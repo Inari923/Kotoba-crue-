@@ -1,0 +1,1760 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>コトバクルー V1-H v0.52｜操作演出・テンポ（技術試作）</title>
+<style>
+:root{color-scheme:dark;--bg:#081822;--panel:#112d3a;--panel2:#193c48;--stroke:#355a67;--fg:#e8f6f5;--muted:#abc7cc;--green:#72dec1;--yellow:#f1cb78;--red:#ffa6a4}*{box-sizing:border-box}body{margin:0;font:14px/1.55 system-ui,-apple-system,"Noto Sans JP",Meiryo,sans-serif;color:var(--fg);background:linear-gradient(140deg,#0b303a,var(--bg) 40%);min-height:100vh}button,input,select{font:inherit;color:inherit}button,select,input{background:#204657;border:1px solid #52717c;border-radius:9px;padding:9px 12px}button{cursor:pointer;font-weight:650}button:disabled{opacity:.4;cursor:default}button:hover:not(:disabled){border-color:var(--green)}button.primary{background:var(--green);color:#06313a;border-color:var(--green)}button.danger{background:#613f45}button.ghost{background:transparent}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}input[type=checkbox]{width:17px;height:17px;accent-color:#6ce2bc}h1,h2,h3,p{margin:0}h1{font-size:25px;line-height:1.25}h2{font-size:18px}h3{font-size:15px}.container{max-width:1130px;margin:auto;padding:18px 16px 42px}.header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}.sub{color:var(--muted)}.tiny{font-size:11px}.small{font-size:12px}.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.space{justify-content:space-between}.stack{display:grid;gap:12px}.panel{background:var(--panel);border:1px solid var(--stroke);border-radius:14px;padding:16px}.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;position:sticky;top:0;z-index:4;background:rgba(8,24,34,.96);border-radius:0 0 10px 10px;padding:8px 0;backdrop-filter:blur(7px)}.stat{background:var(--panel2);border:1px solid var(--stroke);border-radius:10px;text-align:center;padding:8px 4px}.stat strong{display:block;font-size:21px;line-height:1.2;font-variant-numeric:tabular-nums}.stat small{font-size:11px;color:var(--muted)}nav{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}nav button{flex:1 1 135px}nav button.active{background:var(--green);color:#00323a;border-color:var(--green)}.cols{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:12px}.cards{display:grid;gap:9px}.card{border:1px solid var(--stroke);background:var(--panel2);padding:11px;border-radius:10px}.badge{display:inline-block;padding:2px 7px;border-radius:20px;border:1px solid #729f9a;font-size:11px;color:var(--green)}.badge.copy{color:#c4d5e4;border-color:#66869d}.badge.used{color:var(--yellow);border-color:#9a8050}.muted{color:var(--muted)}.headline{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap}.result{border-left:3px solid var(--green);padding:8px 10px;background:#1a3c44}.warning{border-left:3px solid var(--yellow);padding:8px 10px;background:#3a3427}.inlineGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.actions{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.formrow{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:8px 0}.formrow select,.formrow input{max-width:100%;min-width:115px}.facts{display:grid;gap:8px}.fact{background:#173a47;border:1px solid #3f616b;border-radius:10px;padding:10px}.history{padding:6px 10px;border-top:1px solid var(--stroke);font-size:12px;color:var(--muted)}.map{height:auto;width:100%;border:1px solid var(--stroke);border-radius:10px;background:#0c3043}.map text{font-family:system-ui;fill:#e8f6f5;font-size:11px}.map .edge{stroke:#628b99;stroke-width:2;opacity:.55}.map .node{fill:#547c85;stroke:#b4cbd0;stroke-width:1.5}.map .self{fill:#71deb6;stroke:#defae4;stroke-width:3}.map .other{fill:#e2b777}.map .target{stroke:#ff9a93;stroke-width:4}.summaryTable{width:100%;border-collapse:collapse}.summaryTable th,.summaryTable td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--stroke)}.summaryTable td:last-child{text-align:right}.divider{height:1px;background:var(--stroke);margin:12px 0}.footer{font-size:11px;color:var(--muted);margin-top:14px}label{cursor:pointer}@media(max-width:760px){.cols{grid-template-columns:1fr}.stats{grid-template-columns:repeat(5,minmax(0,1fr))}.stat strong{font-size:17px}.container{padding:12px 10px 34px}.panel{padding:12px}h1{font-size:21px}nav button{flex:1 1 30%;padding:9px 6px}.inlineGrid{grid-template-columns:1fr}.formrow>*{max-width:100%}}
+</style><style>.kc45-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:4px 0}.kc45-board{width:100%;height:auto;aspect-ratio:1.65;border:3px solid #ad9a72;border-radius:12px;display:block;background:#27667c}.kc45-caption{font-size:11px;color:#abc7cc;margin:5px 0}</style><style>.kc49-feedback{position:sticky;top:0;z-index:5;max-height:175px;overflow:auto;box-sizing:border-box;border:1px solid #668f91;border-radius:10px;background:#173944;padding:8px 10px;margin:8px 0;color:#f0f4e4}.container .kc49-feedback{top:66px;z-index:3}.kc49-feedback[hidden]{display:none!important}.kc49-head{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px}.kc49-head button{padding:4px 8px;margin:0;font-size:12px}.kc49-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.kc49-event{border:1px solid #759591;border-radius:7px;background:#254a55;padding:5px 9px;animation:kc49in .3s ease-out both}.kc49-event b{display:block;font-size:14px}.kc49-event small{display:block;color:#d0e1db;font-size:11px}.kc49-event[data-event=dice]{background:#ecd6a3;color:#283c43;border-color:#fff2cb}.kc49-event[data-event=dice] small{color:#394b4c}.kc49-event[data-event=vp]{border-color:#e5c675} .kc49-die{display:block;float:left;font-size:34px;line-height:1;margin-right:8px;animation:kc49roll .38s ease-out both}@keyframes kc49roll{from{transform:rotate(-75deg) scale(.72)}to{transform:rotate(0) scale(1)}}@keyframes kc49in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){.kc49-event,.kc49-die{animation:none}}</style><style>/* P6 first layout pass */ .container{max-width:1500px}.cols{grid-template-columns:minmax(0,2.5fr) minmax(230px,1fr)}.cols>aside{align-self:start}.kc45-board{border-width:2px}.kc45-toolbar{gap:6px}.kc45-caption{font-size:12px}.kc49-feedback{max-height:130px}#main{min-width:0}.kc50-chart-count{font-size:12px;color:#b8dad6} @media(max-width:760px){.cols{grid-template-columns:1fr}.container .kc49-feedback{max-height:112px}.kc45-board{aspect-ratio:1.65}.panel{padding:10px}} @media(min-width:761px){.kc50-play{display:grid;grid-template-columns:minmax(0,2fr) minmax(250px,1fr);gap:12px;align-items:start}.kc50-play section{margin:0;min-width:0}} </style><style>/* v0.51 weather: decorative, board only */
+.kc51-weather-label{font-size:12px;color:#b9cbd2;white-space:nowrap}.kc51-weather-label[data-weather=storm]{color:#ffe2a6;font-weight:700}.kc51-rain{animation:kc51rain .85s linear infinite}.kc51-rock{transform-origin:0px 0px;animation:kc51rock 2.8s ease-in-out infinite}.kc51-ripples{animation:kc51ripples 2.1s ease-in-out infinite;opacity:.55;transform-origin:0px 5px}@keyframes kc51rain{from{transform:translate(0,0)}to{transform:translate(-48px,42px)}}@keyframes kc51rock{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}@keyframes kc51ripples{0%,100%{transform:scale(.92);opacity:.35}50%{transform:scale(1.12);opacity:.72}}@media(prefers-reduced-motion:reduce){.kc51-rain,.kc51-rock,.kc51-ripples{animation:none!important}.kc51-ripples{opacity:.5}}
+</style><style>.kc52-wind{animation:kc52wind 8s ease-in-out infinite alternate}@keyframes kc52wind{from{transform:translate(-22px,-16px)}to{transform:translate(22px,16px)}}@media(prefers-reduced-motion:reduce){.kc52-wind{animation:none!important}}</style></head><body><main class="container"><header class="header"><div><div class="small sub">ランダム開始・初訪問・個人原本・原本実物取引</div><h1>コトバクルー　航海統合試作 <span class="sub small">v0.52／操作演出・テンポ（試作）</span></h1></div><div class="row"><label for="aiPolicy37">危険対策AI</label><select id="aiPolicy37"><option value="off">対策しない</option><option value="carry">初期お守りのみ</option><option value="forecast">予報を選択購入</option><option value="ward">お守りを選択購入</option><option value="balanced" selected>慎重な併用</option><option value="aggressive">積極的な併用</option></select><label class="small">試験AI方針 <select id="aiPolicy35" aria-label="試験AI方針"><option value="off">依頼なし</option><option value="opportunistic" selected>通過先で受注</option><option value="selective">条件付き受注</option><option value="hints">通過先でヒント購入</option><option value="detour">依頼へ寄り道</option></select></label><button id="newGame" class="ghost">新しい対戦</button><button id="saveGame" class="ghost">セーブ</button><label class="row small">読込 <input id="loadGame" type="file" accept="application/json,.json" aria-label="セーブを読み込む"></label></div></header><div id="stats" class="stats" aria-label="常時表示の資源"></div><section id="feedback49" class="kc49-feedback" hidden aria-label="操作結果"><div class="kc49-head"><b>航海の結果</b><button type="button" data-kc49-close>閉じる</button></div><div class="kc49-list" data-kc49-list role="status" aria-live="polite" aria-atomic="true"></div></section><nav id="tabs" aria-label="主な画面"><button data-tab="sail">航海</button><button data-tab="ledger">情報台帳</button><button data-tab="port">港の行動</button><button data-tab="trade">プレイヤー交易</button><button data-tab="guide">ルール・記録</button></nav><section class="cols"><section id="main" class="panel stack" aria-live="polite"></section><aside class="stack"><section class="panel stack"><h2>目標島</h2><div id="goal"></div></section><section class="panel stack"><h2>他のプレイヤー</h2><div id="scores"></div></section><section class="panel"><div class="small sub">直近の行動</div><div id="notice" class="result" role="status"></div></section></aside></section><p class="footer">検証用の独立統合航海プロトタイプです。Godot版や既存v0.8.4本体とは別の試作で、AIの判断・島民依頼・航路生成は簡略化しています。高難度モードは実装していません。勝利ラインは10VP、通貨納付は8C→1VP。VP・取引価格は試験用仮値です。</p></main>
+<script>
+/* Presentation-only P2 3D mesh projected onto 2D board. No game mutations or hidden facts. */
+const KCBoard48=(()=>{
+ const colors=['#ec825b','#76c5ef','#e8c76e','#a7d49a'];
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ // Canonical quadratic path: identical geometry in either travel direction.
+ function route(a,b){const reverse=a.id>b.id;if(reverse)[a,b]=[b,a];const dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy),bend=Math.min(32,d*.20)*((a.id+b.id)%2?1:-1);return {key:`${a.id}-${b.id}`,a:[a.x,a.y],b:[b.x,b.y],c:[(a.x+b.x)/2-(d?dy/d:0)*bend*2,(a.y+b.y)/2+(d?dx/d:0)*bend*2],reverse};}
+ function point(r,t){const s=1-t;return r.a.map((v,i)=>s*s*v+2*s*t*r.c[i]+t*t*r.b[i]);}
+ function position(p,nodes){const a=nodes.get(p.sea?.from??p.at),b=nodes.get(p.sea?.to??p.at);if(!a||!b)return null;if(p.sea?.concealed)return {x:a.x,y:a.y,exact:false,at:p.at};const exact=!p.sea||(Number.isFinite(p.sea.progress)&&p.sea.len>0);if(!p.sea)return {x:a.x,y:a.y,exact,at:p.at};const r=route(a,b),raw=exact?Math.max(0,Math.min(1,p.sea.progress/p.sea.len)):.5,t=r.reverse?1-raw:raw;const [x,y]=point(r,t);return {x,y,exact,at:p.at,key:r.key,t};}
+
+
+ // Actual model vertices in local 3D coordinates; no external assets/GPU dependency.
+ // Orthographic camera: screen horizontal x, vertical = depth * .52 - height * .88.
+ function model(color){
+  const faces=[];const face=(v,fill)=>faces.push({v,fill});
+  const box=(x1,x2,y1,y2,z1,z2,fill)=>{
+   const a=[x1,y1,z1],b=[x2,y1,z1],c=[x2,y2,z1],d=[x1,y2,z1],e=[x1,y1,z2],f=[x2,y1,z2],g=[x2,y2,z2],h=[x1,y2,z2];
+   face([a,b,f,e],fill);face([b,c,g,f],fill);face([c,d,h,g],fill);face([d,a,e,h],fill);face([e,f,g,h],fill);
+  };
+  const top=[[-10,-5,5],[5,-5,5],[13,0,5],[5,5,5],[-10,5,5]], bottom=[[-7,-3,0],[4,-3,0],[9,0,0],[4,3,0],[-7,3,0]];
+  for(let i=0;i<5;i++){const j=(i+1)%5;face([bottom[i],bottom[j],top[j],top[i]],i===1||i===2?color:'#805638');}
+  face(top,'#e6c690');box(-6,-4,-.65,.65,5,24,'#765135');
+  face([[-5,0,23],[7,0,8],[-5,0,8]],'#fff2cc');
+  face([[-5,0,24],[-5,0,19],[-11,0,22]],color);
+  const rotated=v=>{const [x,y,z]=v;return [x*.866-y*.5,x*.5+y*.866,z]};
+  const project=v=>{const [x,y,z]=rotated(v);return [x,y*.52-z*.88]};
+  const depth=v=>{const [,y,z]=rotated(v);return y*.88+z*.52};
+  return faces.sort((a,b)=>a.v.reduce((n,v)=>n+depth(v),0)/a.v.length-b.v.reduce((n,v)=>n+depth(v),0)/b.v.length).map(f=>`<polygon points="${f.v.map(v=>project(v).map(n=>n.toFixed(2)).join(',')).join(' ')}" fill="${f.fill}" stroke="#503f34" stroke-width=".6" stroke-linejoin="round"/>`).join('');
+ }
+ function layout(pos){
+  // Cluster by true board anchor; deterministic seat order, keep model badges apart.
+  const groups=[];for(const p of [...pos].sort((a,b)=>a.id-b.id)){let g=groups.find(g=>Math.hypot(g[0].x-p.x,g[0].y-p.y)<1);if(!g)groups.push(g=[]);g.push(p);}
+  return groups.flatMap(g=>g.map((p,i)=>{const offsets=g.length===1?[[0,-8]]:g.length===2?[[-19,-8],[19,-8]]:g.length===3?[[-19,-18],[19,-18],[0,19]]:[[-19,-18],[19,-18],[-19,19],[19,19]];return {...p,displayX:p.x+offsets[i][0],displayY:p.y+offsets[i][1]};}));
+ }
+ // P4: world-anchored illustrated sea; only public area and coordinates.
+ const palette=['#497d91','#367c91','#397e73','#567e87','#777b96','#3f779c','#558a83','#395e85'];
+ const regionNames=['北氷海','東岬海','南翠海','西風海','霧境海','青嶺海','群島海','黒潮海'];
+ function seaArt(isles){
+  const groups=Array.from({length:8},()=>[]);for(const n of isles)if(Number.isInteger(n.area)&&n.area>=0&&n.area<8)groups[n.area].push(n);
+  const motifs=['M4 11l5 -5 5 5m9 8 4 -4 4 4','M3 14q6 -4 12 0t12 0','M7 7q-5 7 0 10q5 -3 0 -10','M2 9h15m-8 7h18','M3 8q8 5 16 0m-9 12q8 5 16 0','M4 17l9 -8 7 8','M8 8h.1m13 11h.1','M3 18q6 -9 12 0t12 0'];
+  const defs=palette.map((c,i)=>`<pattern id="kc48area${i}" width="34" height="27" patternUnits="userSpaceOnUse"><path d="${motifs[i]}" stroke="#f2f0d7" stroke-width="1.2" stroke-linecap="round" fill="none" opacity=".22"/></pattern>`).join('');
+  const panels=groups.map((ns,i)=>{if(!ns.length)return '';const x=Math.min(...ns.map(n=>n.x))-32,y=Math.min(...ns.map(n=>n.y))-43,w=Math.max(...ns.map(n=>n.x))-x+32,h=Math.max(...ns.map(n=>n.y))-y+40;return `<g data-region="${i}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="18" fill="${palette[i]}" stroke="#acc6bd" stroke-width=".8" stroke-dasharray="3 5"/><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="18" fill="url(#kc48area${i})"/><text x="${x+w/2}" y="${y+13}" font-size="9" font-weight="700" text-anchor="middle" fill="#f6eed8" paint-order="stroke" stroke="#244859" stroke-width="2">${regionNames[i]}</text><g class="kc48-glint" aria-hidden="true"><path d="M${x+10} ${y+h-12}q5 -3 10 0t10 0" stroke="#e0f6e7" stroke-width="1.1" fill="none"/></g></g>`;}).join('');
+  return `<defs><pattern id="kc48water" width="62" height="44" patternUnits="userSpaceOnUse"><path d="M5 12q6 -3 12 0t12 0M32 33q6 -3 12 0t12 0" stroke="#aac9c5" stroke-width=".8" opacity=".22" fill="none"/><circle cx="10" cy="32" r=".8" fill="#accac2" opacity=".23"/></pattern>${defs}</defs><style>.kc48-glint{animation:kc48glint 4s ease-in-out infinite alternate;opacity:.25}@keyframes kc48glint{from{opacity:.15}to{opacity:.58}}@media(prefers-reduced-motion:reduce){.kc48-glint{animation:none;opacity:.25}}</style><g data-sea-art="p4" pointer-events="none"><rect x="-2000" y="-2000" width="5000" height="5000" fill="#23566b"/><rect x="-2000" y="-2000" width="5000" height="5000" fill="url(#kc48water)"/>${panels}</g>`;
+ }
+ // v0.51 presentation only: never roll dice or mutate player state.
+ function weatherMode(players,active,viewer){const p=players.find(p=>p.id===active);return active===viewer&&p?.roll?.storm===true?'storm':'clear';}
+ function weatherArt(mode){if(mode==='clear')return '';return `<defs><pattern id="kc51-rain" width="48" height="42" patternUnits="userSpaceOnUse"><path d="M8 3l-6 13M30 18l-6 13M45 2l-5 10" fill="none" stroke="#d5e5ed" stroke-width=".75" opacity=".42" stroke-linecap="round"/></pattern></defs><g class="kc51-weather" data-weather-layer="storm" pointer-events="none" aria-hidden="true"><rect x="-2000" y="-2000" width="5000" height="5000" fill="#172c43" opacity=".18"/><g class="kc52-wind" opacity=".20"><path d="M-2000 -150 Q0 -30 3000 -150 M-2000 230 Q0 350 3000 230 M-2000 530 Q0 650 3000 530" fill="none" stroke="#9eb3c6" stroke-width="34" stroke-linecap="round"/></g><g class="kc51-rain"><rect x="-2100" y="-2100" width="5200" height="5200" fill="url(#kc51-rain)"/></g></g>`;}
+ // P6: display-only label placement; never move logical island/ship anchors.
+ function placeLabels(isles,ships){
+  const blocked=isles.map(n=>({x:n.x-15,y:n.y-9,w:30,h:19})).concat(ships.map(p=>({x:p.displayX-22,y:p.displayY-29,w:44,h:40}))), placed=[];
+  const overlap=(a,b)=>a.x<b.x+b.w+1&&a.x+a.w+1>b.x&&a.y<b.y+b.h+1&&a.y+a.h+1>b.y;
+  for(const n of [...isles].sort((a,b)=>a.id-b.id)){
+   let chosen=null;
+   for(const d of [17,25,35,47,61,79]){for(const [dx,dy] of [[0,1],[1,0],[-1,0],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]]){
+    const v={id:n.id,x:n.x+dx*d-9,y:n.y+dy*d-5,w:18,h:10};if(!blocked.some(b=>overlap(v,b))&&!placed.some(b=>overlap(v,b))){chosen=v;break;}
+   }if(chosen)break;}
+   if(chosen)placed.push(chosen);
+  }return placed;
+ }
+ function render({isles,routes,players,active,overview=false,viewer=0}){const weather=weatherMode(players,active,viewer);const nodes=new Map(isles.map(n=>[n.id,n])),pos=players.map(p=>({...position(p,nodes),id:p.id,sea:p.sea})).filter(p=>Number.isFinite(p.x));const focus=pos.find(p=>p.id===active)||pos[0];const xs=isles.map(n=>n.x),ys=isles.map(n=>n.y),minX=Math.min(...xs)-60,maxX=Math.max(...xs)+60,minY=Math.min(...ys)-60,maxY=Math.max(...ys)+60;const w=Math.max(maxX-minX,(maxY-minY)*1.65),h=w/1.65,cx=(minX+maxX)/2,cy=(minY+maxY)/2;const fw=330,fh=200;const box=overview||!focus?[cx-w/2,cy-h/2,w,h]:[focus.x-fw/2,focus.y-fh/2,fw,fh];
+ const own=players.find(p=>p.id===viewer);const edges=routes.map(e=>{const a=nodes.get(e.a),b=nodes.get(e.b);if(!a||!b)return '';const cross=a.area!==b.area,r=route(a,b),near=!overview&&active===viewer&&own&&(own.sea?r.key===route(nodes.get(own.sea.from),nodes.get(own.sea.to)).key:e.a===own.at||e.b===own.at);return `<g data-route="${e.a}-${e.b}" data-cross="${cross}" data-curve="${r.key}" data-geometry="${[...r.a,...r.c,...r.b].join(',')}"><path d="M${r.a.join(' ')} Q${r.c.join(' ')} ${r.b.join(' ')}" fill="none" stroke="#ecedcf" opacity="${near ? .64 : e.sailed ? .40 : .23}" stroke-width="${near?1.9:1.25}" stroke-linecap="round" stroke-dasharray="${cross?'5 6':'1 5'}"/></g>`}).join('');
+ const markerScale=n=>Math.max(.46,Math.min(1,Math.min(...isles.filter(m=>m.id!==n.id).map(m=>Math.hypot(n.x-m.x,n.y-m.y)))/30));
+ const islands=isles.map(n=>`<g data-island="${n.id}" transform="translate(${n.x} ${n.y})"><g data-marker-scale="${markerScale(n)}" transform="scale(${markerScale(n)})"><ellipse cy="5" rx="14" ry="8" fill="#173b49" opacity=".7"/><ellipse rx="13" ry="8" fill="#e9ce96" stroke="#fff2cf" stroke-width="1.1"/><path d="M-10 0Q-10 -7 -3 -6Q3 -9 9 -4L11 1Q6 5 -3 4Z" fill="#82aa76"/><circle cx="0" cy="0" r="2.1" fill="#f5e4b7"/></g></g>`).join('');
+ const placedShips=layout(pos);const labels=placeLabels(isles,placedShips).map(l=>{const n=nodes.get(l.id),x=l.x+9,y=l.y+5;return `<g data-island-label="${l.id}" pointer-events="none"><line x1="${n.x}" y1="${n.y}" x2="${x}" y2="${y}" stroke="#e2e3ca" stroke-width=".65" opacity=".52"/><rect x="${l.x}" y="${l.y}" width="18" height="10" rx="3" fill="#173e50" stroke="#a6b9ac" stroke-width=".6"/><text x="${x}" y="${y+2.9}" text-anchor="middle" fill="#fff2ce" font-size="8" font-weight="700">${l.id+1}</text></g>`}).join('');
+ const ships=placedShips.sort((a,b)=>a.displayY-b.displayY||a.id-b.id).map(p=>{const color=colors[p.id],x=p.displayX,y=p.displayY;return `<g data-ship="${p.id}" data-exact="${p.exact}" data-sea="${!!p.sea}" data-mesh="p2" data-anchor="${p.x},${p.y}" data-at="${p.at}" data-path="${p.key??''}" data-t="${p.t??''}" transform="translate(${x} ${y})"><ellipse cy="2" rx="14" ry="6" fill="#082b3b" opacity=".65"/>${p.id===active?'<ellipse cy="2" rx="17" ry="9" fill="none" stroke="#fff1af" stroke-width="2"/>':''}${weather==='storm'&&p.id===active?'<g class="kc51-ripples" aria-hidden="true" pointer-events="none"><ellipse cy="5" rx="21" ry="10" fill="none" stroke="#d0e5e5" stroke-width=".9"/><path d="M-22 6q4 -6 8 0m28 0q4 -6 8 0" stroke="#d0e5e5" stroke-width="1" fill="none"/></g>':''}<g class="${weather==='storm'&&p.id===active?'kc51-rock':''}">${model(color)}</g><circle cx="-13" cy="-14" r="6" fill="${color}" stroke="#fff4d6"/><text x="-13" y="-11" text-anchor="middle" font-size="8" font-weight="bold" fill="#172f39">${p.id+1}</text>${!p.exact?'<text x="14" y="-7" font-size="9" fill="#fff4d6">≈</text>':''}</g>`}).join('');
+ return `<div class="kc45-toolbar"><b>${overview?'全体海図':`手番：席${active+1}（追従）`}</b><span class="kc51-weather-label" data-weather="${weather}">${weather==='storm'?'荒天・雨':'荒天演出なし'}</span><button type="button" data-kc45="toggle">${overview?'手番に戻る':'全体表示'}</button></div><svg class="kc45-board" data-mode="${overview?'overview':'follow'}" data-active="${active}" viewBox="${box.join(' ')}" role="img" aria-label="${esc(overview?'全体海図':'手番船の近接海図')}">${seaArt(isles)}${weatherArt(weather)}${edges}${islands}${labels}${ships}</svg><div class="kc45-caption">発見済み航路のみ表示／薄い線：情報取得、濃い線：航行記録／≈ は概略位置（未発見航路の他船は出港地点表示）</div>`;}
+ return {render,position,model,layout,route,point,weatherMode,placeLabels};
+})();
+
+/* Display only. Interpolate rendered coordinates, never change game state. */
+const KCMotion47=(()=>{
+ const duration=420;
+ const mix=(a,b,t)=>a.map((v,i)=>v+(b[i]-v)*t), ease=t=>t*t*(3-2*t);
+ function capture(root){const svg=root?.querySelector('.kc45-board');if(!svg)return null;const ships={};for(const g of svg.querySelectorAll('[data-ship]')){const xy=g.getAttribute('transform').match(/-?\d+(?:\.\d+)?(?:e[+-]?\d+)?/gi)?.map(Number);if(xy?.length===2)ships[g.dataset.ship]={xy,sea:g.dataset.sea,exact:g.dataset.exact==='true',anchor:g.dataset.anchor,at:g.dataset.at,key:g.dataset.path,t:g.dataset.t===''?null:Number(g.dataset.t)};}const routes={};for(const g of svg.querySelectorAll('[data-curve]')){const v=g.dataset.geometry.split(',').map(Number);routes[g.dataset.curve]={a:v.slice(0,2),c:v.slice(2,4),b:v.slice(4,6)};}return {svg,routes,box:svg.getAttribute('viewBox').split(/\s+/).map(Number),mode:svg.dataset.mode,active:svg.dataset.active,ships};}
+ let frame=0,serial=0,finish=null;
+ function stop(snap=true){serial++;if(frame)cancelAnimationFrame(frame);frame=0;if(snap&&finish)finish();finish=null;}
+ function animate(root,old,{snap=false}={}){
+  stop(false);const next=capture(root);if(!next)return;
+  if(!old||snap||old.mode!==next.mode||window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return;
+  const moving=Object.keys(next.ships).filter(id=>old.ships[id]&&next.ships[id].xy.some((n,i)=>n!==old.ships[id].xy[i]));
+  const arrivals=moving.filter(id=>old.ships[id].anchor!==next.ships[id].anchor&&next.ships[id].sea==='false'&&old.ships[id].exact&&next.ships[id].exact);
+  const camera=next.box.some((n,i)=>n!==old.box[i]);if(!moving.length&&!camera)return;
+  const els=new Map([...next.svg.querySelectorAll('[data-ship]')].map(g=>[g.dataset.ship,g]));
+  // For a known common route, animate the exact same quadratic used by the board.
+  // If an intermediate route is unknown (e.g. skipped network snapshots), snap the ship.
+  function segment(a,b){const key=a.key||b.key||[Number(a.at),Number(b.at)].sort((x,y)=>x-y).join('-'),r=next.routes[key];if(!r||!a.exact||!b.exact||(a.key&&a.key!==key)||(b.key&&b.key!==key))return null;const ends=key.split('-');const param=s=>s.key===key?s.t:s.at===ends[0]?0:s.at===ends[1]?1:null;const t0=param(a),t1=param(b);if(!Number.isFinite(t0)||!Number.isFinite(t1))return null;const p0=KCBoard48.point(r,t0),p1=KCBoard48.point(r,t1);return {key,r,t0,t1,o0:a.xy.map((n,i)=>n-p0[i]),o1:b.xy.map((n,i)=>n-p1[i]),p0,p1};}
+  const segments=Object.fromEntries(moving.map(id=>[id,segment(old.ships[id],next.ships[id])]));
+  const update=t=>{const u=ease(t),focus=old.active===next.active&&next.mode==='follow'?segments[next.active]:null;if(camera){const b=mix(old.box,next.box,u);if(focus){const curved=KCBoard48.point(focus.r,focus.t0+(focus.t1-focus.t0)*u),linear=mix(focus.p0,focus.p1,u);b[0]+=curved[0]-linear[0];b[1]+=curved[1]-linear[1];}next.svg.setAttribute('viewBox',b.join(' '));for(const rect of next.svg.querySelectorAll(':scope > rect')){rect.setAttribute('x',b[0]-5);rect.setAttribute('y',b[1]-5);rect.setAttribute('width',b[2]+10);rect.setAttribute('height',b[3]+10);}}for(const id of moving){const a=old.ships[id],b=next.ships[id],s=segments[id],el=els.get(id);let xy;if(s&&t<1){const v=s.t0+(s.t1-s.t0)*u,point=KCBoard48.point(s.r,v);xy=point.map((n,i)=>n+mix(s.o0,s.o1,u)[i]);el.dataset.path=s.key;el.dataset.t=String(v);el.dataset.anchor=point.join(',');}else{xy=t===1||a.anchor!==b.anchor?b.xy:mix(a.xy,b.xy,u);el.dataset.path=b.key;el.dataset.t=b.t??'';el.dataset.anchor=b.anchor;}el.setAttribute('transform',`translate(${xy.join(' ')})`);}};
+  const end=()=>{update(1);next.svg.dataset.motion='idle';};finish=end;next.svg.dataset.motion='moving';update(0);const mine=++serial;let start=null;
+  function tick(now){if(mine!==serial||!next.svg.isConnected)return;if(start===null)start=now;const t=Math.min(1,(now-start)/duration);update(t);if(t<1){frame=requestAnimationFrame(tick);return;}frame=0;finish=null;end();for(const id of arrivals.filter(id=>segments[id])){const g=els.get(id),ring=document.createElementNS('http://www.w3.org/2000/svg','ellipse');ring.setAttribute('rx','18');ring.setAttribute('ry','9');ring.setAttribute('fill','none');ring.setAttribute('stroke','#fff1af');ring.setAttribute('stroke-width','2');ring.setAttribute('data-arrival','true');g.prepend(ring);if(ring.animate){const a=ring.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:'scale(1.6)'}],{duration:360});a.onfinish=()=>ring.remove();a.oncancel=()=>ring.remove();}else ring.remove();}}
+  frame=requestAnimationFrame(tick);
+ }
+ return {capture,animate,stop,mix,ease,duration};
+})();
+
+/* Offline AI playback: consumes already committed board HTML only, never commands. */
+/* Display-only P5. No command, RNG, network or game-state writes. */
+const KCFeedback49=(()=>{
+ const valid=x=>Number.isFinite(x), count=x=>Array.isArray(x)?x.length:0;
+ const statusLabels={pending:'交易提案',accepted:'交易成立',declined:'交易拒否',cancelled:'交易取消',expired:'交易期限切れ',invalidated:'交易不成立',gameEnded:'対戦終了による交易取消'};
+ function snapshot(p,goal,offers=[],extra={}){
+  const roll=p.roll?{value:p.roll.value,power:p.roll.power,storm:!!p.roll.storm}:null;
+  return {id:p.id,at:p.at,sea:!!p.sea,roll,coins:p.coins,food:p.food,vp:p.vp,originals:count(p.heldOriginals),goal:goal?.id,regions:Array.isArray(goal?.regions)?goal.regions.slice():[],offers:Object.fromEntries(offers.filter(o=>o&&typeof o.id==='string'&&statusLabels[o.status]).map(o=>[o.id,o.status])),tradeCount:extra.tradeCount,notice:extra.notice,round:extra.round,visited:extra.visited?Object.keys(extra.visited).filter(k=>extra.visited[k]).map(Number):null,issued:Array.isArray(p.ownIssueIds)?p.ownIssueIds.slice():[]};
+ }
+ function diff(a,b){if(!a||!b||a.id!==b.id)return [];const events=[],push=(kind,label,detail='')=>events.push({kind,label,detail});
+  if(b.roll&&(!a.roll||a.round!==b.round)&&Number.isInteger(b.roll.value)&&b.roll.value>=1&&b.roll.value<=6)push('dice','出目 '+b.roll.value,(b.roll.storm?'荒天 ／ ':'')+(valid(b.roll.power)?'移動力 '+b.roll.power:''));
+  if(!b.sea&&(a.sea||a.at!==b.at)&&Number.isInteger(b.at)){push('arrival','島'+(b.at+1)+'へ到着');if(a.visited&&!a.visited.includes(b.at)&&b.visited?.includes(b.at))push('arrival','初訪問');else if(!a.visited&&!a.issued.includes('isle:'+b.at+':terrain')&&b.issued.includes('isle:'+b.at+':terrain'))push('arrival','到着時の地形原本取得');}
+  for(const [k,label,unit] of [['coins','通貨','C'],['food','食料','個'],['originals','情報原本','枚'],['vp','VP','']]){if(valid(a[k])&&valid(b[k])&&a[k]!==b[k]){const d=b[k]-a[k];push(k,label+' '+(d>0?'+':'−')+Math.abs(d)+unit, '現在 '+b[k]+unit);}}
+  if(valid(a.tradeCount)&&valid(b.tradeCount)&&b.tradeCount>a.tradeCount)push('trade','交易成立');
+  else if(b.notice!==a.notice&&typeof b.notice==='string'&&b.notice.startsWith('交易不成立：'))push('trade','交易不成立');
+  for(const [id,status] of Object.entries(b.offers)){const before=a.offers[id];if(before===status||(!before&&status!=='pending'))continue;push('trade',statusLabels[status]);}
+  if(a.goal!==b.goal&&Number.isInteger(b.goal))push('goal','新しい目標島','候補海域 '+b.regions.filter(Number.isInteger).map(x=>x+1).join('・'));
+  return events;
+ }
+ function create(root){let last=null,timer=null,serial=0;const list=root.querySelector('[data-kc49-list]'),close=root.querySelector('[data-kc49-close]');
+  function clear(){serial++;clearTimeout(timer);timer=null;root.hidden=true;list.replaceChildren();}
+  function reset(){clear();last=null;}
+  function show(events){if(!events.length)return;clear();for(const e of events){const item=document.createElement('span');item.className='kc49-event';item.dataset.event=e.kind;const name=document.createElement('b');name.textContent=e.label;if(e.kind==='dice'){const face=document.createElement('span');face.className='kc49-die';face.setAttribute('aria-hidden','true');face.textContent='⚀⚁⚂⚃⚄⚅'[Number(e.label.slice(-1))-1];item.append(face);}item.append(name);if(e.detail){const d=document.createElement('small');d.textContent=e.detail;item.append(d);}list.append(item);}root.hidden=false;}
+  function update(next,{snap=false,extra=[]}={}){if(snap||!last){clear();last=next;return [];}const events=[...diff(last,next),...extra];last=next;show(events);return events;}
+  close.addEventListener('click',clear);return {update,reset,clear};
+ }
+ return {snapshot,diff,create};
+})();
+
+const feedback49=KCFeedback49.create(document.getElementById("feedback49"));
+const KCReplay47=(()=>{
+ let timer=null,active=false,restore=null,serial=0;
+ function cancel(){const was=active;serial++;clearTimeout(timer);timer=null;active=false;restore=null;return was;}
+ function board(root,html){const t=document.createElement('template');t.innerHTML=html;for(const cls of ['.kc45-toolbar','.kc45-board','.kc45-caption']){const a=root.querySelector(cls),b=t.content.querySelector(cls);if(a&&b)a.replaceWith(b);}}
+ function play(root,initial,stages,final){cancel();if(!root.querySelector('.kc45-board')||!stages.length||window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return;KCMotion47.stop();const mine=++serial;active=true;restore=()=>{cancel();KCMotion47.stop(false);board(root,final);};board(root,initial);
+  function show(i){if(mine!==serial||!root.isConnected)return;if(i===stages.length){const old=KCMotion47.capture(root);cancel();board(root,final);KCMotion47.animate(root,old);return;}const old=KCMotion47.capture(root);board(root,stages[i]);const bar=root.querySelector('.kc45-toolbar');bar.querySelector('b').textContent+=' ／ AI演出中（結果確定済み）';const button=bar.querySelector('button');button.removeAttribute('data-kc45');button.dataset.kc47Skip='true';button.textContent='演出をスキップ';KCMotion47.animate(root,old);timer=setTimeout(()=>show(i+1),520);}
+  show(0);
+ }
+ function skip(){if(restore)restore();}
+ return {play,cancel,skip,isActive:()=>active};
+})();
+
+
+(()=>{'use strict';
+window.__KC38_POLICY=(id)=>document.getElementById(id)?.value;
+const REGION=['北氷海','東岬海','南翠海','西風海','霧境海','青嶺海','群島海','黒潮海'];
+const TERRAIN=['高地','森林','氷雪','砂浜'],MARK=['灯台','遺跡','市場','神殿'];
+const VP_LIMIT=10,COIN_RATE=8,INFO_RATE=3,INFO_GAIN=2,GOAL_VP=4,COPY_PRICE=5,ORIGINAL_PRICE=10;
+let G,tab='sail',historyVisible=false,kindFilter='all',query='',selected=[],tradeKind='original',tradeDirection='buy',tradeTarget=1,tradePrice=ORIGINAL_PRICE;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rand=()=>{G.rng=(Math.imul(G.rng,1664525)+1013904223)>>>0;return G.rng/4294967296};
+const randint=n=>Math.floor(rand()*n);
+const sample=(a)=>a[randint(a.length)];
+const shuffle=(arr)=>{let a=arr.slice();for(let i=a.length-1;i>0;i--){let j=randint(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+const player=(id,start)=>({id,name:id===0?'あなた':'AI '+id,at:start,sea:null,coins:14,food:6,vp:0,vpSources:{coins:0,info:0,goal:0},visited:{[start]:true},known:{},issued:{},workUsed:{},questDone:{},goals:0,roll:null,moved:false,portUsed:false,turn:0,goalHint:0,goalHintId:1});
+const me=()=>G.players[0],findOriginal=id=>G.originals.find(o=>o.id===id),owned=p=>G.originals.filter(o=>o.status==='held'&&o.owner===p.id),heldForFact=(p,id)=>owned(p).filter(o=>o.fact===id);
+function addLog(s){G.logs.unshift('R'+G.round+'：'+s);G.logs=G.logs.slice(0,100);G.notice=s}
+function world(seed){G.rng=seed>>>0;const isles=[],edges=[],dedupe=new Set();
+ for(let r=0;r<8;r++)for(let j=0;j<4;j++){const id=r*4+j;isles.push({id,area:r,name:REGION[r]+'・'+(j+1)+'番島',x:65+(r%4)*173+randint(40),y:60+Math.floor(r/4)*212+(j%2)*75+randint(34),terrain:sample(TERRAIN),mark:sample(MARK),quest:j===0||j===2});}
+ const add=(a,b,l)=>{const key=[a,b].sort((x,y)=>x-y).join(':');if(a===b||dedupe.has(key))return;dedupe.add(key);edges.push({a,b,len:l});};
+ for(let r=0;r<8;r++)for(let j=0;j<4;j++)add(4*r+j,4*r+(j+1)%4,5+randint(5));
+ for(let r=0;r<8;r++){if(r%4<3)add(4*r+randint(4),4*(r+1)+randint(4),9+randint(5));if(r<4)add(4*r+randint(4),4*(r+4)+randint(4),9+randint(5));}
+ let attempts=0;while(edges.length<48&&attempts++<2500){const r=randint(8),s=randint(8);if(r===s||Math.abs(r-s)>4)continue;add(r*4+randint(4),s*4+randint(4),9+randint(5));}
+ return {isles,edges};}
+function neighbors(i){return G.edges.filter(e=>e.a===i||e.b===i).map(e=>({to:e.a===i?e.b:e.a,len:e.len}));}
+function factMap(){const facts={};for(const i of G.isles){facts['isle:'+i.id+':terrain']={id:'isle:'+i.id+':terrain',kind:'島',isle:i.id,title:i.name+'の地形',description:i.terrain+'の島である'};facts['isle:'+i.id+':mark']={id:'isle:'+i.id+':mark',kind:'島',isle:i.id,title:i.name+'の目印',description:'島には「'+i.mark+'」がある'};if(i.quest)facts['quest:'+i.id]={id:'quest:'+i.id,kind:'島民依頼',isle:i.id,title:i.name+'の島民依頼記録',description:'島民の言い伝えを解き明かした記録'};}return facts;}
+function learn(p,factId,source){if(!G.facts[factId])throw Error('unknown fact '+factId);const old=p.known[factId];if(!old)p.known[factId]={source,history:[{round:G.round,source}]};else old.history.push({round:G.round,source});return !old;}
+function issue(p,factId,source){learn(p,factId,source);if(p.issued[factId])return null;const o={id:'OR-'+String(G.nextOriginal++).padStart(5,'0'),fact:factId,issuer:p.id,owner:p.id,status:'held',source,events:[{round:G.round,type:'issued',actor:p.id}]};G.originals.push(o);p.issued[factId]=true;return o;}
+function canRedeem(p){const seen=new Set();return owned(p).filter(o=>{if(seen.has(o.fact))return false;seen.add(o.fact);return true;});}
+function winCheck(){if(G.done)return true;const w=G.players.find(p=>p.vp>=VP_LIMIT);if(!w)return false;G.done=true;G.winner=w.id;addLog(w.name+'の勝利！ 合計'+w.vp+'VP。');return true;}
+function issueGoal(){let available=G.isles.filter(i=>!G.players.some(p=>p.at===i.id)&&i.id!==G.previousGoal);if(!available.length)available=G.isles;const target=sample(available);let other=randint(8);while(other===target.area)other=randint(8);G.goal={id:(G.goal?.id||0)+1,target:target.id,regions:[target.area,other].sort((a,b)=>a-b)};G.previousGoal=target.id;for(const p of G.players){p.goalHint=0;p.goalHintId=G.goal.id;}addLog('新しい目標島：候補海域「'+G.goal.regions.map(r=>REGION[r]).join('・')+'」');}
+function reset(seed=20261124){G={version:'v1h-0.22-vp10-c8',seed,round:1,rng:seed>>>0,done:false,winner:null,notice:'',logs:[],trades:[],originals:[],nextOriginal:1,players:[],goal:null,previousGoal:null,firstStarts:[],time:Date.now()};let w=world(seed);G.isles=w.isles;G.edges=w.edges;G.facts=factMap();let starts=shuffle(G.isles.map(i=>i.id)).slice(0,4);G.firstStarts=starts;G.players=starts.map((s,i)=>player(i,s));for(let p of G.players)issue(p,'isle:'+p.at+':terrain','開始島：特別初期原本');issueGoal();addLog('ランダム開始。全員が開始島の情報原本を1枚ずつ所持。');selected=[];tab='sail';render();}
+function factTargets(p){const i=p.at,arr=['isle:'+i+':mark'];for(const n of neighbors(i))arr.push('isle:'+n.to+':terrain');return arr.filter(fid=>!p.issued[fid]);}
+function arrive(p,id){const previous=p.at;p.at=id;p.sea=null;if(previous!==id)p.workUsed={};if(!p.visited[id]){p.visited[id]=true;p.coins+=2;issue(p,'isle:'+id+':terrain','初訪問による自力取得');addLog(p.name+'が'+G.isles[id].name+'へ初訪問。2Cと情報原本を獲得。');}else addLog(p.name+'が'+G.isles[id].name+'へ到着。');goalArrival27(p,previous,id);}
+function roll(p){if(p.roll!==null||G.done)return false;let storm=rand()<([.3,.15,.1,.25,.22,.14,.18,.27][G.isles[p.sea?p.sea.from:p.at].area]);let value=1+randint(6);let power=Math.max(1,value-(storm?2:0));if(!p.food)power=Math.min(power,2);p.roll={value,storm,power};return true;}
+function travel(p,to){if(G.done||p.moved||!p.roll)return false;let v=p.roll.power;const e=p.sea;if(e){if(to!==e.to)return false;v=Math.min(v,e.len-e.progress);e.progress+=v;if(e.progress>=e.len)arrive(p,e.to);}
+ else {const n=neighbors(p.at).find(x=>x.to===to);if(!n)return false;let start=p.at;p.sea={from:start,to,len:n.len,progress:Math.min(v,n.len)};if(p.sea.progress>=n.len)arrive(p,to);}
+ p.food=Math.max(0,p.food-1);p.moved=true;addLog(p.name+'の航海：'+p.roll.value+'（'+(p.roll.storm?'荒天':'通常')+'）、移動力'+p.roll.power);return true;}
+function stay(p){if(G.done||p.moved||!p.roll||p.sea)return false;p.moved=true;addLog(p.name+'は'+G.isles[p.at].name+'に停泊。');return true;}
+function portAction(p,type,arg){if(G.done||p.sea||!p.moved||p.portUsed)return false;const first=p.at;let result='';
+ if(type==='research'){if(!factTargets(p).includes(arg))return false;const o=issue(p,arg,'港での自力調査');if(!o)return false;result='現地で「'+G.facts[arg].title+'」を調査。原本'+o.id+'取得';}
+ else if(type==='work'){if(p.workUsed[first])return false;p.workUsed[first]=true;p.coins+=3;result='港で仕事：+3C（他の島に到着すると再利用可能）';}
+ else if(type==='food'){if(p.coins<3)return false;p.coins-=3;p.food+=3;result='食料3個を3Cで補給';}
+ else if(type==='goalHint'){if(p.goalHint>=2||p.coins<4)return false;p.coins-=4;p.goalHint++;result='目標の'+(p.goalHint===1?'地形':'目印')+'の手がかりを確認';}
+ else if(type==='quest'){return false;} // v0.26: deprecated self-declared success is forbidden
+ else if(type==='coinVP'){if(p.coins<COIN_RATE)return false;p.coins-=COIN_RATE;p.vp++;p.vpSources.coins++;result=COIN_RATE+'Cを納付して+1VP';}
+ else if(type==='infoVP'){let ids=Array.isArray(arg)?arg:canRedeem(p).slice(0,3).map(o=>o.id);const os=ids.map(findOriginal);if(ids.length!==INFO_RATE||new Set(ids).size!==INFO_RATE||os.some(o=>!o||o.owner!==p.id||o.status!=='held')||new Set(os.map(o=>o.fact)).size!==INFO_RATE)return false;for(const o of os){o.status='redeemed';o.owner=null;o.events.push({round:G.round,type:'redeemed',actor:p.id});}p.vp+=INFO_GAIN;p.vpSources.info+=INFO_GAIN;result=INFO_RATE+'原本を納付して+'+INFO_GAIN+'VP';selected=[];}
+ else return false;
+ p.portUsed=true;addLog(p.name+'：'+result);winCheck();return true;}
+function finishHuman(){if(G.done)return;const p=me();if(!p.moved)return addLog('ダイスを振り、航行か停泊を選択してください。'),render();p.turn++;for(let i=1;i<G.players.length;i++)if(!G.done)aiTurn(G.players[i]);if(!G.done){G.round++;p.moved=false;p.portUsed=false;p.roll=null;}if(!G.testSilent)render();}
+function aiGoalOptions(p){
+ if(p.goalTriedId!==G.goal.id){p.goalTriedId=G.goal.id;p.goalTried={};}
+ let choices=G.isles.filter(i=>G.goal.regions.includes(i.area)&&!p.goalTried[i.id]);
+ if(p.goalHint>=1){const terrain=G.isles[G.goal.target].terrain;
+  choices=choices.filter(i=>!p.known['isle:'+i.id+':terrain']||i.terrain===terrain);}
+ if(p.goalHint>=2){const mark=G.isles[G.goal.target].mark;
+  choices=choices.filter(i=>!p.known['isle:'+i.id+':mark']||i.mark===mark);}
+ if(!choices.length){p.goalTried={};choices=G.isles.filter(i=>G.goal.regions.includes(i.area));}
+ return choices;
+}
+function aiNextHop(p){
+ const choices=aiGoalOptions(p),cost=new Array(32).fill(Infinity),first=new Array(32).fill(null),used=new Set();
+ cost[p.at]=0;
+ for(let t=0;t<32;t++){let i=-1;for(let j=0;j<32;j++)if(!used.has(j)&&(i<0||cost[j]<cost[i]))i=j;
+  if(i<0||!Number.isFinite(cost[i]))break;used.add(i);
+  for(const e of neighbors(i)){const step=G.isles[i].area===G.isles[e.to].area?7:11;const v=cost[i]+step;
+   if(v<cost[e.to]){cost[e.to]=v;first[e.to]=i===p.at?e.to:first[i];}}
+ }
+ let best=null,bestCost=Infinity;
+ for(const c of choices){if(c.id===p.at)continue;
+  if(cost[c.id]<bestCost&&first[c.id]!=null){bestCost=cost[c.id];best=first[c.id];}}
+ return best;
+}
+function aiTurn(p){
+ p.roll=null;p.moved=false;p.portUsed=false;
+ const oldGoal=G.goal.id;
+ roll(p);
+ if(!p.sea){const next=aiNextHop(p);if(next==null)stay(p);else travel(p,next);}else travel(p,p.sea.to);
+ if(p.pendingGoal27&&!G.done)aiGoalAnswer27(p);
+ if(G.goal.id!==oldGoal){p.goalTriedId=G.goal.id;p.goalTried={};}
+ else if(!p.sea&&!G.done&&G.goal.regions.includes(G.isles[p.at].area)){
+   if(p.goalTriedId!==G.goal.id){p.goalTriedId=G.goal.id;p.goalTried={};}
+   p.goalTried[p.at]=true;
+ }
+ if(!G.done&&!p.sea){
+  if(p.food<=1&&p.coins>=3)portAction(p,'food');
+  else if(p.goalHint<2&&p.coins>=11&&aiGoalOptions(p).length>2)portAction(p,'goalHint');
+  else if(p.coins>=COIN_RATE&&(p.vp>=VP_LIMIT-1||p.coins>=COIN_RATE+12))portAction(p,'coinVP');
+  else if(canRedeem(p).length>=INFO_RATE&&(p.id===3||p.vp>=4))portAction(p,'infoVP');
+    else if(factTargets(p).length&&p.id!==2)portAction(p,'research',factTargets(p)[0]);
+  else if(!p.workUsed[p.at])portAction(p,'work');
+  else if(p.coins>=COIN_RATE)portAction(p,'coinVP');
+ }
+ p.turn++;p.moved=false;p.portUsed=false;p.roll=null;
+}
+function fastAutoTrial(seed,originalPrice,cap=100){reset(seed);G.testSilent=true;let attempts=0,accepted=0,steps=0;
+ for(let step=0;step<cap&&!G.done;step++){
+  const p=me();
+  if(originalPrice!==null&&step%3===0){
+   for(const o of owned(p).slice(0,1)){
+    const buyer=G.players.slice(1).find(b=>b.coins>=originalPrice+3&&!b.known[o.fact]);
+    if(buyer){attempts++;const result=trade(p,buyer,p,o.fact,'original',originalPrice,o.id);if(result.ok)accepted++;break;}
+   }
+  }
+  roll(p);
+  if(p.sea)travel(p,p.sea.to);
+  else {
+   const options=neighbors(p.at),unvisited=options.filter(n=>!p.visited[n.to]);
+   const items=canRedeem(p);
+   if(items.length>=INFO_RATE||(p.coins>=COIN_RATE*2&&p.vp>=6))stay(p);
+   else if((unvisited.length||options.length))travel(p,(unvisited[0]||options[0]).to);
+   else stay(p);
+  }
+  if(!G.done&&!p.sea){const uniq=canRedeem(p);
+   if(uniq.length>=INFO_RATE)portAction(p,'infoVP',uniq.slice(0,INFO_RATE).map(o=>o.id));
+   else if(p.coins>=COIN_RATE&&(p.vp>=6||p.coins>=COIN_RATE+12))portAction(p,'coinVP');
+   else if(p.food<=1&&p.coins>=3)portAction(p,'food');
+      else if(!p.workUsed[p.at]&&p.coins<COIN_RATE)portAction(p,'work');
+   else if(factTargets(p).length)portAction(p,'research',factTargets(p)[0]);
+  }
+  if(!G.done)finishHuman();steps++;
+ }
+ G.testSilent=false;const audit=selfAudit();if(!audit.ok||!audit.allStartOne)throw Error('original invariant: '+audit.violations.join(','));const p=me();
+ const r={seed,originalPrice,cap,steps,done:G.done,round:G.round,winner:G.winner,offers:attempts,accepted,tradeCount:G.trades.length,
+ vpSources:{...p.vpSources},vp:p.vp,allOriginals:G.originals.length,accounting:audit};render();return r;
+}
+function trade(p,buyer,seller,fid,mode,price,originalId){p=G.players[p?.id];buyer=G.players[buyer?.id];seller=G.players[seller?.id];if(G.done||!p||!buyer||!seller||buyer===seller||!Number.isInteger(price)||price<0||price>200)return {ok:false,reason:'条件が不正です'};if(p.id!==0&&(buyer.id===0||seller.id===0))return {ok:false,reason:'人間プレイヤーの取引には本人の同意が必要です'};if(buyer.coins<price)return {ok:false,reason:'買い手の通貨が不足'};
+ let o=null,what='';if(mode==='original'){o=findOriginal(originalId);if(!o||o.status!=='held'||o.owner!==seller.id)return {ok:false,reason:'売り手が原本を保有していません'};if(o.fact!==fid)return {ok:false,reason:'情報IDの不一致'};what='原本';}
+ else if(mode==='copy'){if(!seller.known[fid])return {ok:false,reason:'売り手が情報を知らない'};if(buyer.known[fid])return {ok:false,reason:'買い手が既に知っている情報'};what='写し';}
+ else return {ok:false,reason:'種別不明'};
+ // AI response is a trial heuristic. Human approval is only on the initiating side.
+ const ai=p.id===buyer.id?seller:buyer;
+ if(ai.id!==0){
+  // v0.22 experimental counterparty behavior. Evaluates the buyer's next set, the
+  // seller's retained set, liquidity and the risk of handing a rival immediate victory.
+  // These are trial AI preferences, not formal rules or player-facing advice.
+  if(mode==='original'){
+   const originalBuyer=canRedeem(buyer).length;
+   if(ai===buyer){
+    if(owned(buyer).some(x=>x.fact===fid))return {ok:false,reason:'すでに同じ事実の原本を所有'};
+    if(buyer.coins-price<3)return {ok:false,reason:'補給用の通貨を残せない'};
+    if(originalBuyer%INFO_RATE!==INFO_RATE-1)return {ok:false,reason:'原本納付までの必要枚数が多いため見送る'};
+    if(price>12)return {ok:false,reason:'取引価格が高いため見送る'};
+   }else{
+    const retained=new Set(owned(seller).filter(x=>x.id!==o.id).map(x=>x.fact)).size;
+    if(retained<INFO_RATE)return {ok:false,reason:'自分の納付用原本を優先して保持'};
+    const buyerCompletes=(originalBuyer%INFO_RATE===INFO_RATE-1)&&!owned(buyer).some(x=>x.fact===fid);
+    if(buyerCompletes&&buyer.vp>=VP_LIMIT-INFO_GAIN)return {ok:false,reason:'相手が即座に勝利できる取引を拒否'};
+   }
+  }
+  if(mode==='copy'&&ai===buyer&&price>5)return {ok:false,reason:'AIが写しの高値を拒否'};
+ }
+ buyer.coins-=price;seller.coins+=price;
+ if(mode==='original'){o.owner=buyer.id;o.events.push({round:G.round,type:'transfer',from:seller.id,to:buyer.id,price});learn(buyer,fid,'原本実物の取得（'+seller.name+'から）');}
+ else learn(buyer,fid,'情報の写し（'+seller.name+'から）');
+ G.trades.push({round:G.round,buyer:buyer.id,seller:seller.id,mode,price,fact:fid,originalId:o?.id||null});addLog(seller.name+' → '+buyer.name+'：'+what+'「'+G.facts[fid].title+'」を'+price+'Cで取引。');return {ok:true};}
+function selfAudit(){const ids=new Set(),issued=new Set(),invariant=[];for(const o of G.originals){if(ids.has(o.id))invariant.push('duplicate original ID');ids.add(o.id);const key=o.issuer+'|'+o.fact;if(issued.has(key))invariant.push('duplicate issuer/fact');issued.add(key);if(o.status==='held'&&!(o.owner>=0&&G.players[o.owner]))invariant.push('held without owner');if(o.status==='redeemed'&&o.owner!==null)invariant.push('redeemed has owner');if(!G.players[o.issuer].issued[o.fact])invariant.push('missing issue record');}return {ok:invariant.length===0,violations:invariant,issued:G.originals.length,held:G.originals.filter(o=>o.status==='held').length,redeemed:G.originals.filter(o=>o.status==='redeemed').length,trades:G.trades.length,allStartOne:G.players.every(p=>G.originals.filter(o=>o.issuer===p.id&&o.source.startsWith('開始島')).length===1)};}
+function stats(){const p=me();const v=[['VP',p.vp+'/'+VP_LIMIT],['通貨',p.coins+'C'],['食料',p.food],['原本',owned(p).length+'枚'],['情報',Object.keys(p.known).length+'件']];$('stats').innerHTML=v.map(([a,b])=>'<div class="stat"><small>'+a+'</small><strong>'+b+'</strong></div>').join('');}
+let overview45=false;document.addEventListener('click',e=>{if(e.target.closest('[data-kc45]')){overview45=!overview45;render();}});function mapSvg(){return KCBoard48.render({isles:G.isles,routes:chartRoutes50(G,me()),players:chartPlayers50(G,me()),active:G.onlinePilot26?.activeSeat??0,overview:overview45});}
+function sailView(){const p=me(),i=G.isles[p.at];let out='<h2>航海：ラウンド '+G.round+'</h2>'+mapSvg();out+='<div class="card"><b>現在地：</b>'+(p.sea?G.isles[p.sea.from].name+' → '+G.isles[p.sea.to].name+'（進捗'+p.sea.progress+'/'+p.sea.len+'）':i.name)+'<div class="small sub">'+(p.sea?'航路中。進路変更不可':'島に停泊中。出目を見てから移動か停泊を選択できます')+'</div></div>';
+ if(G.done)return out+'<div class="result">対戦終了：'+G.players[G.winner].name+'の勝利</div>';
+ if(!p.moved){out+='<div class="actions"><button data-act="roll" '+(p.roll?'disabled':'')+' class="primary">ダイスを振る</button></div>';if(p.roll){out+='<div class="result">出目 '+p.roll.value+' / '+(p.roll.storm?'荒天あり':'荒天なし')+' / 移動力 '+p.roll.power+'</div><div class="actions">';if(p.sea){out+='<button data-sail="'+p.sea.to+'" class="primary">航路を前進する</button>';}else {for(const n of neighbors(p.at))out+='<button data-sail="'+n.to+'">'+esc(G.isles[n.to].name)+'へ '+(Object.hasOwn(p.known,KC50.id(p.at,n.to))?'既知航路':'未発見航路')+' ('+n.len+')</button>';out+='<button data-act="stay">停泊する</button>';}out+='</div>';}}
+ else out+='<div class="result">移動は確定しました。'+(p.sea?'航路上のため港行動は不可':'港行動を1回利用できます')+'。終了時にAIが行動します。</div><div class="actions"><button class="primary" data-act="end">自分の手番を終了</button></div>';
+ out+=goalChallengePanel27(p);return out;}
+function goalView(){let p=me(),goal=G.goal;let hints=[];if(p.goalHint>=1)hints.push('地形：'+G.isles[goal.target].terrain);if(p.goalHint>=2)hints.push('目印：'+G.isles[goal.target].mark);return '<div class="sub small">探索章 '+goal.id+' / 航路到着＋固有語正答で+'+GOAL_VP+'VP</div><b>候補海域：</b>'+goal.regions.map(r=>REGION[r]).join('・')+'<div class="small">'+(hints.length?'取得済み：'+hints.join(' / '):'詳細情報は未取得')+'</div>';}
+function scoreView(){return G.players.map(p=>'<div class="headline small"><span>'+esc(p.name)+(p.sea?'（海上）':'')+'</span><b>'+p.vp+'VP</b></div><div class="tiny sub">通貨 '+p.coins+'C / 食料 '+p.food+' / 所持原本 '+owned(p).length+'枚 / 到達 '+p.goals+'回</div>').join('<div class="divider"></div>');}
+function infoBadge(p,fid){const arr=heldForFact(p,fid),issued=G.originals.filter(o=>o.issuer===p.id&&o.fact===fid);return arr.length?'原本 '+arr.length+'枚保有':issued.length?'本人発行済（移転・消費）':'写し・原本なし';}
+function ledgerView(){const p=me();let facts=Object.keys(p.known).map(id=>G.facts[id]);facts=facts.filter(f=>f&&(kindFilter==='all'||f.kind===kindFilter)&&(!query||(f.title+f.description+f.id).includes(query)));
+ let out='<div class="headline"><h2>情報台帳（原本管理を統合）</h2><button data-act="history" class="ghost">取得履歴：'+(historyVisible?'表示':'非表示')+'</button></div><p class="small sub">情報を売却・納付しても、ここに残る知識は消えません。購入した写しはVPに納付できません。</p><div class="formrow"><input id="search" placeholder="島名・語句で検索" value="'+esc(query)+'" aria-label="情報の検索"><select id="kindFilter" aria-label="分類フィルタ">'+['all','島','島民依頼','航路'].map(k=>'<option value="'+k+'" '+(k===kindFilter?'selected':'')+'>'+(k==='all'?'すべて':k)+'</option>').join('')+'</select></div><div class="facts">';
+ for(let f of facts){const status=infoBadge(p,f.id),os=heldForFact(p,f.id);out+='<div class="fact"><div class="headline"><b>'+esc(f.title)+'</b><span class="badge '+(status.startsWith('写し')?'copy':status.includes('発行済')?'used':'')+'">'+esc(status)+'</span></div><div class="small">'+esc(f.description)+'</div><div class="tiny sub">ID '+esc(f.id)+' / '+esc(f.kind)+'</div>';if(os.length)out+='<div class="tiny sub">所有中：'+os.map(o=>o.id+'（発行者 '+G.players[o.issuer].name+'）').join('、')+'</div>';if(historyVisible)out+='<div class="history">'+p.known[f.id].history.map(h=>'R'+h.round+' '+esc(h.source)).join(' → ')+'</div>';out+='</div>';}
+ return out+(facts.length?'':'<p class="small sub">該当する情報はありません。</p>')+'</div>';}
+function canPort(p){return !G.done&&p.moved&&!p.sea&&!p.portUsed;}
+function portView(){const p=me(),ready=canPort(p),targets=factTargets(p),originals=canRedeem(p),quest=G.isles[p.at].quest&&!p.questDone[p.at];let out='<h2>港行動（1手番最大1回）</h2><p class="small sub">移動後に島に到着した場合、または停泊を選んだ場合に利用できます。閲覧と任意交易は港行動枠を使いません。</p>';
+ if(!ready)out+='<div class="warning">'+(G.done?'対戦は終了しています。':p.sea?'航路上では港行動不可です。':p.moved?'この手番の港行動は使用済みです。':'ダイスを振り、航海か停泊を確定してください。')+'</div>';
+ out+='<div class="cards"><div class="card"><b>同じ島での継続調査</b><div class="small sub">未取得の事実がある限り、次の手番も自力調査できます。本人×事実1原本まで。</div><div class="formrow"><select id="surveyFact" aria-label="調査対象">'+targets.map(id=>'<option value="'+id+'">'+esc(G.facts[id].title)+'</option>').join('')+'</select><button data-act="survey" '+(!ready||!targets.length?'disabled':'')+'>調査して原本取得</button></div></div>';
+ out+='<div class="card"><b>補給と仕事</b><div class="actions"><button data-port="food" '+(!ready||p.coins<3?'disabled':'')+'>食料3個 / 3C</button><button data-port="work" '+(!ready||p.workUsed[p.at]?'disabled':'')+'>港の仕事 +3C</button><button data-port="goalHint" '+(!ready||p.coins<4||p.goalHint>=2?'disabled':'')+'>目標の手がかり 4C</button></div></div>';
+ out+=questPanel26();
+ out+='<div class="card"><b>VPへの納付</b><div class="small sub">通貨'+COIN_RATE+'C→1VP ／ 異なる事実の原本'+INFO_RATE+'枚→'+INFO_GAIN+'VP。売却・納付後の知識は維持します。</div><div class="actions"><button data-port="coinVP" '+(!ready||p.coins<COIN_RATE?'disabled':'')+'>通貨で+1VP</button></div><div class="tiny sub">原本を3枚選択してください（同じ事実は複数枚選択不可）</div>';
+ for(let o of owned(p))out+='<label class="row small"><input type="checkbox" data-redeem="'+o.id+'" '+(selected.includes(o.id)?'checked':'')+'><span>'+esc(o.id)+'：'+esc(G.facts[o.fact].title)+' / 発行者 '+G.players[o.issuer].name+'</span></label>';
+ out+='<div class="actions"><button data-act="redeem" '+(!ready||originals.length<3?'disabled':'')+'>選択した原本3枚で+2VP</button></div></div></div>';return out;}
+function offerables(other){const p=me(),buyer=tradeDirection==='buy'?p:other,seller=tradeDirection==='sell'?p:other;if(tradeKind==='original')return owned(seller).map(o=>({id:o.fact,key:o.id,label:G.facts[o.fact].title+' / '+o.id}));return Object.keys(seller.known).filter(id=>!buyer.known[id]).map(id=>({id,key:id,label:tradeDirection==='buy'&&id.startsWith('route:')?'航路情報（購入後に区間を開示）':G.facts[id].title}));}
+function tradeView(){const p=me(),other=G.players[tradeTarget],list=offerables(other);return '<h2>全域プレイヤー交易（回数制限なし）</h2><p class="small sub">航海中を含めて距離制限なし・双方合意。写しは知識だけ、原本実物は所有権を移します。知識を既に持っていても、原本の所有権には別の価値があります。AIは原本の残数・資金・相手の勝利目前などを考慮して返答します（試験中）。</p><div class="card"><div class="formrow"><label>相手 <select id="partner">'+G.players.slice(1).map(x=>'<option value="'+x.id+'" '+(x.id===tradeTarget?'selected':'')+'>'+esc(x.name)+'</option>').join('')+'</select></label><label>取引 <select id="tradeType"><option value="original" '+(tradeKind==='original'?'selected':'')+'>原本そのもの</option><option value="copy" '+(tradeKind==='copy'?'selected':'')+'>情報の写し</option></select></label></div><div class="formrow"><label>向き <select id="tradeDirection"><option value="buy" '+(tradeDirection==='buy'?'selected':'')+'>相手から買う</option><option value="sell" '+(tradeDirection==='sell'?'selected':'')+'>相手へ売る</option></select></label><label>価格 <select id="tradePrice">'+(tradeKind==='original'?[8,10,12]:[5]).map(v=>'<option value="'+v+'" '+(tradePrice===v?'selected':'')+'>'+v+'C'+(v===10?'（比較基準）':'')+'</option>').join('')+'</select></label></div><div class="formrow"><label>情報 <select id="tradeFact">'+list.map(x=>'<option value="'+x.key+'">'+esc(x.label)+'</option>').join('')+'</select></label></div><div class="actions"><button data-act="trade" '+(G.done||!list.length?'disabled':'')+' class="primary">取引を提案</button></div><div class="small sub">相手の原本：'+owned(other).length+'枚 / 相手の通貨 '+other.coins+'C　｜　あなた：'+p.coins+'C</div></div><div class="warning small">重要：実物の購入でVP納付を認めるのは新たな試験条件です。取引価格を高くすると、買い手にとって通貨納付（8C→1VP）が有利になりがちです。正式レートではありません。</div><h3>取引履歴</h3><div class="cards">'+G.trades.slice(-10).reverse().map(x=>'<div class="card small">R'+x.round+'　'+G.players[x.seller].name+' → '+G.players[x.buyer].name+'　'+(x.mode==='original'?'原本':'写し')+'　'+x.price+'C<br>'+esc((G.facts[x.fact]?.title||'食料1個'))+'</div>').join('')+(G.trades.length?'':'<p class="sub">取引はまだありません。</p>')+'</div>';}
+function guideView(){return '<h2>V1-H 試作ルールと検証記録</h2><div class="cards"><div class="card"><b>今回統合した内容</b><p>8海域32島／4人／開始島は重複なしで無作為選択／開始島の本人原本1枚／開始島への初訪問報酬重複なし／別島へ初訪問すると2Cと地形原本1枚／同一島の継続調査／情報台帳の原本統合。</p></div><div class="card"><b>原本の発行・売買</b><p>本人が自力取得した事実ごとに原本1枚。発行済みの本人×事実は永久記録されます。原本売却・納付後も知識は失わず、発行元から再取得不可。写しは原本を発行しません。購入した原本実物は同じIDを移すだけです。</p></div><div class="card"><b>勝利・経済：試験数値</b><p>先着10VP / 目標到達4VP / 通貨8C→1VP / 異なる情報原本3枚→2VP。写し5C、原本実物8・10・12Cを比較。相手AIの了承基準も比較試験中。目標4VPは維持。通貨8C→1VP・勝利10VPの比較用試作。交易は別枠・任意・全域・回数無制限。</p></div><div class="card"><b>今回の除外対象</b><p>ハードモードは開発停止。高難度の天候・食料値上げ試験を本編に適用しません。別島ランダム開始原本も不採用です。</p></div></div><h3>最近の記録</h3><div class="cards">'+G.logs.slice(0,25).map(s=>'<div class="history">'+esc(s)+'</div>').join('')+'</div><div class="divider"></div><button data-act="audit">内部整合チェック</button><p class="tiny sub">試作には候補海域と取得済みのヒントを使う試験AIを搭載。人間の交渉成立率・楽しさ・正式バランスを検証したものではありません。</p>';}
+let motionGame47=null;function render(){const old=KCMotion47.capture($('main'));const snap=KCReplay47.cancel()||motionGame47!==G;motionGame47=G;if(G.testSilent)feedback49.reset();else feedback49.update(KCFeedback49.snapshot({...me(),heldOriginals:owned(me())},G.goal,[],{tradeCount:G.trades.length,notice:G.notice,round:G.round,visited:me().visited}),{snap});stats();$('goal').innerHTML=goalView();$('scores').innerHTML=scoreView();$('notice').textContent=G.notice||'航海を開始してください';$('tabs').querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));$('main').innerHTML=({sail:sailView,ledger:ledgerView,port:portView,trade:tradeView,guide:guideView}[tab])();KCMotion47.animate($('main'),old,{snap});}
+function save(){const b=new Blob([JSON.stringify(G,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='KotobaCrew_V1H_Save_v0.22_VP10_C8_R'+G.round+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);}
+function load(x){if(!x||x.version!=='v1h-0.22-vp10-c8'||!Array.isArray(x.players)||x.players.length!==4||!Array.isArray(x.originals)||x.isles?.length!==32||!x.goal||!Array.isArray(x.trades))throw Error('v0.22・勝利10VP/通貨8C版以外のセーブは読み込めません');const previous=G;G=x;const audit=selfAudit();if(!audit.ok||!audit.allStartOne){G=previous;throw Error('原本の整合性検査に失敗：'+audit.violations.join(','));}G.notice='セーブを読み込みました。';render();}
+function ensureEvents25(){if(!G.events25)G.events25={version:'v0.25-trial', trade:{active:false,start:null,end:null,pairs:[],people:[],first:false,second:false,qualified:0,noneligible:0},crisis:{active:false,start:null,end:null,pledges:{}},weatherShield:[0,0,0,0],slowUntil:0,slowStart:0,logs:[]};return G.events25;}
+const _baseReset25=reset;
+reset=function(seed){_baseReset25(seed);G.version='v1h-0.25-vp10-c8-event-trial';ensureEvents25();G.notice='v0.25試験版：交易タブから共同危機・地域交易イベントを開始できます。';render();};
+function adjacent25(a,b){if(a===b)return true;return G.edges.some(e=>{let ra=G.isles[e.a].area,rb=G.isles[e.b].area;return (ra===a&&rb===b)||(ra===b&&rb===a);});}
+function eligiblePair25(seller,buyer){if(seller.sea||buyer.sea)return false;return adjacent25(G.isles[seller.at].area,G.isles[buyer.at].area);}
+const _baseTrade25=trade;
+trade=function(actor,buyer,seller,fact,mode,price,originalId){
+  // Unrestricted ordinary trading remains untouched; qualification only after a real successful trade.
+  let ret;
+  if(mode==='food'){
+    if(!buyer||!seller||buyer===seller||!Number.isInteger(price)||price<2||price>6||buyer.coins<price||seller.food<2||G.done)return {ok:false,reason:'食料取引の条件を満たしません'};
+    if(actor.id!==0&&(buyer.id===0||seller.id===0))return {ok:false,reason:'本人の了承が必要'};
+    if(buyer.id!==actor.id&&buyer.id!==0&&buyer.food>4)return {ok:false,reason:'AIは現在食料を必要としていません'};
+    buyer.coins-=price;seller.coins+=price;seller.food--;buyer.food++;
+    G.trades.push({round:G.round,buyer:buyer.id,seller:seller.id,mode:'food',price,fact:null,originalId:null});
+    addLog(seller.name+' → '+buyer.name+'：食料1個を'+price+'Cで取引');ret={ok:true};
+  }else ret=_baseTrade25(actor,buyer,seller,fact,mode,price,originalId);
+  if(!ret.ok)return ret;
+  const e=ensureEvents25(),w=e.trade;if(!w.active||G.round>w.end)return ret;
+  buyer=G.players[buyer.id];seller=G.players[seller.id];
+  if(!eligiblePair25(seller,buyer)||!Number.isInteger(price)||(mode==='copy'?price<5:mode==='food'?price<2:price<8)){
+    w.noneligible++;e.logs.unshift('R'+G.round+'：通常交易成立・イベント条件には不該当');return ret;
+  }
+  const pair=[buyer.id,seller.id].sort((a,b)=>a-b).join('-');
+  if(w.pairs.includes(pair)){w.noneligible++;e.logs.unshift('R'+G.round+'：同じ2人の重複取引はイベント加算なし');return ret;}
+  w.pairs.push(pair);w.people=[...new Set(w.pairs.flatMap(x=>x.split('-').map(Number)))];w.qualified++;
+  e.logs.unshift('R'+G.round+'：'+pair+'の交易成立をイベントに計上');
+  if(!w.first){w.first=true;buyer.food++;seller.food++;e.logs.unshift('第1段階：取引者2人に食料1個ずつ');}
+  if(!w.second&&w.pairs.length>=2&&w.people.length>=3){w.second=true;for(const i of w.people)e.weatherShield[i]++;e.logs.unshift('第2段階：参加者に次回荒天1回の移動力軽減');}
+  return ret;
+};
+const _baseRoll25=roll;
+roll=function(p){const ok=_baseRoll25(p);if(!ok)return ok;let e=ensureEvents25();if(G.round>=e.slowStart&&G.round<=e.slowUntil)p.roll.power=Math.max(1,p.roll.power-1);
+ if(p.roll.storm&&e.weatherShield[p.id]>0){p.roll.power+=1;e.weatherShield[p.id]--;e.logs.unshift('R'+G.round+'：'+p.name+'は協力報酬で荒天減速を一部軽減');}return ok;};
+function pledge25(id,resource){let e=ensureEvents25(),c=e.crisis,p=G.players[id];if(!c.active||c.pledges[id]||G.round>c.end||G.done)return false;
+ if(resource==='food'){if(p.food<1)return false;p.food--;c.pledges[id]={type:'food',n:1};}
+ else{if(p.coins<2)return false;p.coins-=2;c.pledges[id]={type:'coin',n:2};}
+ e.logs.unshift('R'+G.round+'：'+p.name+'が協力に参加');return true;
+}
+function retract25(id){let e=ensureEvents25(),c=e.crisis,p=G.players[id],v=c.pledges[id];if(!c.active||!v)return false;if(v.type==='food')p.food+=v.n;else p.coins+=v.n;delete c.pledges[id];e.logs.unshift(p.name+'が拠出を撤回');return true;}
+function closeEvents25(){const e=ensureEvents25();let t=e.trade;if(t.active&&G.round>t.end){e.logs.unshift('地域交易イベント終了：'+t.qualified+'件／'+t.pairs.length+'組');t.active=false;}
+ let c=e.crisis;if(c.active&&G.round>c.end){let count=Object.keys(c.pledges).length;let slow=count<=1?2:count===2?1:0;
+ if(count<=1){for(const [id,v] of Object.entries(c.pledges)){if(v.type==='food')G.players[+id].food+=v.n;else G.players[+id].coins+=v.n;}}
+ if(slow){e.slowStart=G.round;e.slowUntil=G.round+slow-1;}
+ if(count===4){for(const id of Object.keys(c.pledges)){e.weatherShield[+id]++;G.players[+id].coins++;}}
+ e.logs.unshift('共同危機終了：協力'+count+'人、全員減速'+slow+'R'+(count===4?'・参加者全員に1Cと荒天防護':'') );c.active=false;}
+}
+const _finishHuman25=finishHuman;
+finishHuman=function(){_finishHuman25();closeEvents25();if(!G.testSilent)render();};
+const _originalTradeView25=tradeView;
+function eventPanel25(){const e=ensureEvents25(),t=e.trade,c=e.crisis;
+  const geo=G.players.slice(1).map(p=>'<span class="badge">'+esc(p.name)+'：'+(eligiblePair25(me(),p)?'対象地域':'対象地域外')+'</span>').join(' ');
+  let out='<div class="divider"></div><h2>イベント検証 v0.25（追加候補）</h2><div class="warning small">試験用の任意イベントです。通常交易の距離・回数・合意ルールは変わりません。報酬と発生条件は正式仕様ではありません。</div>';
+  out+='<div class="card"><b>地域交易協定（3ラウンド）</b><div class="small sub">同一／隣接海域にいる2人による実際の有償取引を計上。第1段階で取引者に食料+1、第2段階（異なる2組・3人以上）で参加者に荒天防護。形式取引・同一ペア反復は不可。</div><p class="small">'+geo+'</p>';
+  if(t.active)out+='<p class="small">開催中 R'+t.start+'〜'+t.end+'　有効取引'+t.qualified+'件／組'+t.pairs.length+'　'+(t.first?'第1段階達成':'未達')+'　'+(t.second?'第2段階達成':'第2段階未達')+'</p>';
+  else out+='<button data-event25="tradeStart" class="primary" '+(G.done?'disabled':'')+'>地域交易イベントを試験開始</button>';
+  out+='<div class="formrow"><label>食料交易（別途試験） <select id="eventFoodPartner">'+G.players.slice(1).map(p=>'<option value="'+p.id+'">'+esc(p.name)+'</option>').join('')+'</select></label><label>向き <select id="eventFoodDirection"><option value="buy">相手から食料1を2Cで買う</option><option value="sell">相手へ食料1を2Cで売る</option></select></label></div><button data-event25="foodTrade" '+(G.done?'disabled':'')+'>食料交易を提案</button>';
+  out+='</div><div class="card"><b>共同危機：段階式（2ラウンド）</b><div class="small sub">0〜1人：全員減速2R・拠出返却／2人：減速1R／3人：減速なし／4人：減速なし＋協力者全員に1Cと荒天防護。食料1か2Cを預けます。</div>';
+  if(!c.active)out+='<button data-event25="crisisStart" '+(G.done?'disabled':'')+'>共同危機を試験開始</button>';
+  else{out+='<p class="small">開催中 R'+c.start+'〜'+c.end+'　協力 '+Object.keys(c.pledges).length+'人</p>';
+    for(const p of G.players)out+='<div class="row small">'+esc(p.name)+'　'+(c.pledges[p.id]?'参加済':'未参加')+'　'+(c.pledges[p.id]?'<button data-event25="retract-'+p.id+'">撤回</button>':'<button data-event25="food-'+p.id+'" '+(p.food<1?'disabled':'')+'>食料1</button> <button data-event25="coin-'+p.id+'" '+(p.coins<2?'disabled':'')+'>2C</button>')+'</div>';
+  }
+  out+='</div><p class="small sub">※ AIへの参加ボタンは検証操作です。完成版でAIの意思決定を強制する仕様ではありません。</p><div class="card"><b>イベント履歴</b>'+e.logs.slice(0,8).map(x=>'<p class="small">'+esc(x)+'</p>').join('')+'</div>';return out;
+}
+tradeView=function(){return _originalTradeView25()+eventPanel25();};
+function handleEvent25(action){let e=ensureEvents25();if(G.done)return false;
+ if(action==='tradeStart'){if(e.trade.active)return false;e.trade={active:true,start:G.round,end:G.round+2,pairs:[],people:[],first:false,second:false,qualified:0,noneligible:0};e.logs.unshift('R'+G.round+'：地域交易イベントを試験開始');return true;}
+ if(action==='foodTrade'){
+   let idx=Number(window.__KC38_POLICY?.('eventFoodPartner')||1),other=G.players[idx],dir=window.__KC38_POLICY?.('eventFoodDirection')||'buy';
+   if(!other)return false;
+   let buyer=dir==='buy'?me():other,seller=dir==='buy'?other:me();
+   const result=trade(me(),buyer,seller,null,'food',2,null);
+   if(!result.ok)e.logs.unshift('食料交易は不成立：'+result.reason);
+   return result.ok;
+ }
+ if(action==='crisisStart'){if(e.crisis.active)return false;e.crisis={active:true,start:G.round,end:G.round+1,pledges:{}};e.logs.unshift('R'+G.round+'：共同危機を試験開始');return true;}
+ const x=action.match(/^(coin|food|retract)-(\d)$/);if(!x)return false;return x[1]==='retract'?retract25(+x[2]):pledge25(+x[2],x[1]);
+}
+const _originalSave25=save;
+save=function(){const b=new Blob([JSON.stringify(G,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='KotobaCrew_V1H_EventPilot_v0.25_R'+G.round+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);};
+load=function(x){if(!x||x.version!=='v1h-0.25-vp10-c8-event-trial'||x.players?.length!==4||x.isles?.length!==32||!x.events25||!Array.isArray(x.originals))throw Error('v0.25イベント試作以外のセーブには対応していません');const prev=G;G=x;const a=selfAudit();if(!a.ok||!a.allStartOne){G=prev;throw Error('原本整合性異常');}ensureEvents25();render();};
+window.__KC_V25={get:()=>structuredClone(G),open:handleEvent25,pledge:pledge25,retract:retract25,eligible:(seller,buyer)=>eligiblePair25(G.players[seller],G.players[buyer]),close:closeEvents25,trade:(seller,buyer,mode,fact,price,originalId)=>trade(G.players[0],G.players[buyer],G.players[seller],fact,mode,price,originalId),state:()=>structuredClone(G.events25),restart:(seed)=>reset(seed),advance:()=>{if(!G.done){if(me().roll===null)roll(me());if(!me().moved)stay(me());finishHuman();}},loadState:(x)=>load(x)};
+$('main').addEventListener('click',e=>{const b=e.target.closest('[data-event25]');if(!b)return;e.preventDefault();e.stopPropagation();handleEvent25(b.dataset.event25);render();},true);
+const QUESTS26=[
+ ['夜の海で、船に岸の位置を知らせる光の建物は？','とうだい','灯台',['燈台']],
+ ['帆船が風を受けて進むため、帆柱に張る布は？','ほ','帆',[]],
+ ['方角を調べるための、磁針のある道具は？','らしんばん','羅針盤',['コンパス']],
+ ['島と島の間を船が通る道筋を何という？','こうろ','航路',[]],
+ ['海の満ち引きに伴って生じる水の動きは？','しお','潮',['潮汐']],
+ ['港で食料や必要な物資を補充することは？','ほきゅう','補給',[]],
+ ['海上で風や波が激しくなった天気は？','あらし','嵐',['荒天']],
+ ['海図に描かれた海や陸の形を調べる行為は？','ちょうさ','調査',[]],
+ ['船が安全に停まるために設けられた場所は？','みなと','港',[]],
+ ['夜空で北の方角を知る目安になる星は？','ほっきょくせい','北極星',[]],
+ ['船員たちが共通の目的のために行う助け合いは？','きょうりょく','協力',[]],
+ ['船で別の島へ渡る旅のことは？','こうかい','航海',[]],
+ ['海で進路を決めるための地図は？','かいず','海図',[]],
+ ['遠くで海と空が接して見える線は？','すいへいせん','水平線',[]],
+ ['陸地に囲まれた小さな海の入り江は？','いりえ','入江',['入り江']],
+ ['海岸に近い水面下の浅い岩場は？','あんしょう','暗礁',[]]
+];
+function quest26(isleId){const idx=Math.floor(isleId/2);const e=QUESTS26[idx];return e?{id:'quest:'+isleId,question:e[0],reading:e[1],answer:e[2],aliases:e[3]}:null;}
+function normalized26(x){return String(x??'').normalize('NFKC').trim().replace(/[\s　]+/g,'').replace(/[ァ-ヶ]/g,ch=>String.fromCharCode(ch.charCodeAt(0)-96)).toLowerCase();}
+function questState26(p){p.questState??={};return p.questState;}
+function questStart26(p){
+ if(G.done||p.sea||!p.moved||p.portUsed||!G.isles[p.at].quest||p.questDone[p.at])return false;
+ const s=questState26(p);if(s[p.at]?.status)return false;
+ s[p.at]={status:'active',startedRound:G.round,attempts:0};p.portUsed=true;
+ addLog(p.name+'が'+G.isles[p.at].name+'の島民依頼を受注（港行動使用）。');return true;
+}
+function questSubmit26(p,answer){
+ if(G.done||p.sea||!p.moved||!G.isles[p.at].quest)return {ok:false,reason:'この港で回答できません'};
+ const state=questState26(p)[p.at],q=quest26(p.at),raw=String(answer??'');
+ if(!state||state.status!=='active'||p.questDone[p.at])return {ok:false,reason:'受注中の依頼がありません'};
+ if(!raw.trim()||raw.length>60)return {ok:false,reason:'60文字以内の回答を入力してください'};
+ const candidates=[q.reading,q.answer,...q.aliases].map(normalized26),correct=candidates.includes(normalized26(raw));
+ state.attempts=1;state.status=correct?'solved':'failed';state.finishedRound=G.round;
+ state.submitted=raw;p.questDone[p.at]=true;
+ if(correct){p.coins+=7;issue(p,'quest:'+p.at,'島民依頼の自力回答');addLog(p.name+'が島民依頼に正答。7C・本人名義の原本を取得。');}
+ else {p.coins+=3;addLog(p.name+'は島民依頼に不正答。通常報酬3Cを取得、原本なし。');}
+ return {ok:true,correct,reward:correct?7:3,original:correct};
+}
+function questPanel26(){
+ const p=me(),i=G.isles[p.at],s=questState26(p)[p.at];let out='<div class="card"><b>島民依頼（語句入力の統合検証）</b>';
+ if(!i.quest){out+='<p class="small sub">この島に依頼はありません。</p>';}
+ else if(p.questDone[p.at]){out+='<p class="small sub">この依頼は'+(s?.status==='solved'?'解決済み':'終了済み')+'です。原本の再取得はできません。</p>';}
+ else if(s?.status==='active'){
+   out+='<p class="small">'+esc(quest26(p.at).question)+'</p>';
+   out+='<div class="formrow"><label>答え（漢字／かな）<input id="questAnswer26" maxlength="60" autocomplete="off" placeholder="言葉を入力"></label>';
+   out+='<button data-act="questSubmit26" '+(!p.moved||p.sea||G.done?'disabled':'')+' class="primary">回答を確定</button></div>';
+   out+='<p class="tiny sub">受注時に港行動を1回使用。回答は1回のみ。不正答なら3C、正答なら7C＋原本。依頼を受けた島で回答できます。試験値です。</p>';
+ }else{
+   out+='<p class="small sub">受注後、表示される言葉の問題に1回答えます。成功・失敗を自分で指定するボタンはありません。</p>';
+   out+='<button data-act="questStart26" '+(!canPort(p)?'disabled':'')+'>依頼を受注（港行動1回）</button>';
+ }
+ return out+'</div>';
+}
+function projectForClient26(playerId){
+ const p=G.players[playerId];if(!p)throw Error('unknown player');
+ const g=G.goal;const target=G.isles[g.target],hints={};
+ if(p.goalHint>=1)hints.terrain=target.terrain;if(p.goalHint>=2)hints.mark=target.mark;
+ return {
+  protocol:'kc-private-view-0.26', round:G.round,done:G.done,winner:G.done?G.winner:null,
+  turn:G.onlinePilot26?{activeSeat:G.onlinePilot26.activeSeat,nextSeq:G.onlinePilot26.seqs[p.id]+1}:null,
+  researchChoices:(!p.sea?factTargets(p).map(id=>({id,title:G.facts[id].title})):[]),
+  canPort:canPort(p),questAvailable:!p.sea&&!!G.isles[p.at].quest&&!p.questDone[p.at],
+  me:{id:p.id,at:p.at,sea:p.sea?{...p.sea}:null,moved:p.moved,roll:p.roll?{...p.roll}:null,coins:p.coins,food:p.food,vp:p.vp,portUsed:p.portUsed,
+      known:Object.keys(p.known).map(id=>({id,title:G.facts[id].title,description:G.facts[id].description})),
+      heldOriginals:owned(p).map(o=>({id:o.id,fact:o.fact,issuer:o.issuer})),
+      ownIssueIds:Object.keys(p.issued),questState:structuredClone(p.questState||{})},
+  others:G.players.filter(x=>x.id!==p.id).map(x=>({id:x.id,name:x.name,vp:x.vp,at:x.at,sea:x.sea?{from:x.sea.from,to:x.sea.to}:null})),
+  map:G.isles.map(x=>({id:x.id,name:x.name,area:x.area,x:x.x,y:x.y,hasQuest:x.quest})),
+  routes:G.edges.map(e=>({a:e.a,b:e.b})),
+  goal:{id:g.id,regions:[...g.regions],hintCount:p.goalHint,hints},
+  activeQuest:!p.sea&&questState26(p)[p.at]?.status==='active'?{isle:p.at,question:quest26(p.at).question}:null,
+  events:G.events25?{trade:{active:G.events25.trade.active,start:G.events25.trade.start,end:G.events25.trade.end},
+     crisis:{active:G.events25.crisis.active,start:G.events25.crisis.start,end:G.events25.crisis.end,pledgedCount:Object.keys(G.events25.crisis.pledges).length}}:null
+ };
+}
+function audit26(){const base=selfAudit(),fail=[...base.violations];for(const p of G.players){for(const [id,s] of Object.entries(p.questState||{})){
+ const isle=G.isles[Number(id)];if(!isle||!isle.quest||!['active','solved','failed'].includes(s.status))fail.push('invalid quest state');
+ if(p.questDone[id]&&s.status==='active')fail.push('completed quest still active');
+ if(s.status==='solved'&&!p.issued['quest:'+id])fail.push('solved quest has no original issue');
+ if(s.status==='failed'&&p.issued['quest:'+id])fail.push('failed quest issued original');
+ }}return {ok:fail.length===0,violations:fail,originals:base.issued};}
+const _reset26=reset;
+reset=function(seed){_reset26(seed);G.version='v1h-0.26-vp10-c8-quest-trial';for(const p of G.players)p.questState={};render();};
+const _load26base=load;
+load=function(x){
+ if(!x||!['v1h-0.25-vp10-c8-event-trial','v1h-0.26-vp10-c8-quest-trial'].includes(x.version))throw Error('v0.25/0.26以外のセーブは読み込めません');
+ const prev=G;try{const obj=structuredClone(x);obj.version='v1h-0.25-vp10-c8-event-trial';_load26base(obj);
+ for(const p of G.players)p.questState??={};G.version='v1h-0.26-vp10-c8-quest-trial';const a=audit26();if(!a.ok)throw Error('依頼状態の検査エラー：'+a.violations.join(','));render();}
+ catch(e){G=prev;render();throw e;}
+};
+save=function(){const b=new Blob([JSON.stringify(G,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='KotobaCrew_V1H_Save_v0.26_R'+G.round+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);};
+function hostInit26(seed){reset(seed);G.onlinePilot26={activeSeat:0,seqs:[0,0,0,0],completedTurns:0};return true;}
+function hostCommand26(id,seq,command,arg){
+ const pilot=G.onlinePilot26;
+ const denied=reason=>({ok:false,reason,round:G.round,activeSeat:pilot?.activeSeat??null});
+ if(!pilot||G.done||!Number.isInteger(id)||id<0||id>=4)return denied('無効なホスト状態または対戦終了');
+ if(!Number.isInteger(seq)||seq!==pilot.seqs[id]+1)return denied('シーケンスが重複または不連続');
+ if(pilot.activeSeat!==id)return denied('あなたの手番ではありません');
+ const p=G.players[id];let ok=false;
+ if(command==='roll')ok=roll(p);
+ else if(command==='stay')ok=stay(p);
+ else if(command==='sail')ok=Number.isInteger(arg?.to)&&travel(p,arg.to);
+ else if(command==='port'){
+   const kind=arg?.type;
+   if(['research','work','food','goalHint','coinVP','infoVP','language28'].includes(kind))ok=portAction(p,kind,arg?.value);
+ }else if(command==='questStart')ok=questStart26(p);
+ else if(command==='questAnswer')ok=questSubmit26(p,arg?.answer).ok;
+ else if(command==='end'){
+   if(p.moved){p.turn++;pilot.completedTurns++;pilot.activeSeat=(id+1)%4;
+     const next=G.players[pilot.activeSeat];next.roll=null;next.moved=false;next.portUsed=false;
+     if(pilot.activeSeat===0){G.round++;closeEvents25();}ok=true;}
+ }
+ if(!ok)return denied('コマンド条件を満たしません');
+ pilot.seqs[id]=seq;
+ return {ok:true,round:G.round,activeSeat:pilot.activeSeat,nextSeq:seq+1};
+}
+window.__KC_V26={reset:(seed)=>reset(seed),hostInit:hostInit26,hostCommand:hostCommand26,get:()=>structuredClone(G),getQuest:(i)=>quest26(i),start:(id)=>questStart26(G.players[id]),submit:(id,s)=>questSubmit26(G.players[id],s),
+ project:projectForClient26,normalize:normalized26,audit:audit26,loadState:(x)=>load(x),saveState:()=>structuredClone(G),
+ advance:()=>{if(!G.done){if(me().roll===null)roll(me());if(!me().moved)stay(me());finishHuman();}},
+ setQuestReady:(id)=>{let p=G.players[id];p.roll={value:1,storm:false,power:1};p.moved=true;p.portUsed=false;}};
+const GOAL_WORDS27=[
+ ['灯台','夜の海で船に陸地の位置を知らせる光の塔は？'],
+ ['羅針盤','磁針を使って方角を調べる道具は？'],
+ ['帆','風を受け、船を進ませるために張る布は？'],
+ ['錨','海底に下ろして船を一か所に留める道具は？'],
+ ['海図','航路や海岸線を示す海の地図は？'],
+ ['海峡','陸地に挟まれた狭い海の通路は？'],
+ ['港','船が立ち寄り、荷物の積み下ろしをする場所は？'],
+ ['暗礁','水面下に潜み、船の航行を妨げる浅い岩場は？'],
+ ['潮','海水の満ち引きを表す一文字の言葉は？'],
+ ['入江','陸地の内側へ湾曲して入り込んだ水域は？'],
+ ['砂州','砂が細長く堆積してできる地形は？'],
+ ['岬','海へ突き出た陸地の先端は？'],
+ ['岩礁','岩が海面近くまで続く浅い場所は？'],
+ ['舵','船の進行方向を変える装置は？'],
+ ['甲板','船の上に設けられた平らな床は？'],
+ ['船倉','船内で荷物を保管する場所は？'],
+ ['満潮','潮が満ち、海面が最も高くなる状態は？'],
+ ['干潮','潮が引き、海面が最も低くなる状態は？'],
+ ['霧笛','霧の中で自分の位置を知らせる船の音は？'],
+ ['航海','船に乗って海を渡る旅は？'],
+ ['水平線','遠くの海面と空が接して見える境目は？'],
+ ['漂流','進路を制御できず海上を流されることは？'],
+ ['船首','船の前側の先端部分は？'],
+ ['船尾','船の後ろ側の端の部分は？'],
+ ['追い風','船の進む方向へ背後から吹く風は？'],
+ ['向かい風','船の進行方向の正面から吹く風は？'],
+ ['海流','海中で広い範囲にわたり続く水の流れは？'],
+ ['星図','星の位置や配置を記した図は？'],
+ ['双眼鏡','両目で遠いものを拡大して見る道具は？'],
+ ['緯度','赤道からの南北の位置を示す角度は？'],
+ ['経度','本初子午線を基準に東西の位置を示す角度は？'],
+ ['群島','複数の島々がまとまって存在する地形は？']
+];
+function goalWordData27(isle){return GOAL_WORDS27[isle]||null;}
+function goalArrival27(p,origin,id){
+ if(G.goal.target!==id)return false;
+ const valid=origin!==id&&neighbors(origin).some(x=>x.to===id);
+ if(!valid)return false;
+ const old=p.pendingGoal27;
+ if(old&&old.goalId===G.goal.id&&old.isle===id)return true;
+ p.pendingGoal27={goalId:G.goal.id,isle:id,from:origin,landedRound:G.round,lastAttemptRound:null,attempts:0};
+ addLog(p.name+'が目標候補の島に到着。固有語への正答で初めて到達VPを獲得できます。');
+ return true;
+}
+function goalChallenge27(p){
+ const c=p.pendingGoal27;
+ if(!c||c.goalId!==G.goal.id||c.isle!==G.goal.target||p.sea||p.at!==c.isle)return null;
+ const word=goalWordData27(c.isle);
+ return {id:c.goalId,isle:c.isle,question:word[1],attempts:c.attempts,canAnswer:!G.done&&p.moved&&c.lastAttemptRound!==G.round};
+}
+function goalSubmit27(p,answer){
+ const c=goalChallenge27(p);if(!c||!c.canAnswer)return {ok:false,reason:'現在は固有語に回答できません'};
+ if(typeof answer!=='string'||!answer.trim()||answer.length>60)return {ok:false,reason:'1〜60文字の回答が必要です'};
+ const pending=p.pendingGoal27;pending.attempts++;pending.lastAttemptRound=G.round;
+ const canonical=goalWordData27(c.isle)[0],correct=normalized26(answer)===normalized26(canonical);
+ if(!correct){addLog(p.name+'は固有語に不正答。次の本人手番に再挑戦できます。');return {ok:true,correct:false};}
+ p.pendingGoal27=null;p.vp+=GOAL_VP;p.vpSources.goal+=GOAL_VP;p.goals++;
+ addLog(p.name+'が固有語に正答。目標島二重到達成功：+'+GOAL_VP+'VP。');
+ if(!winCheck())issueGoal();
+ return {ok:true,correct:true,won:G.done};
+}
+function aiGoalAnswer27(p){
+ const c=goalChallenge27(p);if(!c||!c.canAnswer)return false;
+ return goalSubmit27(p,rand()<0.8?goalWordData27(c.isle)[0]:'???').ok;
+}
+const _issueGoal27=issueGoal;
+issueGoal=function(){_issueGoal27();for(const p of G.players)p.pendingGoal27=null;};
+const _reset27=reset;
+reset=function(seed){_reset27(seed);G.version='v1h-0.27-vp10-c8-goal-word';for(const p of G.players)p.pendingGoal27=null;G.goalWordVersion=1;render();};
+const _travel27=travel;
+travel=function(p,to){const previous=p.pendingGoal27;const oldAt=p.at;const result=_travel27(p,to);
+ if(result&&previous&&p.pendingGoal27===previous&&(p.sea||p.at!==oldAt))p.pendingGoal27=null;
+ return result;};
+const _load27=load;
+load=function(x){if(!x||!['v1h-0.26-vp10-c8-quest-trial','v1h-0.27-vp10-c8-goal-word'].includes(x.version))throw Error('v0.26以降のセーブ形式に対応');
+ const prior=G;try{const data=structuredClone(x);data.version='v1h-0.26-vp10-c8-quest-trial';_load27(data);
+   for(const p of G.players)p.pendingGoal27??=null;G.version='v1h-0.27-vp10-c8-goal-word';G.goalWordVersion=1;
+   const a=audit27();if(!a.ok)throw Error('目標到達状態が不正：'+a.violations.join(','));render();}
+ catch(e){G=prior;render();throw e;}};
+save=function(){const b=new Blob([JSON.stringify(G,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='KotobaCrew_V1H_Save_v0.27_R'+G.round+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);};
+function goalChallengePanel27(p){const c=goalChallenge27(p);if(!c)return '';
+ return '<div class="card"><b>目標島の固有語（到達第2条件）</b><p class="small sub">航路でこの島へ到着しました。正答した場合のみ+'+GOAL_VP+'VP。回答は本人手番につき1回、港行動は消費しません。</p><p>'+esc(c.question)+'</p><div class="formrow"><input id="goalAnswer27" placeholder="固有語を入力" maxlength="60" aria-label="目標島の固有語"><button class="primary" data-act="goalSubmit27" '+(!c.canAnswer?'disabled':'')+'>固有語を回答</button></div>'+(c.canAnswer?'':'<div class="small sub">次の自分の手番に再挑戦できます。</div>')+'</div>';
+}
+const _goalView27=goalView;
+goalView=function(){const p=me(),c=goalChallenge27(p);return _goalView27()+(c?'<p class="small">到着済み。航海タブで固有語の回答が必要です。</p>':'');};
+const _projectForClient27=projectForClient26;
+function projectForClient27(id){const v=_projectForClient27(id),p=G.players[id],c=goalChallenge27(p);
+ v.protocol='kc-private-view-0.27';v.goalChallenge=c;
+ return v;}
+function audit27(){const a=audit26(),violations=[...a.violations];
+ for(const p of G.players){const c=p.pendingGoal27;if(!c)continue;
+ if(c.goalId!==G.goal.id||c.isle!==G.goal.target||p.at!==c.isle||p.sea)violations.push('orphan pending word challenge');
+ if(c.from===c.isle||!neighbors(c.from).some(x=>x.to===c.isle))violations.push('challenge without valid voyage edge');
+ if(c.attempts<0||!Number.isInteger(c.attempts)||c.lastAttemptRound!==null&&!Number.isInteger(c.lastAttemptRound))violations.push('invalid challenge attempts');
+ }
+ return {ok:violations.length===0,violations,originals:a.originals};}
+const _hostInit27=hostInit26;
+function hostInit27(seed){_hostInit27(seed);return true;}
+const _hostCommand27=hostCommand26;
+function hostCommand27(id,seq,command,arg){if(command!=='goalAnswer')return _hostCommand27(id,seq,command,arg);
+ const pilot=G.onlinePilot26;
+ const denied=reason=>({ok:false,reason,round:G.round,activeSeat:pilot?.activeSeat??null});
+ if(!pilot||G.done||!Number.isInteger(id)||id<0||id>=4)return denied('無効なホスト状態');
+ if(!Number.isInteger(seq)||seq!==pilot.seqs[id]+1)return denied('シーケンスが重複または不連続');
+ if(pilot.activeSeat!==id)return denied('あなたの手番ではありません');
+ const out=goalSubmit27(G.players[id],arg?.answer);if(!out.ok)return denied(out.reason);
+ pilot.seqs[id]=seq;
+ return {ok:true,correct:out.correct,round:G.round,activeSeat:pilot.activeSeat,nextSeq:seq+1};
+}
+window.__KC_V27={reset:(seed)=>reset(seed),hostInit:hostInit27,hostCommand:hostCommand27,get:()=>structuredClone(G),
+ project:projectForClient27,goalChallenge:(id)=>goalChallenge27(G.players[id]),answer:(id,word)=>goalSubmit27(G.players[id],word),
+ goalWord:(isle)=>goalWordData27(isle),audit:audit27,loadState:(x)=>load(x),saveState:()=>structuredClone(G),
+ getQuest:(i)=>quest26(i),startQuest:(id)=>questStart26(G.players[id]),submitQuest:(id,w)=>questSubmit26(G.players[id],w),
+ setGoalForTest:(isle,seat)=>{ // QA-only method, NOT exposed in the network API
+  const p=G.players[seat];G.goal.target=isle;G.goal.regions=[G.isles[isle].area,(G.isles[isle].area+1)%8].sort((a,b)=>a-b);
+  for(const x of G.players)x.pendingGoal27=null;p.goalHint=0;return true;},
+ arriveForTest:(id,to)=>arrive(G.players[id],to),playerForTest:(id)=>G.players[id],
+ rate:{VP_LIMIT,GOAL_VP,INFO_RATE,INFO_GAIN,COIN_RATE}};
+const LANG_COST28=2, TRANSLATE_COST28=3, HINT_COSTS28=[3,4];
+function knowsLanguage28(p){return !!p.languages28?.[G.isles[p.at].area];}
+function ensureLanguage28(p){p.languages28??={};return p.languages28;}
+const _portAction28=portAction;
+portAction=function(p,type,arg){
+ if(type!=='language28')return _portAction28(p,type,arg);
+ if(!canPort(p)||knowsLanguage28(p)||p.coins<LANG_COST28)return false;
+ p.coins-=LANG_COST28;ensureLanguage28(p)[G.isles[p.at].area]=true;p.portUsed=true;
+ addLog(p.name+'が'+REGION[G.isles[p.at].area]+'の言語を'+LANG_COST28+'Cで習得（港行動使用）。');return true;
+};
+const _questStart28=questStart26;
+questStart26=function(p){const ok=_questStart28(p);if(ok){const s=questState26(p)[p.at];s.translated=knowsLanguage28(p);s.hints28=0;}return ok;};
+function questReadable28(p){const s=questState26(p)[p.at];return !!(s?.translated||knowsLanguage28(p));}
+function questTranslate28(p){
+ const s=questState26(p)[p.at];if(G.done||p.sea||!p.moved||!s||s.status!=='active'||questReadable28(p)||p.coins<TRANSLATE_COST28)return false;
+ p.coins-=TRANSLATE_COST28;s.translated=true;addLog(p.name+'が島民依頼を'+TRANSLATE_COST28+'Cで翻訳した。');return true;
+}
+function questHint28(p){
+ const s=questState26(p)[p.at];if(G.done||p.sea||!p.moved||!s||s.status!=='active'||!questReadable28(p))return false;
+ const n=s.hints28||0;if(n>=2||p.coins<HINT_COSTS28[n])return false;
+ p.coins-=HINT_COSTS28[n];s.hints28=n+1;addLog(p.name+'が島民依頼の追加ヒント'+(n+1)+'を取得（'+HINT_COSTS28[n]+'C）。');return true;
+}
+function questHints28(p){
+ const s=questState26(p)[p.at],q=quest26(p.at);if(!s||!q||!questReadable28(p))return [];
+ const n=s.hints28||0;const hints=[];
+ if(n>=1)hints.push('読みの文字数：'+normalized26(q.reading).length+'文字');
+ if(n>=2)hints.push('読みの先頭：'+normalized26(q.reading).slice(0,1));
+ return hints;
+}
+const _questSubmit28=questSubmit26;
+questSubmit26=function(p,answer){if(!questReadable28(p))return {ok:false,reason:'まず言語を習得するか、問題を翻訳してください'};return _questSubmit28(p,answer);};
+questPanel26=function(){
+ const p=me(),i=G.isles[p.at],s=questState26(p)[p.at],fluent=knowsLanguage28(p);let out='<div class="card"><b>島民依頼（段階式ヒント・試験）</b>';
+ if(!i.quest)out+='<p class="small sub">この島に依頼はありません。</p>';
+ else if(p.questDone[p.at])out+='<p class="small sub">この依頼は'+(s?.status==='solved'?'解決済み':'終了済み')+'。再取得はできません。</p>';
+ else if(s?.status==='active'){
+  if(!questReadable28(p))out+='<p class="small sub">この海域の言語を未習得のため、問題文を読めません。翻訳（3C）するか、次の港行動で言語を習得してください。</p><button data-act="questTranslate28" '+(p.coins<3||!p.moved||G.done?'disabled':'')+'>この問題を3Cで翻訳</button>';
+  else{out+='<p class="small">'+esc(quest26(p.at).question)+'</p>';
+   const hints=questHints28(p);for(let j=0;j<hints.length;j++)out+='<p class="small sub">ヒント'+(j+1)+'：'+esc(hints[j])+'</p>';
+   const n=s.hints28||0;if(n<2)out+='<button data-act="questHint28" '+(p.coins<HINT_COSTS28[n]||!p.moved||G.done?'disabled':'')+'>追加ヒント'+(n+1)+'を'+HINT_COSTS28[n]+'Cで得る</button>';
+   out+='<div class="formrow"><input id="questAnswer26" maxlength="60" autocomplete="off" aria-label="島民依頼の答え" placeholder="言葉を入力"><button data-act="questSubmit26" class="primary" '+(!p.moved||p.sea||G.done?'disabled':'')+'>回答する（1回のみ）</button></div>';}
+  out+='<p class="tiny sub">受注に港行動1回。翻訳・追加ヒント・回答は港行動を消費しません。正答7Cと原本、誤答3C（いずれも試験値）。</p>';
+ }else{out+='<p class="small sub">'+(fluent?'習得済み言語の依頼です。':'未習得でも受注可能ですが、問題文の翻訳が必要です。')+'</p><button data-act="questStart26" '+(!canPort(p)?'disabled':'')+'>依頼を受注（港行動1回）</button>';}
+ return out+'</div>';
+};
+const _portView28=portView;
+portView=function(){const p=me(),r=G.isles[p.at].area,known=knowsLanguage28(p),html=_portView28();
+ const card='<div class="card"><b>海域言語：'+esc(REGION[r])+'</b><p class="small sub">'+(known?'この海域の言語は習得済み。島民依頼の問題文を読めます。':'未習得：現地の港行動1回と'+LANG_COST28+'Cで永続習得。翻訳より長期的に利用できます。')+'</p>'+(known?'':'<button data-port="language28" '+(!canPort(p)||p.coins<LANG_COST28?'disabled':'')+'>2Cで言語を習得</button>')+'</div>';
+ return html.replace('<div class="cards">','<div class="cards">'+card);
+};
+const _reset28=reset;
+reset=function(seed){_reset28(seed);for(const p of G.players){p.languages28={};}G.version='v1h-0.28-vp10-c8-language-quest';G.languageQuestVersion=1;render();};
+const _load28=load;
+load=function(x){if(!x||!['v1h-0.27-vp10-c8-goal-word','v1h-0.28-vp10-c8-language-quest'].includes(x.version))throw Error('v0.27以降のセーブが必要です');
+ const old=G;try{const y=structuredClone(x),isOld=y.version!=='v1h-0.28-vp10-c8-language-quest';y.version='v1h-0.27-vp10-c8-goal-word';_load28(y);
+  for(const p of G.players){p.languages28??={};for(const s of Object.values(p.questState||{})){if(s.status==='active'&&isOld)s.translated=true;s.hints28??=0;}}
+  G.version='v1h-0.28-vp10-c8-language-quest';G.languageQuestVersion=1;
+  const a=audit28();if(!a.ok)throw Error('言語・依頼の状態不正：'+a.violations.join(','));render();
+ }catch(e){G=old;render();throw e;}
+};
+save=function(){const b=new Blob([JSON.stringify(G,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='KotobaCrew_V1H_Save_v0.28_R'+G.round+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);};
+const _projectForClient28=projectForClient27;
+function projectForClient28(id){const v=_projectForClient28(id),p=G.players[id],s=questState26(p)[p.at];
+ v.protocol='kc-private-view-0.28';v.me.languages=Object.keys(ensureLanguage28(p)).map(Number).filter(r=>p.languages28[r]);
+ v.language={region:G.isles[p.at].area,name:REGION[G.isles[p.at].area],learned:knowsLanguage28(p),cost:LANG_COST28,canLearn:canPort(p)&&!knowsLanguage28(p)&&p.coins>=LANG_COST28};
+ if(v.activeQuest){v.activeQuest={isle:p.at,question:questReadable28(p)?quest26(p.at).question:null,readable:questReadable28(p),hints:questHints28(p),hintCount:s.hints28||0,canTranslate:!questReadable28(p)&&p.coins>=TRANSLATE_COST28,canHint:questReadable28(p)&&(s.hints28||0)<2&&p.coins>=HINT_COSTS28[s.hints28||0],nextHintCost:HINT_COSTS28[s.hints28||0]??null};}
+ return v;
+}
+function audit28(){const a=audit27(),f=[...a.violations];for(const p of G.players){
+ if(!p.languages28||Object.entries(p.languages28).some(([id,v])=>!/^\d+$/.test(id)||+id<0||+id>=8||v!==true))f.push('invalid language ledger');
+ for(const s of Object.values(p.questState||{})){if(s.hints28!==undefined&&(!Number.isInteger(s.hints28)||s.hints28<0||s.hints28>2))f.push('invalid quest hints');if(s.translated!==undefined&&typeof s.translated!=='boolean')f.push('invalid translation');}
+ }return {ok:f.length===0,violations:f,originals:a.originals};}
+const _hostCommand28=hostCommand27;
+function hostCommand28(id,seq,command,arg){if(command!=='questTranslate28'&&command!=='questHint28')return _hostCommand28(id,seq,command,arg);
+ const pilot=G.onlinePilot26;const denied=reason=>({ok:false,reason,round:G.round,activeSeat:pilot?.activeSeat??null});
+ if(!pilot||G.done||!Number.isInteger(id)||id<0||id>=4||pilot.activeSeat!==id)return denied('手番外操作は禁止');
+ if(!Number.isInteger(seq)||seq!==pilot.seqs[id]+1)return denied('不正なシーケンス');
+ const ok=command==='questTranslate28'?questTranslate28(G.players[id]):questHint28(G.players[id]);
+ if(!ok)return denied('未受注・資源不足・ヒント上限などの条件を満たしません');
+ pilot.seqs[id]=seq;return {ok:true,round:G.round,activeSeat:pilot.activeSeat,nextSeq:seq+1};
+}
+window.__KC_V28={reset:(seed)=>reset(seed),hostInit:hostInit27,hostCommand:hostCommand28,project:projectForClient28,get:()=>structuredClone(G),saveState:()=>structuredClone(G),loadState:x=>load(x),audit:audit28,
+ getQuest:i=>quest26(i),getLanguage:id=>({...ensureLanguage28(G.players[id])}),learnLanguage:id=>portAction(G.players[id],'language28'),startQuest:id=>questStart26(G.players[id]),translateQuest:id=>questTranslate28(G.players[id]),hintQuest:id=>questHint28(G.players[id]),submitQuest:(id,ans)=>questSubmit26(G.players[id],ans),playerForTest:id=>G.players[id],rates:{LANG_COST28,TRANSLATE_COST28,HINT_COSTS28}};
+$('main').addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b||!['questTranslate28','questHint28'].includes(b.dataset.act))return;e.preventDefault();e.stopPropagation();
+ const ok=b.dataset.act==='questTranslate28'?questTranslate28(me()):questHint28(me());if(!ok)addLog('翻訳・ヒント取得条件を満たしません');render();},true);
+$('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;tab=b.dataset.tab;render()});
+$('newGame').addEventListener('click',()=>reset((Date.now()>>>0)||20261124));
+$('saveGame').addEventListener('click',save);
+$('loadGame').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;try{load(JSON.parse(await f.text()))}catch(err){alert('読込不可：'+err.message)}e.target.value='';});
+$('main').addEventListener('click',e=>{let b=e.target.closest('button');if(!b)return;
+ if(b.dataset.sail!==undefined){travel(me(),Number(b.dataset.sail));render();return;}
+ if(b.dataset.port){let a=b.dataset.port;portAction(me(),a);render();return;}
+ switch(b.dataset.act){case 'goalSubmit27':{const a=goalSubmit27(me(),$('goalAnswer27')?.value);if(!a.ok)addLog('固有語回答できません：'+a.reason);break;}case 'questStart26':questStart26(me());break;case 'questSubmit26':{const r=questSubmit26(me(),$('questAnswer26')?.value);if(!r.ok)addLog('依頼回答できません：'+r.reason);break;}case 'roll':roll(me());break;case 'stay':stay(me());break;case 'end':finishHuman();return;case 'survey':portAction(me(),'research',$('surveyFact')?.value);break;case 'redeem':{const ids=Array.from($('main').querySelectorAll('[data-redeem]:checked')).map(x=>x.dataset.redeem);if(ids.length!==3){addLog('異なる事実の原本を3枚選択してください。');break;}if(!portAction(me(),'infoVP',ids))addLog('同じ事実の原本や、所有していない原本は納付できません。');break;}
+ case 'history':historyVisible=!historyVisible;break;
+ case 'audit':{const z=selfAudit();addLog(z.ok?'原本整合性PASS：発行'+z.issued+' / 保有'+z.held+' / 納付'+z.redeemed:'整合性異常：'+z.violations.join(','));break;}
+ case 'trade':{const other=G.players[tradeTarget],dir=tradeDirection,sel=$('tradeFact')?.value,buyer=dir==='buy'?me():other,seller=dir==='sell'?me():other;const o=tradeKind==='original'?findOriginal(sel):null;const fid=o?.fact||sel;if(!fid){addLog('取引できる情報がありません。');break;}const result=trade(me(),buyer,seller,fid,tradeKind,tradePrice,o?.id);if(!result.ok)addLog('交易不成立：'+result.reason);break;}
+ }render();});
+$('main').addEventListener('change',e=>{const x=e.target;if(x.id==='kindFilter'){kindFilter=x.value;render()}if(x.id==='partner'){tradeTarget=Number(x.value);render()}if(x.id==='tradeType'){tradeKind=x.value;tradePrice=tradeKind==='original'?ORIGINAL_PRICE:COPY_PRICE;render()}if(x.id==='tradeDirection'){tradeDirection=x.value;render()}if(x.id==='tradePrice'){tradePrice=Number(x.value);render()}if(x.dataset.redeem){selected=Array.from($('main').querySelectorAll('[data-redeem]:checked')).map(y=>y.dataset.redeem);}});
+$('main').addEventListener('input',e=>{if(e.target.id==='search'){const field=e.target;const st=field.selectionStart;query=field.value;render();const newField=$('search');newField?.focus();newField?.setSelectionRange(st,st)}});
+window.__KC_TEST={issueByPlayer:(id,fact,source='検証用自力取得')=>issue(G.players[id],fact,source),arriveByPlayer:(id,dest)=>arrive(G.players[id],dest),fastAutoTrial,getState:()=>structuredClone(G),getPlayerRef:(id)=>G.players[id],reset,learn,issue,arrive,roll,travel,stay,portAction,trade,findOriginal,owned,canRedeem,selfAudit,load,finishHuman,render,debugAdvance:()=>{if(!G.done){if(me().roll===null)roll(me());if(!me().moved)stay(me());finishHuman();}},setTab:x=>{tab=x;render()},setTradeConfig:(x)=>{tradeKind=x.kind||tradeKind;tradeDirection=x.direction||tradeDirection;tradeTarget=x.target||tradeTarget;tradePrice=x.price||tradePrice;render()},rates:{VP_LIMIT,COIN_RATE,INFO_RATE,INFO_GAIN,GOAL_VP,COPY_PRICE,ORIGINAL_PRICE}};
+const TRADE29_VERSION='v1h-0.29-vp10-c8-online-offers';
+function ensureTrade29(){if(!G.trade29)G.trade29={next:1,offers:[],history:[]};return G.trade29;}
+function tradeFind29(id){return ensureTrade29().offers.find(o=>o.id===id);}
+function tradePublic29(o){return {id:o.id,sender:o.sender,recipient:o.recipient,buyer:o.buyer,seller:o.seller,mode:o.mode,price:o.price,fact:o.fact,originalId:o.originalId,foodQty:o.mode==='food'?1:0,
+ title:o.mode==='food'?'食料1個':G.facts[o.fact]?.title||'不明な情報',createdRound:o.createdRound,expiresAfterRound:o.expiresAfterRound,status:o.status,closedRound:o.closedRound??null};}
+function releaseOffer29(o,reason){if(!o||o.status!=='pending')return false;
+ const s=G.players[o.seller];
+ if(o.mode==='original'){const orig=findOriginal(o.originalId);if(!orig||orig.status!=='escrow'||orig.owner!==s.id)throw Error('原本エスクロー異常');orig.status='held';orig.events.push({round:G.round,type:'offerReleased',reason});}
+ if(o.mode==='food')s.food+=1;
+ o.status=reason;o.closedRound=G.round;ensureTrade29().history.push({id:o.id,status:reason,round:G.round});
+ return true;}
+function expireOffers29(){const t=ensureTrade29();for(const o of t.offers){if(o.status==='pending'&&(G.done||G.round>o.expiresAfterRound))releaseOffer29(o,G.done?'gameEnded':'expired');}}
+function offer29(sender,recipient,mode,price,fact,originalId){expireOffers29();const t=ensureTrade29();const seller=G.players[sender],buyer=G.players[recipient];
+ if(G.done||!seller||!buyer||seller===buyer)return {ok:false,reason:'宛先または対戦状態が不正'};
+ if(!['original','copy','food'].includes(mode)||!Number.isInteger(price)||price<0||price>200)return {ok:false,reason:'取引条件が不正'};
+ if(t.offers.filter(x=>x.status==='pending'&&x.sender===sender).length>=3||t.offers.filter(x=>x.status==='pending').length>=12)return {ok:false,reason:'保留中の提案が上限に達しました'};
+ let reserved=null;
+ if(mode==='original'){
+  const o=findOriginal(originalId);
+  if(!o||o.status!=='held'||o.owner!==seller.id||o.fact!==fact)return {ok:false,reason:'保有している原本のみ提案できます'};
+  o.status='escrow';o.events.push({round:G.round,type:'offerReserved',actor:sender});reserved={kind:'original',id:o.id};
+ }else if(mode==='copy'){
+  if(typeof fact!=='string'||!seller.known[fact]||buyer.known[fact])return {ok:false,reason:'既知情報の重複や未所持情報は提案できません'};
+ }else{
+  if(seller.food<1)return {ok:false,reason:'食料が不足しています'};
+  seller.food-=1;reserved={kind:'food',qty:1};fact=null;originalId=null;
+ }
+ const offer={id:'TX-'+String(t.next++).padStart(6,'0'),sender,recipient,buyer:recipient,seller:sender,mode,price,fact,originalId:mode==='original'?originalId:null,
+ reserved,createdRound:G.round,expiresAfterRound:G.round+2,status:'pending'};
+ t.offers.push(offer);
+ return {ok:true,offer:tradePublic29(offer)};
+}
+function acceptOffer29(recipient,id){expireOffers29();const o=tradeFind29(id);
+ if(!o||o.status!=='pending'||o.recipient!==recipient)return {ok:false,reason:'承諾できる提案がありません'};
+ const buyer=G.players[o.buyer],seller=G.players[o.seller];
+ if(buyer.coins<o.price)return {ok:false,reason:'買い手の通貨が不足しています'};
+ if(o.mode==='copy'&&(!seller.known[o.fact]||buyer.known[o.fact])){releaseOffer29(o,'invalidated');return {ok:false,reason:'情報の保有状態が変わりました'};}
+ let orig=null;
+ if(o.mode==='original'){
+  orig=findOriginal(o.originalId);if(!orig||orig.status!=='escrow'||orig.owner!==seller.id||orig.fact!==o.fact){releaseOffer29(o,'invalidated');return {ok:false,reason:'原本の状態が変わりました'};}
+ }
+ // No async/await between validation and settlement: atomic in the single-threaded host.
+ buyer.coins-=o.price;seller.coins+=o.price;
+ if(o.mode==='original'){
+  orig.status='held';orig.owner=buyer.id;orig.events.push({round:G.round,type:'transfer',from:seller.id,to:buyer.id,price:o.price});
+  learn(buyer,o.fact,'原本実物の取得（'+seller.name+'から）');
+ }else if(o.mode==='copy'){learn(buyer,o.fact,'情報の写し（'+seller.name+'から）');}
+ else buyer.food+=1;
+ G.trades.push({round:G.round,buyer:buyer.id,seller:seller.id,mode:o.mode,price:o.price,fact:o.fact,originalId:o.originalId,online:true,offerId:o.id});
+ o.status='accepted';o.closedRound=G.round;ensureTrade29().history.push({id:o.id,status:'accepted',round:G.round});
+ addLog(seller.name+' → '+buyer.name+'：'+(o.mode==='food'?'食料1個':o.mode==='copy'?'情報の写し':'原本実物')+'／'+o.price+'Cのオンライン交易成立');
+ return {ok:true,offer:tradePublic29(o)};
+}
+function auditTrade29(){const base=audit28(),fail=[...base.violations],t=ensureTrade29(),reservedOrig=new Set();
+ const ids=new Set();
+ for(const o of t.offers){if(ids.has(o.id))fail.push('duplicate offer ID');ids.add(o.id);
+  if(!G.players[o.sender]||!G.players[o.recipient]||o.sender===o.recipient)fail.push('invalid parties');
+  if(!Number.isInteger(o.price)||o.price<0||o.price>200)fail.push('invalid offer price');
+  if(o.status==='pending'&&o.mode==='original'){
+   const asset=findOriginal(o.originalId);if(!asset||asset.status!=='escrow'||asset.owner!==o.seller||reservedOrig.has(o.originalId))fail.push('invalid original escrow');reservedOrig.add(o.originalId);
+  }
+  if(o.status==='pending'&&o.mode==='food'&&(!o.reserved||o.reserved.kind!=='food'))fail.push('invalid food escrow');
+ }
+ for(const o of G.originals)if(o.status==='escrow'&&!reservedOrig.has(o.id))fail.push('orphan original escrow');
+ for(const p of G.players)if(p.coins<0||p.food<0)fail.push('negative resource');
+ if(t.offers.filter(o=>o.status==='pending').length>12)fail.push('too many pending offers');
+ return {ok:fail.length===0,violations:fail,originals:base.originals,pending:t.offers.filter(o=>o.status==='pending').length,accepted:t.offers.filter(o=>o.status==='accepted').length};
+}
+const _reset29=reset;
+reset=function(seed){_reset29(seed);G.version=TRADE29_VERSION;G.trade29={next:1,offers:[],history:[]};};
+const _load29=load;
+load=function(x){if(!x||!['v1h-0.28-vp10-c8-language-quest',TRADE29_VERSION].includes(x.version))throw Error('v0.28／v0.29以外のセーブには対応していません');
+ const previous=G;try{const y=structuredClone(x),t=y.trade29;y.version='v1h-0.28-vp10-c8-language-quest';_load29(y);
+ G.version=TRADE29_VERSION;G.trade29=t||{next:1,offers:[],history:[]};
+ const a=auditTrade29();if(!a.ok)throw Error('取引の状態復元に失敗：'+a.violations.join(','));render();
+ }catch(e){G=previous;render();throw e;}};
+const _project29=projectForClient28;
+function projectForClient29(id){expireOffers29();const v=_project29(id),p=G.players[id],t=ensureTrade29();v.protocol='kc-private-view-0.29';
+ const visible=(key)=>{const subset=t.offers.filter(o=>o[key]===id),active=subset.filter(o=>o.status==='pending');return [...subset.filter(o=>o.status!=='pending').slice(-12),...active].map(tradePublic29);};
+ v.trade29={incoming:visible('recipient'),outgoing:visible('sender'),
+   originalChoices:owned(p).map(o=>({id:o.id,fact:o.fact,title:G.facts[o.fact]?.title||'不明',issuer:o.issuer})),
+   copyChoices:Object.keys(p.known).map(fact=>({fact,title:G.facts[fact]?.title||'不明'})),canOffer:!G.done,food:p.food};
+ return v;}
+const _command29=hostCommand28;
+function hostCommand29(id,seq,command,arg){
+ if(!['tradeOffer29','tradeAccept29','tradeDecline29','tradeCancel29'].includes(command)){
+  const result=_command29(id,seq,command,arg);if(result.ok)expireOffers29();return result;
+ }
+ const pilot=G.onlinePilot26;const denied=reason=>({ok:false,reason,round:G.round,activeSeat:pilot?.activeSeat??null});
+ if(!pilot||G.done||!Number.isInteger(id)||id<0||id>=4)return denied('無効なホスト状態または対戦終了');
+ if(!Number.isInteger(seq)||seq!==pilot.seqs[id]+1)return denied('シーケンスが重複または不連続');
+ // Trading is allowed out of turn, at sea and over unlimited distance.
+ let out;
+ if(command==='tradeOffer29')out=offer29(id,arg?.recipient,arg?.mode,arg?.price,arg?.fact,arg?.originalId);
+ else if(command==='tradeAccept29')out=acceptOffer29(id,arg?.id);
+ else {const o=tradeFind29(arg?.id),needed=command==='tradeDecline29'?'recipient':'sender';
+  if(!o||o.status!=='pending'||o[needed]!==id)out={ok:false,reason:'操作できる提案がありません'};
+  else {releaseOffer29(o,command==='tradeDecline29'?'declined':'cancelled');out={ok:true,offer:tradePublic29(o)};}
+ }
+ if(!out.ok)return denied(out.reason||'交易条件を満たしません');
+ pilot.seqs[id]=seq;return {ok:true,round:G.round,activeSeat:pilot.activeSeat,nextSeq:seq+1,offer:out.offer};
+}
+window.__KC_V29={hostInit:hostInit27,hostCommand:hostCommand29,project:projectForClient29,get:()=>structuredClone(G),audit:auditTrade29,
+ saveState:()=>structuredClone(G),loadState:x=>load(x),reset:(seed)=>reset(seed),offer:offer29,accept:acceptOffer29,
+ expire:expireOffers29,playerForTest:id=>G.players[id],offers:()=>structuredClone(ensureTrade29().offers)};
+const V30_VERSION='v1h-0.30-vp10-c8-online-persist-coop';
+function ensureCrisis30(){
+ if(!G.crisis30)G.crisis30={nextStart:4,history:[]};
+ ensureEvents25();return G.crisis30;
+}
+const _reset30=reset;
+reset=function(seed){_reset30(seed);G.version=V30_VERSION;G.crisis30={nextStart:4,history:[]};};
+function startScheduledCrisis30(){
+ const c=ensureCrisis30(),ev=ensureEvents25().crisis;
+ if(!G.done&&!ev.active&&G.round>=c.nextStart){
+  ensureEvents25().crisis={active:true,start:G.round,end:G.round+1,pledges:{}};
+  ensureEvents25().logs.unshift('R'+G.round+'：共同危機発生（オンライン試験）');
+  c.nextStart=G.round+8;return true;
+ }return false;
+}
+function endCrisisIfGameFinished30(){
+ if(!G.done)return;
+ const c=ensureEvents25().crisis;if(!c.active)return;
+ for(const [id,v] of Object.entries(c.pledges)){
+  if(v.type==='food')G.players[+id].food+=v.n;
+  else G.players[+id].coins+=v.n;
+ }
+ ensureCrisis30().history.push({round:G.round,count:Object.keys(c.pledges).length,status:'gameEndedRefund'});
+ c.active=false;c.pledges={};
+}
+function captureClosedCrisis30(before){
+ const e=ensureEvents25(),c=e.crisis;
+ if(before?.active&&!c.active){
+  const count=Object.keys(before.pledges).length,slow=count<=1?2:count===2?1:0;
+  const entry={round:G.round,start:before.start,count,slow,status:'resolved',bonus:count===4};
+  ensureCrisis30().history.push(entry);
+ }
+}
+const _load30=load;
+load=function(x){
+ if(!x||![TRADE29_VERSION,V30_VERSION].includes(x.version))throw Error('v0.29/v0.30以外のセーブは未対応');
+ const prev=G;
+ try{
+  const clone=structuredClone(x),saved=clone.crisis30;
+  clone.version=TRADE29_VERSION;delete clone.crisis30;
+  _load30(clone);
+  G.version=V30_VERSION;G.crisis30=saved||{nextStart:Math.max(4,G.round+2),history:[]};
+  if(!audit30().ok)throw Error('共同危機・交易の復元監査に失敗');
+  render();
+ }catch(e){G=prev;render();throw e;}
+};
+function audit30(){
+ const base=auditTrade29(),fail=[...base.violations],v=ensureCrisis30(),e=ensureEvents25();
+ if(!Number.isInteger(v.nextStart)||v.nextStart<4||!Array.isArray(v.history))fail.push('invalid crisis scheduler');
+ const c=e.crisis;
+ if(typeof c.active!=='boolean'||(c.active&&(!Number.isInteger(c.start)||!Number.isInteger(c.end)||c.end<c.start)))fail.push('invalid crisis timing');
+ if(c.pledges===null||typeof c.pledges!=='object')fail.push('invalid crisis pledges');
+ else for(const [key,r] of Object.entries(c.pledges)){
+  if(!/^[0-3]$/.test(key)||!r||!(['food','coin'].includes(r.type))||r.n!==(r.type==='food'?1:2))fail.push('invalid crisis escrow');
+ }
+ if(!Array.isArray(e.weatherShield)||e.weatherShield.length!==4||e.weatherShield.some(n=>!Number.isInteger(n)||n<0))fail.push('invalid storm shield');
+ return {...base,ok:fail.length===0,violations:fail,crisisActive:c.active,crisisPledges:Object.keys(c.pledges||{}).length};
+}
+function projectForClient30(id){
+ const v=projectForClient29(id),p=G.players[id],e=ensureEvents25(),c=e.crisis,meta=ensureCrisis30();
+ v.protocol='kc-private-view-0.30';
+ v.crisis30={active:c.active,start:c.active?c.start:null,end:c.active?c.end:null,
+  count:Object.keys(c.pledges).length,participants:Object.keys(c.pledges).map(Number),
+  ownPledge:c.pledges[id]?.type||null,
+  canPledge:!!(c.active&&!c.pledges[id]&&G.round<=c.end&&!G.done&&(p.coins>=2||p.food>=1)),
+  canRetract:!!(c.active&&c.pledges[id]&&!G.done),
+  canFood:p.food>=1,canCoin:p.coins>=2,
+  nextEventRound:meta.nextStart,lastOutcome:meta.history.at(-1)||null,
+  weatherShield:e.weatherShield[id],slowUntil:e.slowUntil,slowStart:e.slowStart};
+ return v;
+}
+const _host30=hostCommand29;
+function hostCommand30(id,seq,cmd,arg){
+ if(cmd!=='crisisPledge30'&&cmd!=='crisisRetract30'){
+  const before=structuredClone(ensureEvents25().crisis);
+  const r=_host30(id,seq,cmd,arg);
+  if(r.ok){captureClosedCrisis30(before);endCrisisIfGameFinished30();startScheduledCrisis30();}
+  return r;
+ }
+ const pilot=G.onlinePilot26,denied=reason=>({ok:false,reason,round:G.round,activeSeat:pilot?.activeSeat??null});
+ if(!pilot||G.done||!Number.isInteger(id)||id<0||id>=4)return denied('不正な席・終了状態');
+ if(!Number.isInteger(seq)||seq!==pilot.seqs[id]+1)return denied('不連続または重複したコマンド');
+ // Pledges are voluntary and can be submitted outside the owner's sailing turn.
+ let ok=false;
+ if(cmd==='crisisPledge30'){
+  if(arg?.resource!=='food'&&arg?.resource!=='coin')return denied('拠出資源は食料または通貨');
+  ok=pledge25(id,arg.resource);
+ } else ok=retract25(id);
+ if(!ok)return denied('協力イベントが無効、拠出済、または資源不足');
+ pilot.seqs[id]=seq;
+ return {ok:true,round:G.round,activeSeat:pilot.activeSeat,nextSeq:seq+1};
+}
+window.__KC_V30={hostInit:(seed)=>{hostInit27(seed);ensureCrisis30();return true;},hostCommand:hostCommand30,
+ project:projectForClient30,saveState:()=>structuredClone(G),loadState:x=>load(x),get:()=>structuredClone(G),audit:audit30,
+ // Only tests use these functions. The HTTP host intentionally exposes neither.
+ forceCrisisForTest:()=>{const c=ensureCrisis30();c.nextStart=G.round;return startScheduledCrisis30();},
+ forceRoundForTest:r=>{G.round=r;closeEvents25();},
+ playerForTest:id=>G.players[id],reset:seed=>reset(seed),offers:()=>structuredClone(ensureTrade29().offers)};
+const V31_VERSION='v1h-0.31-vp10-c8-region-trade-online';
+function ensureRegion31(){if(!G.regionTrade31)G.regionTrade31={nextStart:7,serial:0,active:false,start:null,end:null,
+ pairs:[],people:[],first:false,second:false,qualified:0,noneligible:0,history:[]};return G.regionTrade31;}
+const _reset31=reset;
+reset=function(seed){_reset31(seed);G.version=V31_VERSION;G.regionTrade31={nextStart:7,serial:0,active:false,start:null,end:null,pairs:[],people:[],first:false,second:false,qualified:0,noneligible:0,history:[]};};
+function startRegion31(){const r=ensureRegion31();if(G.done||r.active||G.round<r.nextStart)return false;
+ r.serial++;r.active=true;r.start=G.round;r.end=G.round+2;r.pairs=[];r.people=[];r.first=false;r.second=false;
+ r.qualified=0;r.noneligible=0;r.nextStart=G.round+10;
+ ensureEvents25().logs.unshift(`R${G.round}：地域交易協定 #${r.serial} 開催（R${r.start}〜${r.end}）`);return true;
+}
+function closeRegion31(reason='expired'){const r=ensureRegion31();if(!r.active)return false;
+ if(reason==='expired'&&G.round<=r.end)return false;
+ r.history.push({id:r.serial,start:r.start,end:r.end,closedRound:G.round,reason,pairs:[...r.pairs],
+ people:[...r.people],qualified:r.qualified,noneligible:r.noneligible,first:r.first,second:r.second});
+ if(r.history.length>40)r.history.shift();
+ ensureEvents25().logs.unshift(`地域交易協定 #${r.serial} 終了：有効${r.qualified}組・第2段階${r.second?'達成':'未達'}`);
+ r.active=false;return true;
+}
+function qualifyTrade31(offer){const r=ensureRegion31();if(!r.active||G.round<r.start||G.round>r.end||G.done)return false;
+ if(!offer||offer.status!=='accepted'){return false;}
+ const seller=G.players[offer.seller],buyer=G.players[offer.buyer];
+ const minimum={copy:5,original:8,food:2}[offer.mode];
+ if(!seller||!buyer||seller===buyer||!Number.isInteger(offer.price)||minimum==null||offer.price<minimum||!eligiblePair25(seller,buyer)){
+  r.noneligible++;return false;
+ }
+ const pair=[seller.id,buyer.id].sort((a,b)=>a-b).join('-');
+ if(r.pairs.includes(pair)){r.noneligible++;return false;}
+ r.pairs.push(pair);r.qualified++;r.people=[...new Set(r.pairs.flatMap(x=>x.split('-').map(Number)))].sort((a,b)=>a-b);
+ const events=ensureEvents25();events.logs.unshift(`R${G.round}：地域交易イベントに ${pair} の有償${offer.mode}取引を計上`);
+ if(!r.first){r.first=true;seller.food+=1;buyer.food+=1;
+  events.logs.unshift('地域交易第1段階：最初の取引者2名に食料1個ずつ');}
+ if(!r.second&&r.pairs.length>=2&&r.people.length>=3){r.second=true;
+  for(const i of r.people)events.weatherShield[i]++;
+  events.logs.unshift('地域交易第2段階：異なる2組・3人以上に荒天防護1回');}
+ return true;
+}
+const _load31=load;
+load=function(x){if(!x||![V30_VERSION,V31_VERSION].includes(x.version))throw Error('v0.30/v0.31のセーブ形式のみ対応');
+ const before=G;
+ try{
+  const clone=structuredClone(x),region=clone.regionTrade31;
+  clone.version=V30_VERSION;delete clone.regionTrade31;
+  _load31(clone);
+  G.version=V31_VERSION;
+  G.regionTrade31=region||{nextStart:Math.max(7,G.round+2),serial:0,active:false,start:null,end:null,pairs:[],people:[],first:false,second:false,qualified:0,noneligible:0,history:[]};
+  const a=audit31();if(!a.ok)throw Error('地域交易状態の整合性異常：'+a.violations.join(','));render();
+ }catch(e){G=before;render();throw e;}
+};
+function audit31(){const base=audit30(),fail=[...base.violations],r=ensureRegion31();
+ if(!Number.isInteger(r.serial)||r.serial<0||!Number.isInteger(r.nextStart)||r.nextStart<7||!Array.isArray(r.history)||r.history.length>40)fail.push('invalid region schedule');
+ if(typeof r.active!=='boolean'||!Array.isArray(r.pairs)||!Array.isArray(r.people)||!Number.isInteger(r.qualified)||r.qualified!==r.pairs.length||!Number.isInteger(r.noneligible)||r.noneligible<0)fail.push('invalid region counter');
+ if(r.active&&(!Number.isInteger(r.start)||!Number.isInteger(r.end)||r.end!==r.start+2))fail.push('invalid region timing');
+ const allPairs=new Set();const allPeople=new Set();
+ for(const pair of r.pairs||[]){
+  if(typeof pair!=='string'||!/^([0-3])-([0-3])$/.test(pair))fail.push('invalid trade pair');
+  else {const [a,b]=pair.split('-').map(Number);if(a>=b||allPairs.has(pair))fail.push('duplicate/unsorted trade pair');allPairs.add(pair);allPeople.add(a);allPeople.add(b);}
+ }
+ if(JSON.stringify([...allPeople].sort((a,b)=>a-b))!==JSON.stringify(r.people))fail.push('invalid event participants');
+ if(r.first!==(r.pairs.length>=1)||r.second!==(r.pairs.length>=2&&r.people.length>=3))fail.push('invalid event milestone');
+ return {...base,ok:fail.length===0,violations:fail,regionActive:r.active,regionPairs:r.pairs.length};
+}
+function projectForClient31(id){const v=projectForClient30(id),r=ensureRegion31();
+ v.protocol='kc-private-view-0.31';
+ v.regionTrade31={active:r.active,start:r.active?r.start:null,end:r.active?r.end:null,
+  eligiblePairs:[...r.pairs],participants:[...r.people],qualified:r.qualified,
+  first:r.first,second:r.second,nextEventRound:r.nextStart,lastOutcome:r.history.at(-1)||null,
+  ownArea:G.isles[G.players[id].at].area,
+  eligibleNow:G.players.filter(p=>p.id!==id).map(p=>({id:p.id,eligible:eligiblePair25(G.players[id],p)}))};
+ return v;
+}
+const _host31=hostCommand30;
+function hostCommand31(id,seq,command,arg){
+ // Enforce event deadline before accepting a trade, but never restrict ordinary trade.
+ closeRegion31();
+ const result=_host31(id,seq,command,arg);
+ if(!result.ok)return result;
+ if(command==='tradeAccept29'){
+  const o=tradeFind29(arg?.id);if(o?.status==='accepted')qualifyTrade31(o);
+ }
+ if(G.done)closeRegion31('gameEnded');else{closeRegion31();startRegion31();}
+ return result;
+}
+window.__KC_V31={hostInit:(seed)=>{hostInit27(seed);ensureCrisis30();ensureRegion31();return true;},hostCommand:hostCommand31,
+ project:projectForClient31,saveState:()=>structuredClone(G),loadState:x=>load(x),get:()=>structuredClone(G),audit:audit31,
+ forceRegionForTest:()=>{const r=ensureRegion31();r.nextStart=G.round;return startRegion31();},
+ forceRoundForTest:r=>{G.round=r;closeEvents25();closeRegion31();},
+ playerForTest:id=>G.players[id],offers:()=>structuredClone(ensureTrade29().offers),
+ regionState:()=>structuredClone(ensureRegion31()),reset:seed=>reset(seed)};
+const V32_VERSION='v1h-0.32-vp10-c8-reward-ledger';
+function ensureReward32(){
+ if(!G.reward32){const shield=ensureEvents25().weatherShield;
+  G.reward32={opening:[...shield],awards:[],consumes:[],next:1};}
+ return G.reward32;
+}
+function recordAward32(player,source,sourceKey){
+ const l=ensureReward32();const key=String(sourceKey)+':'+player;
+ if(l.awards.some(a=>a.key===key))throw Error('duplicate cooperative reward event: '+key);
+ l.awards.push({key,player,source,round:G.round,qty:1,id:l.next++});
+}
+function recordConsume32(player,kind){const l=ensureReward32();l.consumes.push({player,round:G.round,kind,qty:1,id:l.next++});}
+const _reset32=reset;
+reset=function(seed){_reset32(seed);G.version=V32_VERSION;G.reward32={opening:[0,0,0,0],awards:[],consumes:[],next:1};};
+const _roll32=roll;
+roll=function(p){const before=[...ensureEvents25().weatherShield];const ok=_roll32(p);
+ if(ok){const after=ensureEvents25().weatherShield;
+  for(let i=0;i<4;i++){const spent=before[i]-after[i];if(spent<0||spent>1)throw Error('unexpected shield delta on roll');
+   if(spent===1)recordConsume32(i,'storm');}}
+ return ok;};
+const _qualify32=qualifyTrade31;
+qualifyTrade31=function(offer){const before=[...ensureEvents25().weatherShield];const ok=_qualify32(offer);
+ if(ok){const after=ensureEvents25().weatherShield;const event=ensureRegion31();
+  for(let i=0;i<4;i++){const gained=after[i]-before[i];if(gained<0||gained>1)throw Error('unexpected region award');
+   if(gained)recordAward32(i,'regionalTrade','region:'+event.serial);}}
+ return ok;};
+const _closeEvents32=closeEvents25;
+closeEvents25=function(){const prev=[...ensureEvents25().weatherShield],e=ensureEvents25();
+ const oldSlowUntil=e.slowUntil,oldSlowStart=e.slowStart,crisis=structuredClone(e.crisis);
+ _closeEvents32();const after=ensureEvents25().weatherShield;
+ for(let i=0;i<4;i++){const gained=after[i]-prev[i];if(gained<0||gained>1)throw Error('unexpected crisis reward');
+  if(gained)recordAward32(i,'jointCrisis','crisis:'+crisis.start);}
+ // If a second temporary crisis overlaps a currently active slowing effect,
+ // resolving the second crisis cannot shorten the first effect.
+ if(oldSlowUntil>=G.round&&e.slowUntil<oldSlowUntil){e.slowUntil=oldSlowUntil;e.slowStart=Math.min(oldSlowStart,G.round);}
+};
+function auditReward32(){const b=audit31(),v=[...b.violations],l=G.reward32,e=ensureEvents25();
+ if(!l||!Array.isArray(l.opening)||l.opening.length!==4||!Array.isArray(l.awards)||!Array.isArray(l.consumes)||!Number.isInteger(l.next)||l.next<1)
+  return {...b,ok:false,violations:[...v,'invalid reward ledger structure']};
+ const good=n=>Number.isInteger(n)&&n>=0,balances=[...l.opening],keys=new Set(),ids=new Set();
+ if(!balances.every(good))v.push('invalid opening reward balances');
+ for(const [type,entries,sign] of [['award',l.awards,1],['consume',l.consumes,-1]])for(const a of entries){
+  if(!a||!Number.isInteger(a.id)||a.id<1||ids.has(a.id)||!Number.isInteger(a.player)||a.player<0||a.player>3||a.qty!==1||!Number.isInteger(a.round)||a.round<1){v.push('invalid '+type+' record');continue;}
+  ids.add(a.id);balances[a.player]+=sign;
+  if(type==='award'){
+   if(!['regionalTrade','jointCrisis'].includes(a.source)||typeof a.key!=='string'||keys.has(a.key))v.push('invalid duplicate award');
+   keys.add(a.key);
+  } else if(a.kind!=='storm')v.push('invalid consumption kind');
+ }
+ if(ids.size&&Math.max(...ids)>=l.next)v.push('nonmonotonic ledger counter');
+ for(let i=0;i<4;i++)if(balances[i]!==e.weatherShield[i]||balances[i]<0)v.push('shield provenance mismatch seat'+i);
+ return {...b,ok:v.length===0,violations:v,shieldLedger:{opening:[...l.opening],earned:l.awards.length,used:l.consumes.length,balance:balances}};
+}
+const _load32=load;
+load=function(x){if(!x||![V30_VERSION,V31_VERSION,V32_VERSION].includes(x.version))throw Error('v0.31/v0.32以外のセーブは未対応');
+ const before=G;
+ try{const obj=structuredClone(x),previous=obj.reward32;
+  if(x.version===V32_VERSION&&!previous)throw Error('v0.32の報酬台帳が欠落');
+  obj.version=V31_VERSION;delete obj.reward32;
+  _load32(obj);G.version=V32_VERSION;
+  G.reward32=previous||{opening:[...ensureEvents25().weatherShield],awards:[],consumes:[],next:1};
+  const a=auditReward32();if(!a.ok)throw Error('報酬台帳検証失敗：'+a.violations.join(','));render();
+ }catch(e){G=before;render();throw e;}
+};
+function projectForClient32(id){const p=projectForClient31(id),ledger=ensureReward32();p.protocol='kc-private-view-0.32';
+ p.reward32={shield:eShield32(id),earned:ledger.awards.filter(x=>x.player===id).map(x=>({source:x.source,round:x.round})),
+  used:ledger.consumes.filter(x=>x.player===id).length, opening:ledger.opening[id]};return p;}
+function eShield32(id){return ensureEvents25().weatherShield[id];}
+const _host32=hostCommand31;
+function hostCommand32(id,seq,command,arg){const answer=_host32(id,seq,command,arg);
+ if(answer.ok){const check=auditReward32();if(!check.ok)throw Error('after command reward integrity failure: '+check.violations.join(','));}
+ return answer;}
+window.__KC_V32={hostInit:(seed)=>{hostInit27(seed);ensureCrisis30();ensureRegion31();ensureReward32();return true;},
+ hostCommand:hostCommand32,project:projectForClient32,saveState:()=>structuredClone(G),loadState:x=>load(x),
+ get:()=>structuredClone(G),audit:auditReward32,regionState:()=>structuredClone(ensureRegion31()),
+ playerForTest:id=>G.players[id],eventsForTest:()=>ensureEvents25(),forceRegionForTest:()=>{const r=ensureRegion31();r.nextStart=G.round;return startRegion31();},
+ forceCrisisForTest:()=>{const c=ensureCrisis30();c.nextStart=G.round;return startScheduledCrisis30();},
+ forceRoundForTest:r=>{G.round=r;closeEvents25();closeRegion31();},rollForTest:p=>roll(G.players[p]),
+ reset:seed=>reset(seed)};
+const V33_VERSION='v1h-0.33-vp10-c8-sea-crew';
+const CREW33={navigator:{name:'航海士',effect:'航海出目＋1'},weather:{name:'観測員',effect:'荒天の移動減速を1軽減・損害を最大1軽減'},chef:{name:'料理人',effect:'2航海に1回、食料消費なし'}};
+const SEA33_NAMES={box:'漂流箱',fishing:'漁場',tailwind:'追い風',spoil:'食料の傷み',pirates:'海賊',counter:'逆潮流',rescue:'遭難船救助',current:'危険潮流'};
+function freshSea33(){return {version:1,mode:'choice',crews:[[],[],[],[]],sailing:[{count:0,cooldown:0,pending:null},{count:0,cooldown:0,pending:null},{count:0,cooldown:0,pending:null},{count:0,cooldown:0,pending:null}],history:[],next:1};}
+function ensureSea33(){if(!G.sea33)G.sea33=freshSea33();return G.sea33;}
+function crewActive33(p,role){return ensureSea33().crews[p.id].some(c=>c.role===role&&p.turn<c.expiresTurn);}
+function recruit33(p,role){if(!CREW33[role]||G.done)return false;const cs=ensureSea33().crews[p.id];if(cs.length>=3||cs.some(c=>c.role===role))return false;
+ cs.push({role,joinedRound:G.round,joinedTurn:p.turn,expiresTurn:p.turn+6,chefSails:0});addLog(`${p.name}に${CREW33[role].name}が加入（本人6手番）`);return true;}
+function expireCrew33(p){const cs=ensureSea33().crews[p.id],keep=cs.filter(c=>p.turn<c.expiresTurn);if(keep.length!==cs.length)addLog(`${p.name}のクルーが任期満了で下船`);ensureSea33().crews[p.id]=keep;}
+const _reset33=reset;
+reset=function(seed){_reset33(seed);G.version=V33_VERSION;G.sea33=freshSea33();};
+const _questAnswer33=questSubmit26;
+questSubmit26=function(p,answer){const r=_questAnswer33(p,answer);
+ // Quest v0.28 has only correct/incorrect, unlike legacy 'excellent/normal' grades.
+ // Treat correct as trial excellent purely to test recruiting; mapping by isle ID is provisional.
+ if(r.ok&&r.correct){const role=['navigator','weather','chef'][p.at%3];recruit33(p,role);}
+ return r;};
+const _roll33=roll;
+roll=function(p){const ok=_roll33(p);if(!ok)return ok;
+ if(crewActive33(p,'navigator'))p.roll.power++;
+ if(p.roll.storm&&crewActive33(p,'weather'))p.roll.power++;
+ return ok;};
+function appendHistory33(p,kind,detail){const d=ensureSea33();d.history.push({id:d.next++,round:G.round,seat:p.id,kind,detail});if(d.history.length>120)d.history.shift();addLog(`${p.name}の海上イベント：${SEA33_NAMES[kind]}（${detail}）`);}
+function shiftProgress33(p,n){if(!p.sea)return 0;const start=p.sea.progress;
+ p.sea.progress=Math.min(p.sea.len,Math.max(0,p.sea.progress+n));const delta=p.sea.progress-start;
+ if(p.sea.progress>=p.sea.len)arrive(p,p.sea.to);
+ return delta;}
+function loss33(p,kind){const reduce=crewActive33(p,'weather')?1:0;
+ if(kind==='spoil'){const spent=Math.min(p.food,Math.max(0,1-reduce));p.food-=spent;return '食料−'+spent;}
+ if(kind==='pirates'){const spent=Math.min(p.coins,Math.max(0,2-reduce));p.coins-=spent;return '通貨−'+spent+'C';}
+ const delta=shiftProgress33(p,-Math.max(0,1-reduce));return '進捗'+delta;}
+function decideSea33(p,decision){const s=ensureSea33().sailing[p.id],pending=s.pending;
+ if(!pending||!['take','skip'].includes(decision))return false;
+ const kind=pending.kind;if(kind==='rescue'&&decision==='take'&&p.food<1)return false;
+ if(decision==='skip')appendHistory33(p,kind,'見送り・変化なし');
+ else if(kind==='rescue'){
+  const foodCost=Math.min(1,p.food),shift=shiftProgress33(p,-1);
+  p.food-=foodCost;p.coins+=5;appendHistory33(p,kind,'救助：食料−'+foodCost+'・進捗'+shift+'・通貨＋5C');
+ }else if(kind==='current'){
+  // Risk resolution consumes the same serial RNG state as other host-only effects.
+  if(rand()<.6){const delta=shiftProgress33(p,3);appendHistory33(p,kind,'成功：進捗＋'+delta);}
+  else {const delta=shiftProgress33(p,-2),damage=Math.min(p.food,Math.max(0,1-(crewActive33(p,'weather')?1:0)));p.food-=damage;
+   appendHistory33(p,kind,'失敗：進捗'+delta+'・食料−'+damage);}
+ }else return false;
+ s.pending=null;return true;}
+function applySea33(p,kind){const s=ensureSea33().sailing[p.id];
+ if(['rescue','current'].includes(kind)){s.pending={kind,startedRound:G.round};
+  if(!G.onlinePilot26&&p.id!==0)decideSea33(p,kind==='rescue'?(p.food>=2?'take':'skip'):(p.food>=3?'take':'skip'));
+  return;}
+ let info='';
+ if(kind==='box'){p.coins+=3;info='通貨＋3C';}
+ if(kind==='fishing'){p.food+=2;info='食料＋2';}
+ if(kind==='tailwind'){const delta=p.food>0?shiftProgress33(p,2):0;info='進捗＋'+delta+(p.food===0?'（食料切れ）':'');}
+ if(['spoil','pirates','counter'].includes(kind))info=loss33(p,kind);
+ appendHistory33(p,kind,info);
+}
+function trySeaEvent33(p){const s=ensureSea33().sailing[p.id];if(s.cooldown>0){s.cooldown--;return;}
+ if(rand()>=.25)return;
+ const v=rand();let category=v<.38?'plus':v<.72?'minus':'choice';
+ const table=category==='plus'?['box','fishing','tailwind']:category==='minus'?['spoil','pirates','counter']:['rescue','current'];
+ const kind=table[randint(table.length)];s.cooldown=1;applySea33(p,kind);
+}
+const _travel33=travel;
+travel=function(p,to){const before=p.food,ok=_travel33(p,to);if(!ok)return ok;
+ const ss=ensureSea33().sailing[p.id];ss.count++;
+ const chef=ensureSea33().crews[p.id].find(c=>c.role==='chef'&&p.turn<c.expiresTurn);
+ if(chef){chef.chefSails++;if(chef.chefSails%2===0&&before>0)p.food++;}
+ if(!G.done&&p.sea)trySeaEvent33(p);
+ return ok;};
+const _finish33=finishHuman;
+finishHuman=function(){if(ensureSea33().sailing[0].pending){if(G.testSilent)decideSea33(me(),'skip');else {addLog('海上イベントの選択を確定してください。');render();return;}}
+ _finish33();for(const p of G.players)expireCrew33(p);if(!G.testSilent)render();};
+const _sail33=sailView;
+sailView=function(){const x=_sail33(),p=me(),s=ensureSea33().sailing[0],crew=ensureSea33().crews[0];
+ let panel='<div class="card"><b>クルー・海上イベント（v0.33検証）</b><p class="small">'+(crew.length?crew.map(c=>CREW33[c.role].name+'：残り'+Math.max(0,c.expiresTurn-p.turn)+'手番').join('／'):'現在クルーなし')+'</p>';
+ if(s.pending){panel+='<p>「'+esc(SEA33_NAMES[s.pending.kind])+'」：選択してください。手番終了までに解決が必要です。</p><div class="actions"><button data-act="seaChoice33" data-choice="take">挑戦／救助する</button><button data-act="seaChoice33" data-choice="skip">見送る</button></div>';}
+ else panel+='<p class="small sub">航海中にランダムイベントが発生します。加入したクルーは原則6本人手番で下船します。</p>';
+ panel+='</div>';return x+panel;};
+$('main').addEventListener('click',e=>{const t=e.target.closest('[data-act="seaChoice33"]');if(!t)return;
+ e.preventDefault();e.stopImmediatePropagation();decideSea33(me(),t.dataset.choice);render();},true);
+const _load33=load;
+load=function(x){if(!x||![V30_VERSION,V31_VERSION,V32_VERSION,V33_VERSION].includes(x.version))throw Error('v0.30〜v0.33のセーブ形式のみ対応');
+ const prev=G;try{const data=structuredClone(x),sea=data.sea33;
+ if(x.version===V33_VERSION&&!sea)throw Error('v0.33海上イベント台帳欠落');
+ data.version=x.version===V33_VERSION?V32_VERSION:x.version;delete data.sea33;
+ _load33(data);G.version=V33_VERSION;G.sea33=sea||freshSea33();
+ const a=auditSea33();if(!a.ok)throw Error('海上イベント／クルー台帳の整合性異常：'+a.violations.join(','));render();
+ }catch(e){G=prev;render();throw e;}};
+function auditSea33(){const b=auditReward32(),v=[...b.violations],s=G.sea33;
+ if(!s||s.version!==1||s.mode!=='choice'||!Array.isArray(s.crews)||s.crews.length!==4||!Array.isArray(s.sailing)||s.sailing.length!==4||!Array.isArray(s.history)||!Number.isInteger(s.next)||s.next<1)
+  return {...b,ok:false,violations:[...v,'sea33 structure invalid']};
+ const roles=Object.keys(CREW33),kinds=Object.keys(SEA33_NAMES),histIds=new Set();
+ for(let i=0;i<4;i++){
+  const cs=s.crews[i],ss=s.sailing[i],p=G.players[i];
+  if(!Array.isArray(cs)||cs.length>3||!ss||!Number.isInteger(ss.count)||ss.count<0||!Number.isInteger(ss.cooldown)||ss.cooldown<0||ss.cooldown>1){v.push('invalid crew or sailing seat '+i);continue;}
+  const seen=new Set();for(const c of cs){if(!c||!roles.includes(c.role)||seen.has(c.role)||!Number.isInteger(c.joinedRound)||!Number.isInteger(c.joinedTurn)||!Number.isInteger(c.expiresTurn)||c.expiresTurn!==c.joinedTurn+6||c.expiresTurn<=p.turn||!Number.isInteger(c.chefSails)||c.chefSails<0)v.push('invalid crew entry '+i);seen.add(c.role);}
+  if(ss.pending&&(!['rescue','current'].includes(ss.pending.kind)||!Number.isInteger(ss.pending.startedRound)||!p.moved||!p.sea))v.push('invalid unresolved sea choice '+i);
+ }
+ for(const h of s.history){if(!h||!Number.isInteger(h.id)||h.id<1||histIds.has(h.id)||!Number.isInteger(h.round)||h.round<1||!Number.isInteger(h.seat)||h.seat<0||h.seat>3||!kinds.includes(h.kind)||typeof h.detail!=='string')v.push('invalid sea history entry');else histIds.add(h.id);}
+ if(histIds.size&&Math.max(...histIds)>=s.next)v.push('sea event counter not monotonic');
+ return {...b,ok:v.length===0,violations:v,seaEvents:s.history.length,crews:s.crews.map(c=>c.length)};}
+function projectForClient33(id){const v=projectForClient32(id),s=ensureSea33(),p=G.players[id],cs=s.crews[id];v.protocol='kc-private-view-0.33';
+ v.sea33={crew:cs.map(c=>({role:c.role,name:CREW33[c.role].name,effect:CREW33[c.role].effect,remaining:c.expiresTurn-p.turn})),
+  pending:s.sailing[id].pending?{kind:s.sailing[id].pending.kind,title:SEA33_NAMES[s.sailing[id].pending.kind],canTake:s.sailing[id].pending.kind!=='rescue'||p.food>=1}:null,
+  ownHistory:s.history.filter(x=>x.seat===id).slice(-8).map(x=>({kind:x.kind,detail:x.detail,round:x.round})),
+  mode:s.mode};return v;}
+const _host33=hostCommand32;
+function hostCommand33(id,seq,cmd,arg){const pilot=G.onlinePilot26,deny=reason=>({ok:false,reason,round:G.round,activeSeat:pilot?.activeSeat??null});
+ if(!pilot||G.done||!Number.isInteger(id)||id<0||id>3)return deny('無効な席・対戦終了');
+ const hasPending=!!ensureSea33().sailing[id].pending;
+ if(cmd==='seaEventChoice33'){
+  if(pilot.activeSeat!==id||!Number.isInteger(seq)||pilot.seqs[id]+1!==seq||!hasPending)return deny('選択権・手番・シーケンス不一致');
+  if(!decideSea33(G.players[id],arg?.choice))return deny('不正な選択');
+  pilot.seqs[id]=seq;const audit=auditSea33();if(!audit.ok)throw Error('sea33 audit failure '+audit.violations.join(','));
+  return {ok:true,round:G.round,activeSeat:pilot.activeSeat,nextSeq:seq+1};
+ }
+ if(hasPending&&cmd!=='tradeOffer29'&&cmd!=='tradeAccept29'&&cmd!=='tradeDecline29'&&cmd!=='tradeCancel29'&&cmd!=='crisisPledge30'&&cmd!=='crisisRetract30')return deny('海上イベントの選択を先に確定してください');
+ const result=_host33(id,seq,cmd,arg);
+ if(result.ok){if(cmd==='end')expireCrew33(G.players[id]);const audit=auditSea33();if(!audit.ok)throw Error('sea33 audit failure '+audit.violations.join(','));}
+ return result;}
+window.__KC_V33={hostInit:(seed)=>{hostInit27(seed);ensureCrisis30();ensureRegion31();ensureReward32();ensureSea33();return true;},hostCommand:hostCommand33,project:projectForClient33,
+ saveState:()=>structuredClone(G),loadState:x=>load(x),get:()=>structuredClone(G),audit:auditSea33,
+ playerForTest:id=>G.players[id],seaForTest:()=>ensureSea33(),eventsForTest:()=>ensureEvents25(),forceCrisisForTest:()=>{const z=ensureCrisis30();z.nextStart=G.round;return startScheduledCrisis30();},forceRegionForTest:()=>{const z=ensureRegion31();z.nextStart=G.round;return startRegion31();},forceRoundForTest:r=>{G.round=r;closeEvents25();closeRegion31();},rollForTest:id=>roll(G.players[id]),travelForTest:(id,to)=>travel(G.players[id],to),
+ grantCrewForTest:(id,role)=>recruit33(G.players[id],role),forceEventForTest:(id,kind)=>{const p=G.players[id];if(!p.sea||!p.moved)return false;applySea33(p,kind);return true;},
+ choiceForTest:(id,choice)=>decideSea33(G.players[id],choice),expireForTest:id=>expireCrew33(G.players[id]),reset:seed=>reset(seed)};
+const V34_VERSION='v1h-0.34-vp10-c8-quest-grades';
+const QUEST34_FORMAT={order:{name:'注文書',crew:'navigator'},lost:{name:'失われた言葉',crew:'weather'},food:{name:'保存食',crew:'chef'}};
+const QUEST34_BANK=[
+ {format:'lost',question:'夜の海で船に岸の位置を知らせる光の建物。その名称を答えてください。',reading:'とうだい',exact:'灯台',equiv:['燈台'],normal:[]},
+ {format:'order',question:'帆船の帆柱に張り、風を受ける布を注文してください。',reading:'ほ',exact:'帆',normal:['セイル']},
+ {format:'order',question:'方角を確認するため、磁針を使う道具を注文してください。',reading:'らしんばん',exact:'羅針盤',normal:['コンパス']},
+ {format:'lost',question:'島と島の間を船が通る道筋を何と呼びますか。',reading:'こうろ',exact:'航路',normal:['海路']},
+ {format:'lost',question:'海の満ち引きにともなう流れの一般的な呼び方は？',reading:'しお',exact:'潮',normal:['潮汐']},
+ {format:'food',question:'小麦粉を硬く焼き、水分を減らした長期航海用の保存食を納品してください。',reading:'かんぱん',exact:'乾パン',normal:['ビスケット']},
+ {format:'lost',question:'海上で風雨が激しくなった天気を表す言葉は？',reading:'あらし',exact:'嵐',normal:['荒天','しけ']},
+ {format:'order',question:'進路や島の位置を確かめるための海の地図を注文してください。',reading:'かいず',exact:'海図',normal:['航海図']},
+ {format:'order',question:'船を岸につなぐときに使う専用の綱を注文してください。',reading:'けいりゅうさく',exact:'係留索',normal:['ロープ']},
+ {format:'lost',question:'夜空で北を知る目安になる恒星は？',reading:'ほっきょくせい',exact:'北極星',normal:['ポラリス']},
+ {format:'lost',question:'船員が共通の目的で互いに助け合うことを表す言葉は？',reading:'きょうりょく',exact:'協力',normal:['連携']},
+ {format:'food',question:'魚を干して水分を減らした保存食を納品してください。',reading:'ひもの',exact:'干物',normal:['乾物']},
+ {format:'order',question:'船内で飲料水を携行するための容器を注文してください。',reading:'すいとう',exact:'水筒',normal:['ボトル']},
+ {format:'lost',question:'遠くの海面で海と空が接して見える線は？',reading:'すいへいせん',exact:'水平線',normal:['海平線']},
+ {format:'food',question:'食品を金属の缶に密閉して保存したものを納品してください。',reading:'かんづめ',exact:'缶詰',normal:['保存食']},
+ {format:'order',question:'船を一定位置にとどめるために海底へ降ろす器具を注文してください。',reading:'いかり',exact:'錨',normal:['アンカー']}
+];
+function quest34(isle){return QUEST34_BANK[Math.floor(isle/2)]||null;}
+function questForPlayer34(p){const s=questState26(p)[p.at];return s?.quest34Mode==='new'?quest34(p.at):quest26(p.at);}
+function gradeQuest34(q,raw){const normalized=normalized26(raw);
+ if([q.exact,q.reading,...(q.equiv||[])].map(normalized26).includes(normalized))return 'excellent';
+ if(q.normal.map(normalized26).includes(normalized))return 'normal';return 'failure';}
+const _startQuest34=questStart26;
+questStart26=function(p){const ok=_startQuest34(p);if(ok){const s=questState26(p)[p.at];s.quest34Mode='new';s.format34=quest34(p.at).format;}return ok;};
+const _submitQuestLegacy33=questSubmit26;
+questSubmit26=function(p,answer){const state=questState26(p)[p.at];
+ if(!state||state.quest34Mode!=='new')return _submitQuestLegacy33(p,answer); // migrations: preserve previously accepted contracts
+ if(G.done||p.sea||!p.moved||!G.isles[p.at].quest)return {ok:false,reason:'この港では回答できません'};
+ if(state.status!=='active'||p.questDone[p.at])return {ok:false,reason:'受注中の依頼がありません'};
+ if(!questReadable28(p))return {ok:false,reason:'まず言語を習得するか翻訳してください'};
+ const raw=String(answer??'');if(!raw.trim()||raw.length>60)return {ok:false,reason:'60文字以内で回答してください'};
+ const q=quest34(p.at),grade=gradeQuest34(q,raw),reward=grade==='excellent'?7:grade==='normal'?3:0;
+ state.attempts=1;state.status=grade==='excellent'?'solved':'failed';
+ state.finishedRound=G.round;state.submitted=raw;state.grade34=grade;state.reward34=reward;
+ state.crewRole34=grade==='excellent'?QUEST34_FORMAT[q.format].crew:null;
+ p.questDone[p.at]=true;
+ let recruited=false;
+ if(grade==='excellent'){
+  p.coins+=7;issue(p,'quest:'+p.at,'島民依頼・大成功（自力回答）');
+  recruited=recruit33(p,state.crewRole34);
+ } else if(grade==='normal'){p.coins+=3;}
+ state.recruited34=recruited;
+ addLog(`${p.name}の${QUEST34_FORMAT[q.format].name}：${grade==='excellent'?'大成功・7C＋情報原本':grade==='normal'?'通常成功・3C':'失敗・報酬なし'}${recruited?'・クルー加入':''}`);
+ return {ok:true,correct:grade!=='failure',grade,reward,original:grade==='excellent',crewRecruited:recruited,crewRole:state.crewRole34};
+};
+const _hintsLegacy34=questHints28;
+questHints28=function(p){const s=questState26(p)[p.at];if(s?.quest34Mode!=='new')return _hintsLegacy34(p);
+ const q=quest34(p.at);if(!questReadable28(p))return [];
+ const hints=[];if((s.hints28||0)>=1)hints.push('読みの文字数：'+normalized26(q.reading).length+'文字');
+ if((s.hints28||0)>=2)hints.push('読みの先頭：'+normalized26(q.reading).slice(0,1));return hints;};
+questPanel26=function(){const p=me(),s=questState26(p)[p.at],has=G.isles[p.at].quest,q=questForPlayer34(p),fmt=has?(s?.quest34Mode==='new'?QUEST34_FORMAT[q.format]?.name:'旧版の受注中依頼'):'—';
+ let out='<div class="card"><b>島民依頼・3段階評価（試験）</b>';
+ if(!has)out+='<p class="small sub">この島には依頼がありません。</p>';
+ else if(p.questDone[p.at]){const label=s?.grade34==='excellent'?'大成功':s?.grade34==='normal'?'通常成功':s?.grade34==='failure'?'失敗':s?.status==='solved'?'旧版の正答':'旧版の終了';
+  out+='<p class="small">'+esc(fmt)+'：'+esc(label)+'／再回答・再報酬なし</p>';
+ }else if(s?.status==='active'){
+  out+='<p class="small">依頼形式：'+esc(fmt)+'</p>';
+  if(!questReadable28(p))out+='<p class="small sub">海域言語の学習または3Cでの翻訳が必要です。</p><button data-act="questTranslate28" '+(!p.moved||p.coins<3?'disabled':'')+'>3Cで翻訳</button>';
+  else{out+='<p class="small">'+esc(s.quest34Mode==='new'?q.question:q.question)+'</p>';
+   for(const h of questHints28(p))out+='<p class="small sub">ヒント：'+esc(h)+'</p>';
+   const n=s.hints28||0;if(n<2)out+='<button data-act="questHint28" '+(p.coins<HINT_COSTS28[n]||!p.moved?'disabled':'')+'>追加ヒント'+(n+1)+'（'+HINT_COSTS28[n]+'C）</button>';
+   out+='<div class="formrow"><input id="questAnswer26" maxlength="60" placeholder="言葉を入力"><button class="primary" data-act="questSubmit26" '+(!p.moved||G.done?'disabled':'')+'>回答を確定</button></div>';
+  }
+  out+='<p class="tiny sub">大成功：7C＋原本＋空席があればクルー／通常成功：3C／失敗：0C。1回回答。仮の語彙・報酬。</p>';
+ }else out+='<p class="small sub">「注文書」「失われた言葉」「保存食」の3形式。大成功のみクルー加入判定。</p><button data-act="questStart26" '+(!canPort(p)?'disabled':'')+'>受注する（港行動1回）</button>';
+ return out+'</div>';
+};
+const _reset34=reset;
+reset=function(seed){_reset34(seed);G.version=V34_VERSION;G.quest34={version:1};};
+const _load34=load;
+load=function(x){if(!x||![V33_VERSION,V34_VERSION].includes(x.version))throw Error('v0.33／v0.35の保存データのみ対応');
+ const prior=G;try{const y=structuredClone(x),state=y.quest34;
+ if(x.version===V34_VERSION&&(!state||state.version!==1))throw Error('v0.35の依頼評価台帳が欠落');
+ y.version=V33_VERSION;delete y.quest34;_load34(y);
+ G.quest34=state||{version:1};G.version=V34_VERSION;
+ const a=auditQuest34();if(!a.ok)throw Error('島民依頼の保存状態が不正：'+a.violations.join(','));render();
+ }catch(e){G=prior;render();throw e;}};
+function auditQuest34(){const a=auditSea33(),v=[...a.violations];
+ if(!G.quest34||G.quest34.version!==1)v.push('missing quest34 marker');
+ for(const p of G.players)for(const [id,s] of Object.entries(p.questState||{})){
+  if(s.quest34Mode!=='new'){if(s.grade34!==undefined)v.push('legacy grade mutation');continue;}
+  const index=Number(id),q=quest34(index);
+  if(!q||!G.isles[index]?.quest||s.format34!==q.format)v.push('quest34 format mismatch '+id);
+  if(s.status==='active'){
+   if(s.grade34!==undefined||s.reward34!==undefined||p.questDone[id])v.push('active graded quest '+id);
+  }else{
+   const grade=s.grade34,amount=grade==='excellent'?7:grade==='normal'?3:grade==='failure'?0:null;
+   if(amount===null||s.reward34!==amount||!p.questDone[id]||s.status!==(grade==='excellent'?'solved':'failed')||s.attempts!==1)v.push('quest result mismatch '+id);
+   if(grade==='excellent'){
+    if(!p.issued['quest:'+id]||s.crewRole34!==QUEST34_FORMAT[q.format].crew||typeof s.recruited34!=='boolean')v.push('excellent award mismatch '+id);
+   } else if(p.issued['quest:'+id]||s.crewRole34!==null||s.recruited34!==false)v.push('nonexcellent reward mismatch '+id);
+  }
+ }
+ return {...a,ok:v.length===0,violations:v};}
+const _project34=projectForClient33;
+function projectForClient34(id){const v=_project34(id),p=G.players[id],s=questState26(p)[p.at];v.protocol='kc-private-view-0.34';
+ if(v.activeQuest&&s?.quest34Mode==='new'){
+  const q=quest34(p.at);v.activeQuest.question=questReadable28(p)?q.question:null;
+  v.activeQuest.format=QUEST34_FORMAT[q.format].name;
+  v.activeQuest.hints=questHints28(p);
+ }
+ v.quest34={currentResult:p.questDone[p.at]&&s?.quest34Mode==='new'?{format:QUEST34_FORMAT[s.format34]?.name||'',grade:s.grade34,reward:s.reward34,crewRecruited:s.recruited34}:null,
+   availableFormats:['注文書','失われた言葉','保存食']};return v;}
+const _command34=hostCommand33;
+function hostCommand34(id,seq,cmd,arg){const response=_command34(id,seq,cmd,arg);
+ if(response.ok){const a=auditQuest34();if(!a.ok)throw Error('quest34 audit failure '+a.violations.join(','));}return response;}
+window.__KC_V34={hostInit:(seed)=>{hostInit27(seed);ensureCrisis30();ensureRegion31();ensureReward32();ensureSea33();ensureQuest34();return true;},hostCommand:hostCommand34,project:projectForClient34,
+ saveState:()=>structuredClone(G),loadState:x=>load(x),get:()=>structuredClone(G),audit:auditQuest34,
+ playerForTest:id=>G.players[id],questForTest:isle=>structuredClone(quest34(isle)),startQuestForTest:id=>questStart26(G.players[id]),submitQuestForTest:(id,word)=>questSubmit26(G.players[id],word),
+ setQuestReadyForTest:(id,at)=>{const p=G.players[id];p.at=at;p.sea=null;p.roll={value:1,storm:false,power:1};p.moved=true;p.portUsed=false;ensureLanguage28(p)[G.isles[at].area]=true;return true;},
+ grantCrewForTest:(id,role)=>recruit33(G.players[id],role),getCrewForTest:id=>structuredClone(ensureSea33().crews[id]),
+ reset:seed=>reset(seed)};
+function ensureQuest34(){if(!G.quest34)G.quest34={version:1};return G.quest34;}
+const V35_VERSION='v1h-0.35-vp10-c8-ai-quest-trials';
+const AI35_MODES=['off','opportunistic','selective','hints','detour'];
+function freshAI35(){return {version:1,policy:'opportunistic',history:[],spendTranslation:0,spendHints:0,detours:0};}
+function ai35State(){G.aiQuest35??=freshAI35();return G.aiQuest35;}
+function ai35Random(p){ // independent fixed result per world seed/seat/island; no lucky rerolls
+ let x=(G.seed ^ Math.imul(p.id+1,0x9e3779b9) ^ Math.imul(p.at+1,0x85ebca6b))>>>0;
+ x^=x>>>16;x=Math.imul(x,0x7feb352d)>>>0;x^=x>>>15;x=Math.imul(x,0x846ca68b)>>>0;x^=x>>>16;
+ return (x>>>0)/4294967296;
+}
+function ai35CanTry(p){
+ return !G.done&&!p.sea&&G.isles[p.at].quest&&!p.questDone[p.at]&&
+  !questState26(p)[p.at]?.status &&p.food>1&&p.coins>=(knowsLanguage28(p)?0:3)&&
+  (owned(p).length<8||p.coins<18);
+}
+function ai35Selective(p){
+ if(!ai35CanTry(p))return false;
+ const q=quest34(p.at),role=QUEST34_FORMAT[q.format].crew;
+ // Avoid replacing a nearly complete immediate VP redemption or urgent provisioning.
+ return p.food>=3&&!crewActive33(p,role)&&canRedeem(p).length<INFO_RATE&&
+  p.vp<=6&&p.coins<=22&&(role==='navigator'||p.coins<=9);
+}
+function ai35SolveAtPort(p,mode){
+ if(!ai35CanTry(p)||p.portUsed)return false;
+ if(!questStart26(p))return false;
+ const before=p.coins;
+ if(!questReadable28(p)&&!questTranslate28(p))throw Error('AI quest translation should be affordable');
+ const spentTranslate=before-p.coins;
+ let spentHints=0;
+ if(mode==='hints'&&p.coins>=10){for(let i=0;i<2;i++){const c=HINT_COSTS28[i];if(p.coins>=c+3&&questHint28(p))spentHints+=c;}}
+ const r=ai35Random(p),threshold=spentHints===7?[.53,.88]:spentHints===3?[.42,.86]:[.30,.80];
+ const grade=r<threshold[0]?'excellent':r<threshold[1]?'normal':'failure';
+ const q=quest34(p.at);
+ const word=grade==='excellent'?q.exact:grade==='normal'?(q.normal[0]||'無効回答'):'該当する言葉がありません';
+ // Some quest questions have no normal synonyms; a simulated normal result becomes failure.
+ const result=questSubmit26(p,word);
+ if(!result.ok)throw Error('AI quest decision failed: '+result.reason);
+ const a=ai35State();a.spendTranslation+=spentTranslate;a.spendHints+=spentHints;
+ a.history.push({seat:p.id,isle:p.at,round:G.round,policy:mode,grade:result.grade,crew:result.crewRecruited,translation:spentTranslate,hints:spentHints});
+ return true;
+}
+function ai35NextQuestHop(p){
+ if(!G.sea33||G.sea33.crews[p.id].length>=2)return null;
+ const questTargets=G.isles.filter(i=>i.quest&&!p.questDone[i.id]&&!questState26(p)[i.id]?.status&&
+  (i.id!==p.at||ai35CanTry(p)));
+ const distances=new Array(32).fill(Infinity),first=new Array(32).fill(null),used=new Set();distances[p.at]=0;
+ for(let k=0;k<32;k++){let u=-1;for(let j=0;j<32;j++)if(!used.has(j)&&(u===-1||distances[j]<distances[u]))u=j;
+  if(u<0||!Number.isFinite(distances[u]))break;used.add(u);
+  for(const n of neighbors(u)){const cost=distances[u]+n.len;
+   if(cost<distances[n.to]){distances[n.to]=cost;first[n.to]=u===p.at?n.to:first[u];}}
+ }
+ const order=questTargets.filter(i=>i.id!==p.at).sort((a,b)=>distances[a.id]-distances[b.id]);
+ if(!order.length||distances[order[0].id]>17)return null;
+ return first[order[0].id];
+}
+const _aiTurn35Old=aiTurn;
+aiTurn=function(p){
+ const mode=ai35State().policy;
+ if(mode==='off'||G.onlinePilot26)return _aiTurn35Old(p);
+ p.roll=null;p.moved=false;p.portUsed=false;
+ const oldGoal=G.goal.id,priorIsland=p.at;
+ roll(p);
+ if(p.sea)travel(p,p.sea.to);
+ else if(mode==='detour'&&ai35CanTry(p))stay(p);
+ else{
+  const direct=aiNextHop(p),diversion=mode==='detour'&&p.food>=3&&p.coins>=3?ai35NextQuestHop(p):null;
+  const next=diversion??direct;
+  if(diversion!=null&&diversion!==direct)ai35State().detours++;
+  if(next==null)stay(p);else travel(p,next);
+ }
+ if(p.pendingGoal27&&!G.done)aiGoalAnswer27(p);
+ if(G.goal.id!==oldGoal){p.goalTriedId=G.goal.id;p.goalTried={};}
+ else if(!p.sea&&!G.done&&G.goal.regions.includes(G.isles[p.at].area)){
+   if(p.goalTriedId!==G.goal.id){p.goalTriedId=G.goal.id;p.goalTried={};}p.goalTried[p.at]=true;
+ }
+ if(!G.done&&!p.sea){
+  let quested=false;
+  if((p.at!==priorIsland||mode==='detour')&&ai35CanTry(p)&&(mode!=='selective'||ai35Selective(p)))quested=ai35SolveAtPort(p,mode);
+  if(!quested){
+   if(p.food<=1&&p.coins>=3)portAction(p,'food');
+   else if(p.goalHint<2&&p.coins>=11&&aiGoalOptions(p).length>2)portAction(p,'goalHint');
+   else if(p.coins>=COIN_RATE&&(p.vp>=VP_LIMIT-1||p.coins>=COIN_RATE+12))portAction(p,'coinVP');
+   else if(canRedeem(p).length>=INFO_RATE&&(p.id===3||p.vp>=4))portAction(p,'infoVP');
+   else if(factTargets(p).length&&p.id!==2)portAction(p,'research',factTargets(p)[0]);
+   else if(!p.workUsed[p.at])portAction(p,'work');
+   else if(p.coins>=COIN_RATE)portAction(p,'coinVP');
+  }
+ }
+ p.turn++;p.moved=false;p.portUsed=false;p.roll=null;
+ expireCrew33(p);
+};
+let AI35_TRIAL_POLICY=null;
+const _reset35=reset;
+reset=function(seed){_reset35(seed);G.aiQuest35=freshAI35();const chosen=AI35_TRIAL_POLICY||window.__KC38_POLICY?.('aiPolicy35');if(AI35_MODES.includes(chosen))G.aiQuest35.policy=chosen;G.version=V35_VERSION;};
+const _load35=load;
+load=function(x){if(!x||![V34_VERSION,V35_VERSION].includes(x.version))throw Error('v0.34／v0.35の保存データのみ対応');
+ const prior=G;try{const y=structuredClone(x),a=y.aiQuest35;
+ if(x.version===V35_VERSION&&!a)throw Error('AI方針データ欠落');
+ y.version=V34_VERSION;delete y.aiQuest35;_load35(y);
+ G.aiQuest35=a||freshAI35();G.version=V35_VERSION;
+ const audit=auditAI35();if(!audit.ok)throw Error('AI方針台帳の整合性違反：'+audit.violations.join(','));render();
+ }catch(e){G=prior;render();throw e;}};
+function auditAI35(){const base=auditQuest34(),v=[...base.violations],a=G.aiQuest35;
+ if(!a||a.version!==1||!AI35_MODES.includes(a.policy)||!Array.isArray(a.history)||![a.spendTranslation,a.spendHints,a.detours].every(x=>Number.isInteger(x)&&x>=0))
+  return {...base,ok:false,violations:[...v,'ai35 structure invalid']};
+ for(const h of a.history){if(!h||![1,2,3].includes(h.seat)||!Number.isInteger(h.isle)||h.isle<0||h.isle>31||!Number.isInteger(h.round)||h.round<1||!['excellent','normal','failure'].includes(h.grade)||typeof h.crew!=='boolean'||!Number.isInteger(h.translation)||!Number.isInteger(h.hints)||h.translation<0||h.hints<0||!AI35_MODES.includes(h.policy))v.push('invalid ai quest record');}
+ if(a.history.reduce((s,h)=>s+h.translation,0)!==a.spendTranslation||a.history.reduce((s,h)=>s+h.hints,0)!==a.spendHints)v.push('AI spending does not match ledger');
+ return {...base,ok:v.length===0,violations:v,aiQuestCount:a.history.length};
+}
+const _project35=projectForClient34;
+function projectForClient35(id){const v=_project35(id);v.protocol='kc-private-view-0.35';return v;}
+const _command35=hostCommand34;
+function hostCommand35(id,seq,cmd,arg){const r=_command35(id,seq,cmd,arg);if(r.ok){const a=auditAI35();if(!a.ok)throw Error('ai35 audit failure '+a.violations.join(','));}return r;}
+const policyUI35=$('aiPolicy35');
+if(policyUI35)policyUI35.addEventListener('change',()=>{if(AI35_MODES.includes(policyUI35.value)){ai35State().policy=policyUI35.value;addLog('比較用AI方針：'+policyUI35.value);render();}});
+window.__KC_V35={hostInit:seed=>{hostInit27(seed);ensureCrisis30();ensureRegion31();ensureReward32();ensureSea33();ensureQuest34();ai35State();G.version=V35_VERSION;return true;},hostCommand:hostCommand35,project:projectForClient35,
+ saveState:()=>structuredClone(G),loadState:x=>load(x),get:()=>structuredClone(G),audit:auditAI35,
+ reset:seed=>reset(seed),setPolicy:mode=>{if(!AI35_MODES.includes(mode))return false;ai35State().policy=mode;return true;},
+ fastTrial:(seed,mode,cap=140)=>{if(!AI35_MODES.includes(mode))throw Error('invalid trial policy');AI35_TRIAL_POLICY=mode;try{const r=fastAutoTrial(seed,null,cap);return {...r,ai35:structuredClone(ai35State()),players:G.players.map(p=>({id:p.id,vp:p.vp,coins:p.coins,food:p.food,goals:p.goals,crew:ensureSea33().crews[p.id].length,originals:owned(p).length}))};}finally{AI35_TRIAL_POLICY=null;}},
+ playerForTest:id=>G.players[id],questForTest:isle=>structuredClone(quest34(isle)),getCrewForTest:id=>structuredClone(ensureSea33().crews[id]),grantCrewForTest:(id,role)=>recruit33(G.players[id],role),
+ startQuestForTest:id=>questStart26(G.players[id]),submitQuestForTest:(id,word)=>questSubmit26(G.players[id],word),
+ aiTryForTest:(id,mode)=>ai35SolveAtPort(G.players[id],mode),
+ setQuestReadyForTest:(id,at)=>{const p=G.players[id];p.at=at;p.sea=null;p.roll={value:1,storm:false,power:1};p.moved=true;p.portUsed=false;ensureLanguage28(p)[G.isles[at].area]=true;return true;}
+};
+const V36_VERSION='v1h-0.36-vp10-c8-regional-forecast-ward';
+const NAV36_RATES=[
+ {plus:.48,minus:.26,choice:.26}, {plus:.32,minus:.42,choice:.26},
+ {plus:.44,minus:.30,choice:.26}, {plus:.27,minus:.48,choice:.25},
+ {plus:.50,minus:.25,choice:.25}, {plus:.35,minus:.40,choice:.25},
+ {plus:.43,minus:.32,choice:.25}, {plus:.29,minus:.46,choice:.25}
+];
+const NAV36_STORM=[.3,.15,.1,.25,.22,.14,.18,.27];
+const NAV36_FORECAST_COST=2,NAV36_WARD_COST=4;
+function freshNav36(){return {version:1,seats:Array.from({length:4},()=>({wardStock:1,wardPurchased:0,wardSpent:0,armed:false,forecastsBought:Array(8).fill(0),knownRegions:[],forecast:null,lossPrevented:0,seaSails:0,context:null})),records:[],next:1};}
+function nav36(){G.navigation36??=freshNav36();return G.navigation36;}
+function navSeat36(p){return nav36().seats[p.id];}
+function regionAt36(p){return G.isles[p.sea?p.sea.from:p.at].area;}
+function currentForecast36(p){const f=navSeat36(p).forecast;return f&&f.remaining>0&&f.region===regionAt36(p)?f:null;}
+function navLog36(p,kind,detail){const a=nav36();a.records.push({id:a.next++,round:G.round,seat:p.id,kind,detail});if(a.records.length>300)a.records.shift();}
+function buyForecast36(p){if(!canPort(p)||p.coins<NAV36_FORECAST_COST)return false;
+ const s=navSeat36(p),r=G.isles[p.at].area;if(s.forecastsBought[r]>=2)return false;
+ p.coins-=NAV36_FORECAST_COST;p.portUsed=true;s.forecastsBought[r]++;if(!s.knownRegions.includes(r))s.knownRegions.push(r);
+ s.forecast={region:r,remaining:6,lossGuard:1};navLog36(p,'forecast','海域'+r+'：次の6航海、損失1回防止');return true;}
+function buyWard36(p){if(!canPort(p)||p.coins<NAV36_WARD_COST||navSeat36(p).wardStock>=3)return false;
+ const s=navSeat36(p);p.coins-=NAV36_WARD_COST;p.portUsed=true;s.wardStock++;s.wardPurchased++;
+ navLog36(p,'wardBuy','お守りを購入');return true;}
+function armWard36(p){if(G.done||p.moved||p.roll||navSeat36(p).armed||navSeat36(p).wardStock<1||!!ensureSea33().sailing[p.id].pending)return false;
+ navSeat36(p).armed=true;navLog36(p,'wardArm','次の航海でお守り使用を予約');return true;}
+function cancelWard36(p){if(!navSeat36(p).armed||p.moved||!!ensureSea33().sailing[p.id].pending)return false;
+ navSeat36(p).armed=false;navLog36(p,'wardCancel','お守りの使用予約を解除');return true;}
+const _reset36=reset;
+reset=function(seed){_reset36(seed);G.version=V36_VERSION;G.navigation36=freshNav36();};
+const _port36=portAction;
+portAction=function(p,kind,arg){if(kind==='forecast36')return buyForecast36(p);if(kind==='wardBuy36')return buyWard36(p);return _port36(p,kind,arg);};
+const _roll36=roll;
+roll=function(p){const s=navSeat36(p),shield=ensureEvents25().weatherShield;
+ const activeForecast=currentForecast36(p),protected36=s.armed||!!activeForecast;
+ const actual=shield[p.id];if(protected36)shield[p.id]=0; // Preserve cooperative shield if other protection applies.
+ let ok=false;
+ try{ok=_roll36(p);}finally{if(protected36)shield[p.id]=actual;}
+ if(!ok)return false;
+ if(p.roll.storm&&protected36){const before=Math.max(1,p.roll.value-2);
+  const after=Math.max(1,p.roll.value-(s.armed?0:1));p.roll.power+=after-before;
+  p.roll.power=Math.max(1,p.roll.power);
+ }
+ s.context=null;
+ return true;};
+trySeaEvent33=function(p){const s=ensureSea33().sailing[p.id];if(s.cooldown>0){s.cooldown--;return;}
+ if(rand()>=.25)return;const r=regionAt36(p),weights=NAV36_RATES[r],v=rand();
+ const category=v<weights.plus?'plus':v<weights.plus+weights.minus?'minus':'choice';
+ const table=category==='plus'?['box','fishing','tailwind']:category==='minus'?['spoil','pirates','counter']:['rescue','current'];
+ const kind=table[randint(table.length)];s.cooldown=1;applySea33(p,kind);};
+function lossProtector36(p){const ctx=navSeat36(p).context;if(!ctx)return false;
+ if(ctx.ward&&!ctx.lossUsed){ctx.lossUsed=true;navSeat36(p).lossPrevented++;navLog36(p,'wardBlock','お守りで損失イベントを無効化');return true;}
+ if(ctx.forecast&&ctx.forecast.lossGuard>0){
+  ctx.forecast.lossGuard--;const live=navSeat36(p).forecast;
+  if(live&&live.region===ctx.forecast.region&&live.lossGuard>0)live.lossGuard--;
+  navSeat36(p).lossPrevented++;navLog36(p,'forecastBlock','予報で損失イベントを無効化');return true;}
+ return false;}
+const _applySea36=applySea33;
+applySea33=function(p,kind){if(['spoil','pirates','counter'].includes(kind)&&lossProtector36(p)){
+ appendHistory33(p,kind,'防護によって損失なし');return;}
+ return _applySea36(p,kind);};
+const _decideSea36=decideSea33;
+decideSea33=function(p,choice){const pending=ensureSea33().sailing[p.id].pending;
+ if(!pending)return false;
+ if(pending.kind==='current'&&choice==='take'){
+  const s=ensureSea33().sailing[p.id];const success=rand()<.6;
+  if(success){const delta=shiftProgress33(p,3);appendHistory33(p,'current','挑戦成功：進捗＋'+delta);}
+  else if(lossProtector36(p)){appendHistory33(p,'current','挑戦失敗：防護によって損失なし');}
+  else{const delta=shiftProgress33(p,-2),damage=Math.min(p.food,Math.max(0,1-(crewActive33(p,'weather')?1:0)));
+   p.food-=damage;appendHistory33(p,'current','挑戦失敗：進捗'+delta+'・食料−'+damage);}
+  s.pending=null;navSeat36(p).context=null;return true;
+ }
+ const ok=_decideSea36(p,choice);if(ok)navSeat36(p).context=null;return ok;};
+const _travel36=travel;
+travel=function(p,to){const s=navSeat36(p),f=currentForecast36(p),oldFood=p.food,
+  armed=s.armed&&s.wardStock>0;
+ const ctx={ward:armed,forecast:f?{region:f.region,lossGuard:f.lossGuard}:null,lossUsed:false};s.context=ctx;
+ // A valid travel consumes the ward; invalid commands never cost resources.
+ const ok=_travel36(p,to);
+ if(!ok){s.context=null;return false;}
+ s.seaSails++;
+ if(armed){s.wardStock--;s.wardSpent++;navLog36(p,'wardUse','航海でお守りを使用');}
+ s.armed=false;
+ if(f){f.remaining--;if(f.remaining===0)s.forecast=null;}
+ if(!ensureSea33().sailing[p.id].pending)s.context=null;
+ return true;};
+const _stay36=stay;
+stay=function(p){const ok=_stay36(p);if(ok){const s=navSeat36(p);s.armed=false;s.context=null;}return ok;};
+const _finish36=finishHuman;
+finishHuman=function(){const ret=_finish36();for(const p of G.players){const s=navSeat36(p);if(!p.roll&&!p.moved)s.armed=false;}return ret;};
+const _portView36=portView;
+portView=function(){const p=me(),s=navSeat36(p),r=G.isles[p.at].area,f=s.forecast,
+  info='<div class="card"><b>危険予報・天候のお守り（試験値）</b><p class="small sub">'+
+  '危険予報：2C＋港行動1回・1海域2回まで。購入海域での次の6航海を保護（荒天減速−1・損失イベント1回防止）。</p>'+
+  '<p class="small sub">現在の予報：'+(f?REGION[f.region]+'／残り'+f.remaining+'航海・損失防止'+f.lossGuard+'回':'なし')+
+  ' ／ お守り残'+s.wardStock+'個。予報購入済み海域 '+s.knownRegions.length+'</p>'+
+  '<div class="actions"><button data-act="forecastBuy36" '+(!canPort(p)||p.coins<2||s.forecastsBought[r]>=2?'disabled':'')+'>当地の危険予報 2C（'+s.forecastsBought[r]+'/2回）</button>'+
+  '<button data-act="wardBuy36" '+(!canPort(p)||p.coins<4||s.wardStock>=3?'disabled':'')+'>天候のお守りを購入 4C</button></div></div>';
+ return _portView36().replace('<div class="cards">','<div class="cards">'+info);};
+const _sailView36=sailView;
+sailView=function(){const p=me(),s=navSeat36(p),r=regionAt36(p),f=currentForecast36(p);
+ const panel='<div class="card"><b>航海危険度・防護（v0.36検証）</b><p class="small sub">'+REGION[r]+'／荒天率'+Math.round(NAV36_STORM[r]*100)+'%。'+
+ (s.knownRegions.includes(r)?'海上イベント内訳：利益'+Math.round(NAV36_RATES[r].plus*100)+'%、損失'+Math.round(NAV36_RATES[r].minus*100)+'%、選択'+Math.round(NAV36_RATES[r].choice*100)+'%。':'海上イベント内訳は危険予報の購入後に確認できます。')+
+ '</p><p class="small sub">お守り残'+s.wardStock+'個'+(s.armed?'（次の航海で使用予定）':'')+'／当地有効予報 '+(f?'残'+f.remaining+'航海・損失防止'+f.lossGuard+'回':'なし')+'</p>'+
+ '<div class="actions"><button data-act="wardArm36" '+(G.done||p.moved||p.roll||s.armed||s.wardStock===0?'disabled':'')+'>お守りを次の航海で使用</button>'+
+ '<button data-act="wardCancel36" '+(!s.armed||p.moved?'disabled':'')+'>使用予約を取消</button></div></div>';
+ return _sailView36()+panel;};
+$('main').addEventListener('click',e=>{const t=e.target.closest('[data-act]');if(!t||!['wardArm36','wardCancel36','forecastBuy36','wardBuy36'].includes(t.dataset.act))return;
+ e.preventDefault();e.stopImmediatePropagation();const k=t.dataset.act,p=me();
+ if(k==='wardArm36')armWard36(p);if(k==='wardCancel36')cancelWard36(p);
+ if(k==='forecastBuy36')buyForecast36(p);if(k==='wardBuy36')buyWard36(p);render();},true);
+const _load36=load;
+load=function(x){if(!x||![V35_VERSION,V36_VERSION].includes(x.version))throw Error('v0.35/v0.36のセーブのみ読み込めます');
+ const old=G;try{const data=structuredClone(x),nav=data.navigation36;
+ if(x.version===V36_VERSION&&!nav)throw Error('予報・お守り台帳の欠落');data.version=V35_VERSION;delete data.navigation36;
+ _load36(data);G.version=V36_VERSION;G.navigation36=nav||freshNav36();const a=audit36();if(!a.ok)throw Error('予報・お守り台帳の異常：'+a.violations.join(','));render();
+ }catch(e){G=old;render();throw e;}};
+function audit36(){const b=auditAI35(),v=[...b.violations],n=G.navigation36;
+ if(!n||n.version!==1||!Array.isArray(n.seats)||n.seats.length!==4||!Array.isArray(n.records)||!Number.isInteger(n.next)||n.next<1)
+  return {...b,ok:false,violations:[...v,'invalid navigation36 structure']};
+ const kinds=['forecast','wardBuy','wardArm','wardCancel','wardUse','wardBlock','forecastBlock'];
+ const ids=new Set();for(const a of n.records){if(!a||!Number.isInteger(a.id)||a.id<1||ids.has(a.id)||!Number.isInteger(a.seat)||a.seat<0||a.seat>3||!Number.isInteger(a.round)||a.round<1||!kinds.includes(a.kind)||typeof a.detail!=='string')v.push('invalid navigation event');else ids.add(a.id);}
+ if(ids.size&&Math.max(...ids)>=n.next)v.push('navigation sequence invalid');
+ for(let i=0;i<4;i++){const s=n.seats[i],p=G.players[i];if(!s){v.push('missing nav seat '+i);continue;}
+ if(!Number.isInteger(s.wardStock)||s.wardStock<0||s.wardStock>3||!Number.isInteger(s.wardPurchased)||s.wardPurchased<0||!Number.isInteger(s.wardSpent)||s.wardSpent<0||s.wardStock!==1+s.wardPurchased-s.wardSpent)v.push('ward inventory mismatch '+i);
+ if(typeof s.armed!=='boolean'||(s.armed&&s.wardStock===0))v.push('invalid ward armed '+i);
+ if(!Array.isArray(s.forecastsBought)||s.forecastsBought.length!==8||s.forecastsBought.some(c=>!Number.isInteger(c)||c<0||c>2)||!Array.isArray(s.knownRegions)||new Set(s.knownRegions).size!==s.knownRegions.length||s.knownRegions.some(r=>!Number.isInteger(r)||r<0||r>7||s.forecastsBought[r]===0))v.push('invalid forecast purchases '+i);
+ if(s.forecast){const f=s.forecast;if(!Number.isInteger(f.region)||f.region<0||f.region>7||!Number.isInteger(f.remaining)||f.remaining<1||f.remaining>6||!Number.isInteger(f.lossGuard)||f.lossGuard<0||f.lossGuard>1||s.forecastsBought[f.region]===0)v.push('invalid active forecast '+i);}
+ if(!Number.isInteger(s.lossPrevented)||s.lossPrevented<0||!Number.isInteger(s.seaSails)||s.seaSails<0)v.push('invalid nav counters '+i);
+ if(s.context&&(!p.sea||!ensureSea33().sailing[i].pending||typeof s.context.ward!=='boolean'||typeof s.context.lossUsed!=='boolean'||(s.context.forecast&&(!Number.isInteger(s.context.forecast.region)||s.context.forecast.region<0||s.context.forecast.region>7||![0,1].includes(s.context.forecast.lossGuard)))))v.push('orphan sea protection context '+i);
+ }
+ return {...b,ok:v.length===0,violations:v,forecasts:n.seats.map(x=>x.forecast?.remaining||0),wards:n.seats.map(x=>x.wardStock)};}
+const _project36=projectForClient35;
+function projectForClient36(id){const v=_project36(id),p=G.players[id],s=navSeat36(p),r=regionAt36(p),f=s.forecast;
+ v.protocol='kc-private-view-0.36';v.navigation36={region:r,regionName:REGION[r],stormPercent:Math.round(NAV36_STORM[r]*100),known:s.knownRegions.includes(r),
+  profile:s.knownRegions.includes(r)?{...NAV36_RATES[r]}:null,forecast:f?{region:f.region,regionName:REGION[f.region],remaining:f.remaining,lossGuard:f.lossGuard}:null,
+  forecastsBought:s.forecastsBought[G.isles[p.at].area],canForecast:canPort(p)&&s.forecastsBought[G.isles[p.at].area]<2&&p.coins>=2,
+  wardStock:s.wardStock,armed:s.armed,canArm:!G.done&&!p.moved&&!p.roll&&!s.armed&&s.wardStock>0,
+  canCancel:s.armed&&!p.moved,canWardBuy:canPort(p)&&p.coins>=4&&s.wardStock<3,lossPrevented:s.lossPrevented,
+  knownRegions:[...s.knownRegions]};return v;}
+const _host36=hostCommand35;
+function hostCommand36(id,seq,cmd,arg){const pilot=G.onlinePilot26,deny=reason=>({ok:false,reason,round:G.round,activeSeat:pilot?.activeSeat??null});
+ if(['wardArm36','wardCancel36'].includes(cmd)){
+  if(!pilot||G.done||pilot.activeSeat!==id||!Number.isInteger(seq)||pilot.seqs[id]+1!==seq)return deny('操作権またはシーケンス不一致');
+  const p=G.players[id],ok=cmd==='wardArm36'?armWard36(p):cancelWard36(p);
+  if(!ok)return deny('お守り操作不可');pilot.seqs[id]=seq;return {ok:true,nextSeq:seq+1,round:G.round,activeSeat:pilot.activeSeat};
+ }
+ if(['forecast36','wardBuy36'].includes(cmd)){
+  if(!pilot||G.done||pilot.activeSeat!==id||!Number.isInteger(seq)||pilot.seqs[id]+1!==seq)return deny('操作権またはシーケンス不一致');
+  const ok=portAction(G.players[id],cmd);if(!ok)return deny('港行動条件・通貨・回数上限');pilot.seqs[id]=seq;
+  return {ok:true,nextSeq:seq+1,round:G.round,activeSeat:pilot.activeSeat};
+ }
+ const r=_host36(id,seq,cmd,arg);if(r.ok){const a=audit36();if(!a.ok)throw Error('nav36 audit failure '+a.violations.join(','));}return r;}
+window.__KC_V36={...window.__KC_V35,hostInit:seed=>{hostInit27(seed);ensureCrisis30();ensureRegion31();ensureReward32();ensureSea33();ensureQuest34();ai35State();nav36();G.version=V36_VERSION;return true;},
+ hostCommand:hostCommand36,project:projectForClient36,saveState:()=>structuredClone(G),loadState:x=>load(x),get:()=>structuredClone(G),audit:audit36,
+ reset:seed=>reset(seed),playerForTest:id=>G.players[id],seaForTest:()=>ensureSea33(),forecastForTest:id=>structuredClone(navSeat36(G.players[id])),
+ forceSeaEventForTest:(id,kind)=>applySea33(G.players[id],kind),armForTest:id=>armWard36(G.players[id]),cancelForTest:id=>cancelWard36(G.players[id]),
+ buyForecastForTest:id=>buyForecast36(G.players[id]),buyWardForTest:id=>buyWard36(G.players[id]),
+ rollForTest:id=>roll(G.players[id]),travelForTest:(id,to)=>travel(G.players[id],to),stayForTest:id=>stay(G.players[id]),
+ startCrewForTest:(id,role)=>recruit33(G.players[id],role),forceRegionForTest:()=>{const r=ensureRegion31();r.nextStart=G.round;return startRegion31();}};
+const V37_VERSION='v1h-0.37-vp10-c8-ai-navigation-trials';
+const AI37_MODES=['off','carry','forecast','ward','balanced','aggressive'];
+let AI37_TRIAL_POLICY=null;
+function freshAI37(){return {version:1,policy:'balanced',records:[],forecastBuys:0,wardBuys:0,wardUses:0,armAttempts:0,forecastAttempt:0,wardAttempt:0};}
+function ai37(){G.aiNavigation37??=freshAI37();return G.aiNavigation37;}
+function ai37Mode(){return ai37().policy;}
+function ai37Record(p,kind){const a=ai37();a.records.push({seat:p.id,round:G.round,kind,region:regionAt36(p)});}
+function ai37WantWard(p){
+ const mode=ai37Mode();if(mode==='off'||mode==='forecast'||G.onlinePilot26)return false;
+ const s=navSeat36(p),r=regionAt36(p),risk=NAV36_STORM[r];
+ if(!s.wardStock||s.armed||p.roll||p.moved||!!currentForecast36(p)||ensureEvents25().weatherShield[p.id]>0)return false;
+ if(mode==='carry')return risk>=.22;
+ if(mode==='ward')return risk>=.20&&(p.food<=3||p.vp>=5);
+ if(mode==='balanced')return risk>=.25&&(p.food<=3||p.vp>=6);
+ return risk>=.18;
+}
+function ai37ForecastEligible(p){const mode=ai37Mode();if(!['forecast','balanced','aggressive'].includes(mode)||G.onlinePilot26||!canPort(p))return false;
+ const r=G.isles[p.at].area,storm=NAV36_STORM[r],s=navSeat36(p);
+ if(s.forecastsBought[r]>=2||s.forecast?.region===r&&s.forecast.remaining>=2||p.food<3)return false;
+ if(p.vp>=8||canRedeem(p).length>=INFO_RATE||p.coins<COIN_RATE+NAV36_FORECAST_COST+2)return false;
+ if(mode==='forecast')return storm>=.22&&p.coins>=14;
+ if(mode==='balanced')return storm>=.25&&p.coins>=16;
+ return storm>=.18&&p.coins>=12;
+}
+function ai37WardEligible(p){const mode=ai37Mode();if(!['ward','balanced','aggressive'].includes(mode)||G.onlinePilot26||!canPort(p))return false;
+ const r=G.isles[p.at].area,storm=NAV36_STORM[r],s=navSeat36(p);
+ if(s.wardStock>=2||!!currentForecast36(p)||p.food<2||p.vp>=8||canRedeem(p).length>=INFO_RATE)return false;
+ if(mode==='ward')return storm>=.22&&p.coins>=12;
+ if(mode==='balanced')return storm>=.25&&p.coins>=16;
+ return storm>=.18&&p.coins>=10;
+}
+const _portAction37=portAction;
+portAction=function(p,kind,arg){
+ // The pre-existing AI calls portAction at most once at each dock. Replacing that
+ // discretionary action preserves competition with research/work. Never override
+ // urgent food, immediate point conversion, nor actual human/online commands.
+ if(p.id!==0&&!G.onlinePilot26&&['research','work','goalHint'].includes(kind)){
+  const a=ai37();
+  if(ai37ForecastEligible(p)){a.forecastAttempt++;if(_portAction37(p,'forecast36')){a.forecastBuys++;ai37Record(p,'forecast');return true;}}
+  if(ai37WardEligible(p)){a.wardAttempt++;if(_portAction37(p,'wardBuy36')){a.wardBuys++;ai37Record(p,'wardBuy');return true;}}
+ }
+ return _portAction37(p,kind,arg);
+};
+const _aiTurn37=aiTurn;
+aiTurn=function(p){
+ const a=ai37();if(p.id!==0&&!G.onlinePilot26&&ai37WantWard(p)){
+  a.armAttempts++;if(armWard36(p))ai37Record(p,'arm');
+ }
+ const previous=navSeat36(p).wardSpent;
+ const ret=_aiTurn37(p);
+ const used=navSeat36(p).wardSpent-previous;
+ if(used){a.wardUses+=used;ai37Record(p,'wardUse');}
+ return ret;
+};
+const _reset37=reset;
+reset=function(seed){_reset37(seed);G.aiNavigation37=freshAI37();const choice=AI37_TRIAL_POLICY||window.__KC38_POLICY?.('aiPolicy37');if(AI37_MODES.includes(choice))G.aiNavigation37.policy=choice;G.version=V37_VERSION;};
+const _load37=load;
+load=function(x){
+ if(!x||![V36_VERSION,V37_VERSION].includes(x.version))throw Error('v0.36/v0.37保存データのみ読み込み可能');
+ const old=G;try{
+  const y=structuredClone(x),a=y.aiNavigation37;
+  if(x.version===V37_VERSION&&!a)throw Error('AI危険判断台帳の欠落');
+  y.version=V36_VERSION;delete y.aiNavigation37;_load37(y);
+  G.version=V37_VERSION;G.aiNavigation37=a||freshAI37();
+  const result=audit37();if(!result.ok)throw Error('AI航海台帳異常：'+result.violations.join(','));render();
+ }catch(err){G=old;render();throw err;}
+};
+function audit37(){const b=audit36(),v=[...b.violations],a=G.aiNavigation37;
+ if(!a||a.version!==1||!AI37_MODES.includes(a.policy)||!Array.isArray(a.records)||![a.forecastBuys,a.wardBuys,a.wardUses,a.armAttempts,a.forecastAttempt,a.wardAttempt].every(x=>Number.isInteger(x)&&x>=0))
+  return {...b,ok:false,violations:[...v,'AI37 ledger shape']};
+ const count={forecast:0,wardBuy:0,wardUse:0};
+ for(const rec of a.records){
+  if(!rec||![1,2,3].includes(rec.seat)||!Number.isInteger(rec.round)||rec.round<1||!['forecast','wardBuy','wardUse','arm'].includes(rec.kind)||!Number.isInteger(rec.region)||rec.region<0||rec.region>7)v.push('invalid AI37 record');
+  else if(rec.kind in count)count[rec.kind]++;
+ }
+ if(count.forecast!==a.forecastBuys||count.wardBuy!==a.wardBuys||count.wardUse!==a.wardUses||a.forecastBuys>a.forecastAttempt||a.wardBuys>a.wardAttempt||a.wardUses>a.armAttempts)v.push('AI37 counter/ledger mismatch');
+ return {...b,ok:v.length===0,violations:v,aiNavPolicy:a.policy,aiNavRecords:a.records.length};
+}
+const select37=$('aiPolicy37');
+if(select37)select37.addEventListener('change',()=>{if(AI37_MODES.includes(select37.value)){ai37().policy=select37.value;render();}});
+window.__KC_V37={...window.__KC_V36,
+ hostInit:seed=>{window.__KC_V36.hostInit(seed);ai37();G.version=V37_VERSION;return true;},
+ project:id=>{const v=projectForClient36(id);v.protocol='kc-private-view-0.37';return v;},
+ get:()=>structuredClone(G),saveState:()=>structuredClone(G),loadState:x=>load(x),audit:audit37,
+ reset:seed=>reset(seed),setPolicy:mode=>{if(!AI37_MODES.includes(mode))return false;ai37().policy=mode;return true;},
+ fastTrial:(seed,aiMode,navMode,cap=180)=>{if(!AI37_MODES.includes(navMode)||!AI35_MODES.includes(aiMode))throw Error('invalid AI policy');
+  AI37_TRIAL_POLICY=navMode;try{const r=window.__KC_V35.fastTrial(seed,aiMode,cap);return {...r,aiNavigation:structuredClone(ai37()),navigation:structuredClone(nav36()),round:G.round,players:G.players.map(p=>({id:p.id,vp:p.vp,coins:p.coins,food:p.food,goals:p.goals,crew:ensureSea33().crews[p.id].length,originals:owned(p).length}))};}finally{AI37_TRIAL_POLICY=null;}
+ },
+ aiDecisionForTest:id=>({ward:ai37WantWard(G.players[id]),forecast:ai37ForecastEligible(G.players[id]),wardBuy:ai37WardEligible(G.players[id])}),
+ aiPortForTest:(id,kind='work')=>portAction(G.players[id],kind),
+ aiArmForTest:id=>ai37WantWard(G.players[id])&&armWard36(G.players[id]),
+ getPolicyInfo:()=>structuredClone(ai37())
+};
+/* V0.50 experimental chart knowledge: separate from original/VP rules. */
+const KC50={key:(a,b)=>[a,b].sort((x,y)=>x-y).join('-'),id:(a,b)=>'route:'+KC50.key(a,b)};
+function chartFacts50(g){for(const e of g.edges){const id=KC50.id(e.a,e.b),[a,b]=[e.a,e.b].sort((x,y)=>x-y);g.facts[id]={id,kind:'航路',title:`航路：${g.isles[a].name} ↔ ${g.isles[b].name}`,description:`島${a+1}と島${b+1}を結ぶ航路が存在する`,route:[a,b]};}}
+const oldFactMap50=factMap;factMap=function(){const facts=oldFactMap50();chartFacts50({...G,facts});return facts;};
+function chartRoutes50(g,p){return g.edges.filter(e=>Object.hasOwn(p.known,KC50.id(e.a,e.b))).map(e=>({a:e.a,b:e.b,sailed:!!p.routeSailed50?.[KC50.id(e.a,e.b)]}));}
+const oldTravel50=travel;travel=function(p,to){const from=p.sea?.from??p.at, dest=p.sea?.to??to;const ok=oldTravel50(p,to);if(ok){const id=KC50.id(from,dest);if(!G.facts[id])throw Error('invalid chart route');p.routeSailed50??={};if(!p.routeSailed50[id]){learn(p,id,'本人航行による海図記録');p.routeSailed50[id]=true;}}return ok;};
+const oldLoad50=load;load=function(x){const y=structuredClone(x);chartFacts50(y);for(const p of y.players){p.routeSailed50??={};for(const id of Object.keys(p.known))if(id.startsWith('route:')&&!y.edges.some(e=>KC50.id(e.a,e.b)===id))throw Error('invalid chart fact');for(const [id,val] of Object.entries(p.routeSailed50))if(val!==true||!Object.hasOwn(p.known,id)||!y.edges.some(e=>KC50.id(e.a,e.b)===id))throw Error('invalid sailed ledger');if(p.sea){const id=KC50.id(p.sea.from,p.sea.to);if(!Object.hasOwn(p.known,id))p.known[id]={source:'旧セーブの現在航路',history:[{round:y.round,source:'旧セーブの現在航路'}]};p.routeSailed50[id]=true;}}return oldLoad50(y);};
+function project50(id){const v=window.__KC_V37.project(id),p=G.players[id];v.routes=chartRoutes50(G,p);v.sailChoices=!G.done&&v.turn?.activeSeat===id&&!p.moved&&p.roll?(p.sea?[p.sea.to]:neighbors(p.at).map(e=>e.to)):[];if(v.trade29)v.trade29.incoming=v.trade29.incoming.map(o=>o.fact?.startsWith("route:")&&o.status!=="accepted"&&!Object.hasOwn(p.known,o.fact)?{...o,fact:null,title:"航路情報（承諾後に区間を開示）"}:o);v.others=v.others.map(o=>o.sea&&!Object.hasOwn(p.known,KC50.id(o.sea.from,o.sea.to))?{...o,sea:{from:o.at,to:o.at,concealed:true}}:o);return v;}
+
+function chartPlayers50(g,p){return g.players.map(o=>o.id!==p.id&&o.sea&&!Object.hasOwn(p.known,KC50.id(o.sea.from,o.sea.to))?{...o,sea:{from:o.at,to:o.at,concealed:true}}:o);}
+
+// Offline visual replay captures before/after each synchronous AI turn.
+let stages47=null;
+const boardAt47=active=>KCBoard48.render({isles:G.isles,routes:chartRoutes50(G,me()),players:chartPlayers50(G,me()),active,overview:overview45});
+const aiTurn47=aiTurn;aiTurn=function(p){if(stages47)stages47.push(boardAt47(p.id));const ret=aiTurn47(p);if(stages47)stages47.push(boardAt47(p.id));return ret;};
+const finish47=finishHuman;finishHuman=function(){if(G.testSilent||G.onlinePilot26||tab!=='sail'||G.done)return finish47();KCReplay47.skip();const initial=boardAt47(0);stages47=[];let ret,stages;try{ret=finish47();stages=stages47;}finally{stages47=null;}if(stages?.length)KCReplay47.play($('main'),initial,stages,boardAt47(0));return ret;};
+document.addEventListener('click',e=>{if(e.target.closest('[data-kc47-skip]')){e.preventDefault();e.stopImmediatePropagation();KCReplay47.skip();}},true);
+reset(20261124);
+
+window.__KC_V38={...window.__KC_V37,project:project50,getRefForHost38:(id)=>G.players[id]};
+
+})();
+</script></body></html>
